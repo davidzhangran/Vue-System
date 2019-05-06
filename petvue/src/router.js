@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Login from "./views/login";
 import UserSystem from "./views/userSystem";
 import UserStore from "./views/userStore";
-
+import Storefront from "./components/storefront/storefront"
 
 Vue.use(Router)
 
@@ -17,12 +17,20 @@ export default new Router({
     {
       path: '/userSystem',
       name: 'userSystem',
-      component: UserSystem
+      component: UserSystem,
+     
     },
     {
       path: '/userStore',
       name: 'userStore',
-      component: UserStore
+      component: UserStore,
+      children: [
+        {
+          path: 'storefront',
+          name: 'storefront',
+          component: Storefront
+        }
+      ]
     }
   ]
 })
