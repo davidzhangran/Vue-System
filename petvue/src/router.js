@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from "./views/login";
-import System from "./views/system";
+import UserSystem from "./views/userSystem";
+import UserStore from "./views/userStore";
 
 
 Vue.use(Router)
@@ -14,9 +15,14 @@ export default new Router({
       component: Login
     },
     {
-      path: '/system',
-      name: 'system',
-      component: System
+      path: '/userSystem',
+      name: 'userSystem',
+      component: UserSystem
+    },
+    {
+      path: '/userStore',
+      name: 'userStore',
+      component: UserStore
     }
   ]
 })

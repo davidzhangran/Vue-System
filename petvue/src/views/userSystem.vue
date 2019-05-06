@@ -1,0 +1,46 @@
+<template>
+  <div>
+    <el-menu
+      :default-active="activeIndex2"
+      class="el-menu-demo"
+      mode="horizontal"
+      @select="handleSelect"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+    >
+      <el-menu-item index="1">用户管理</el-menu-item>
+     
+      <el-menu-item index="3" >宠主管理</el-menu-item>
+      <el-menu-item index="3" >门店管理</el-menu-item>
+      <el-menu-item index="3" >评论管理</el-menu-item>
+    </el-menu>
+  </div>
+</template>
+
+
+<script>
+export default {
+  name: "system",
+  data() {
+    return {
+      isCollapse: true
+    };
+  },
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    }
+  }
+};
+</script>
+
+<style>
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
+</style>
