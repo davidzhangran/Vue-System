@@ -18,7 +18,7 @@ export default new Router({
       path: '/userSystem',
       name: 'userSystem',
       component: UserSystem,
-     
+
     },
     {
       path: '/userStore',
@@ -29,7 +29,7 @@ export default new Router({
           path: 'storefront',
           name: 'storefront',
           component: Storefront
-        }
+        },
       ]
     }
   ]
