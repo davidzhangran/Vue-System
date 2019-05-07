@@ -99,7 +99,7 @@ export default {
       feature: "",
       person: "",
       licensenumber: "",
-      license: "", //营业执照
+      license:[], //营业执照
       banner: [] //头图
     };
   },
@@ -115,9 +115,10 @@ export default {
     },
     // 上传图片
     licenseSuc(response) {
-      this.license = response.data.url;
+      this.license.push(response.data.url);
     },
     bannerSuc(response) {
+      
       this.banner.push(response.data.url);
     },
     add() {
@@ -144,7 +145,8 @@ export default {
         banner
       });
     }
-  }
+  },
+
 };
 </script>
 <style scoped>

@@ -10,6 +10,13 @@ const addStorefront = async (parm) => {
         }).then(response => response.json())
 }
 
+const getStorefrontByPage = async ({ currentPage = 1, eachPage = 5 } = {}) => {
+    let data = await fetch(`/storefront/getStorefrontByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
+        .then(response => response.json())
+    return data
+}
+
 export default {
-    addStorefront
+    addStorefront,
+    getStorefrontByPage
 }
