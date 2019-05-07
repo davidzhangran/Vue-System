@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from "./views/login";
 import UserSystem from "./views/userSystem";
 import UserStore from "./views/userStore";
+import Pet from "./components/pet/pet";
 
 
 Vue.use(Router)
@@ -22,7 +23,12 @@ export default new Router({
     {
       path: '/userStore',
       name: 'userStore',
-      component: UserStore
+      component: UserStore,
+      children:[{
+        path: 'Pet',
+        name: 'Pet',
+        component: Pet,
+      }]
     }
   ]
 })
