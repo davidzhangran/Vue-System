@@ -18,7 +18,7 @@ export default new Router({
     },
     {
       path: '/login/:phone',
-      name: 'login1',
+      name: 'login',
       component: Login
     },
     {

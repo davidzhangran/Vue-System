@@ -11,7 +11,7 @@
             <el-table-column prop="email" label="邮箱" width="120"></el-table-column>
             <el-table-column prop="name" label="姓名" width="100"></el-table-column>
             <el-table-column prop="role" label="角色" width="120"></el-table-column>
-            <el-table-column prop="status" label="状态" width="120"></el-table-column>
+            <el-table-column prop="state" label="状态" width="120"></el-table-column>
             <el-table-column label="操作" width="200">
               <template slot-scope="scope">
                 <el-button
