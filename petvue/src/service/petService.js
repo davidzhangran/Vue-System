@@ -10,10 +10,16 @@ const addPet = async (parm) => {
         }).then(response => response.json())
 }
 //分页
-const getPetsByPageSer = async ({ currentPage = 1, eachPage = 3,type="",text="" } = {}) => {
-    let data = await fetch(`/pet/getPetsByPage?currentPage=${currentPage}&eachPage=${eachPage}&type=${type}&text=${text}`)
+const getPetsByPageSer = async ({ currentPage = 1, eachPage = 3,type,text } = {}) => {
+    if(type!=undefined){
+        let data = await fetch(`/pet/getPetsByPage?currentPage=${currentPage}&eachPage=${eachPage}&type=${type}&text=${text}`)
         .then(response => response.json())
-    return data
+        return data
+    }else{
+        let data = await fetch(`/pet/getPetsByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
+        .then(response => response.json())
+        return data
+    }
 }
 //删除
 const removePet = async (parm) => {

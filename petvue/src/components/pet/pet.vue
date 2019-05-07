@@ -102,6 +102,7 @@
           class="footer"
           action="/pet/addPImage"
           list-type="picture-card"
+          auto-upload="false"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
           :on-exceed="exceed"
@@ -120,19 +121,19 @@
       </div>
     </el-dialog>
     <el-table :data="pets" border style="width: 100%">
-      <el-table-column fixed prop="images" label="照片" width="150">
+      <el-table-column fixed prop="images" label="照片" width="150" align="center">
         <template slot-scope="scope">
-          <img :src="scope.row.images" style="width:80px;height:80px"/>
+          <img :src="scope.row.images" style="width:50px;height:50px"/>
         </template>
       </el-table-column>
-      <el-table-column fixed prop="name" label="名称" width="150"></el-table-column>
-      <el-table-column prop="category" label="宠物品种" width="120"></el-table-column>
-      <el-table-column prop="color" label="毛色" width="120"></el-table-column>
-      <el-table-column prop="price" label="价格" width="120"></el-table-column>
-      <el-table-column prop="age" label="年龄" width="120"></el-table-column>
-      <el-table-column prop="gender" label="性别" width="120"></el-table-column>
-      <el-table-column prop="describe" label="描述" width="120"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="250">
+      <el-table-column fixed prop="name" label="名称" width="150" align="center"></el-table-column>
+      <el-table-column prop="category" label="宠物品种" width="120" align="center"></el-table-column>
+      <el-table-column prop="color" label="毛色" width="120" align="center"></el-table-column>
+      <el-table-column prop="price" label="价格" width="120" align="center"></el-table-column>
+      <el-table-column prop="age" label="年龄" width="120" align="center"></el-table-column>
+      <el-table-column prop="gender" label="性别" width="120" align="center"></el-table-column>
+      <el-table-column prop="describe" label="描述" width="120" align="center"></el-table-column>
+      <el-table-column fixed="right" label="操作" align="center" >
         <template slot-scope="scope">
           <el-button @click="hanleClick(scope.row)"  type="text" size="small">修改</el-button>
           <el-button type="text" @click="handleDelete(scope.row)" size="small">删除</el-button>
