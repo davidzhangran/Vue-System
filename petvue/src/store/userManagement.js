@@ -34,7 +34,7 @@ export default {
             console.log(context.state);
             const { eachPage, currentPage } = context.state//解构得到state里面的两个值
             const data = await userService.getUserByPgae({ eachPage, currentPage })
-            context.commit("getUsersByPgae",data)
+            context.commit("getUsersByPgae", data)
         },
         async addUserAsync({ dispatch }, { username, password, phone, email, name, role }) {
             const data = { username, password, phone, email, name, role: role == "平台管理员" ? "0" : "1" }
