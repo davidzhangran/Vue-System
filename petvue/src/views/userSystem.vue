@@ -8,7 +8,6 @@
       active-text-color="#ffd04b"
     >
       <el-menu-item index="1">用户管理</el-menu-item>
-     
       <el-menu-item index="3" >宠主管理</el-menu-item>
       <el-menu-item index="3" >门店管理</el-menu-item>
       <el-menu-item index="3" >评论管理</el-menu-item>

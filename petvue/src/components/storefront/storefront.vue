@@ -37,11 +37,30 @@
           </div>
           <div>
             营业执照：
+            <!-- /storefront/addLicense -->
             <el-upload
-              action="http://localhost:3000/images/"
+              action="/storefront/addLicense2"
               list-type="picture-card"
               :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove"
+              :limit="1"
+              :on-exceed="exceed"
+              :on-success="licenseSuc"
+            >
+              <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="dialogVisible">
+              <img width="100%" :src="dialogImageUrl" alt>
+            </el-dialog>
+          </div>
+          <div>
+            头图：
+            <!-- /storefront/addLicense -->
+            <el-upload
+              action="/storefront/addLicense2"
+              list-type="picture-card"
+              :on-preview="handlePictureCardPreview"
+              :limit="5"
+              :on-success="bannerSuc"
             >
               <i class="el-icon-plus"></i>
             </el-upload>
@@ -56,7 +75,7 @@
         <el-button type="primary" @click="add">确 定</el-button>
       </div>
     </el-dialog>
-    <StorefrontStorefrontTab />
+    <StorefrontStorefrontTab/>
   </div>
 </template>
 
@@ -79,28 +98,50 @@ export default {
       phone: "",
       feature: "",
       person: "",
-      licensenumber: ""
+      licensenumber: "",
+      license: "", //营业执照
+      banner: [] //头图
     };
   },
   methods: {
     ...mapActions(["addStorefrontAsync"]),
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
+    ...mapMutations(["exceed", "licenseSuc", "bannerSuc"]),
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
+    exceed() {
+      this.$message.error("上传图片不能超过1张!");
+    },
+    // 上传图片
+    licenseSuc(response) {
+      this.license = response.data.url;
+    },
+    bannerSuc(response) {
+      this.banner.push(response.data.url);
+    },
     add() {
+      //申请门店
       this.dialogFormVisible = false; //关闭窗口
-      const { name, site, person, licensenumber, phone, feature } = this;
+      const {
+        name,
+        site,
+        person,
+        licensenumber,
+        phone,
+        feature,
+        license,
+        banner
+      } = this;
       this.addStorefrontAsync({
         name,
         site,
         licensenumber,
         person,
         feature,
-        phone
+        phone,
+        license,
+        banner
       });
     }
   }
