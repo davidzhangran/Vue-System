@@ -10,6 +10,11 @@ const addStorefront = async (parm) => {
         }).then(response => response.json())
 }
 
+// 获取门店
+const getStorefrontByPage = async ( currentPage = 1, eachPage = 10 ) => {
+    return await fetch(`/storefront/getStorefrontByPage?currentPage=${currentPage}&eachPage=${eachPage}`).then(response => response.json())
+}
+
 export default {
-    addStorefront
+    addStorefront, getStorefrontByPage
 }
