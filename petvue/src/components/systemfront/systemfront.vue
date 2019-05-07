@@ -66,98 +66,129 @@
           <el-input v-model="form.name" style="width:300px"></el-input>
         </el-form-item>
         <el-form-item label="营业执照图片" :label-width="formLabelWidth">
-          
+          <!-- 图片 -->
+          <el-upload
+            action="/storefront/addLicense2"
+            list-type="picture-card"
+            ref="upload"
+            :auto-upload="false"
+            :limit="1"
+            :on-exceed="exceed"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt>
+          </el-dialog>
+          <!-- /图片 -->
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="submitUpload">确 定</el-button>
       </div>
     </el-dialog>
     <!-- /修改组件 -->
-    <img width="260" height="200" :src="form.license" />
     <!-- <h1>{{form.license}}</h1> -->
   </div>
 </template>
 
 
 <script>
-  export default {
-    methods: {
-      handleClick(row) {
-        console.log(row);
-        this.dialogFormVisible = true;
-      }
+export default {
+  methods: {
+    submitUpload() {
+      this.$refs.upload.submit();
+      this.dialogFormVisible = false;
     },
-
-    data() {
-      return {
-        tableData: [
-          {
-            _id: "123456",
-            name: "卖点狗粮",
-            licensenumber: "111111",
-            license: "../../../introduceBG.jpg",
-            specification: "都适用",
-            site: "上海市普陀区金沙江路 1518 弄",
-            location: "定位",
-            person: "小明",
-            phone: "13547006776",
-            banner: "../storeFront/img/头图.png",
-            feature: "超好吃的狗粮",
-            vip: "心悦3",
-            commission: "1:1",
-            clerk: [
-              {
-                name: "张三",
-                age: 18
-              },
-              {
-                name: "李四",
-                age: 15
-              }
-            ],
-            goodsId: [
-              {
-                _id: "001",
-                name: "超好吃的狗粮"
-              }
-            ],
-            serveId: [
-              {
-                _id: "001",
-                name: "洗澡澡"
-              }
-            ],
-            petId: [
-              {
-                _id: "001",
-                name: "山野一号"
-              }
-            ]
-          }
-        ],
-        dialogFormVisible: false,
-        form: {
-          name: "",
-          region: "",
-          date1: "",
-          date2: "",
-          delivery: false,
-          type: [],
-          resource: "",
-          desc: "",
-          license: require('../../../../../introduceBG.jpg')
-        },
-        formLabelWidth: "120px"
-      };
+    handleClick(row) {
+      console.log(row);
+      this.dialogFormVisible = true;
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    exceed() {
+      this.$message.error("上传图片不能超过1张!");
     }
-  };
+  },
+
+  data() {
+    return {
+      dialogImageUrl: "",
+      dialogVisible: false,
+      tableData: [
+        {
+          _id: "123456",
+          name: "卖点狗粮",
+          licensenumber: "111111",
+          license: "../../../introduceBG.jpg",
+          specification: "都适用",
+          site: "上海市普陀区金沙江路 1518 弄",
+          location: "定位",
+          person: "小明",
+          phone: "13547006776",
+          banner: "../storeFront/img/头图.png",
+          feature: "超好吃的狗粮",
+          vip: "心悦3",
+          commission: "1:1",
+          clerk: [
+            {
+              name: "张三",
+              age: 18
+            },
+            {
+              name: "李四",
+              age: 15
+            }
+          ],
+          goodsId: [
+            {
+              _id: "001",
+              name: "超好吃的狗粮"
+            }
+          ],
+          serveId: [
+            {
+              _id: "001",
+              name: "洗澡澡"
+            }
+          ],
+          petId: [
+            {
+              _id: "001",
+              name: "山野一号"
+            }
+          ]
+        }
+      ],
+      dialogFormVisible: false,
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: "",
+        license: ""
+      },
+      formLabelWidth: "120px"
+    };
+  }
+};
 </script>
 
 <style>
-  .sa {
-    display: flex;
-    flex-wrap: wrap;
-  }
+.sa {
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>
