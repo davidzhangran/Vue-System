@@ -8,6 +8,7 @@ import Pet from "./components/pet/pet";
 import Storefront from "./components/storefront/storefront"
 import SystemFront from "./components/systemfront/systemfront"
 import UserManagement from "./components/userManagement/userManagement"
+import Commodity from "./components/commodity/commodity"
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -51,6 +52,11 @@ export default new Router({
         path: 'storefront',
         name: 'storefront',
         component: Storefront
+      },
+      {
+        path: 'commodity',
+        name: 'commodity',
+        component: Commodity
       },]
     }
   ]

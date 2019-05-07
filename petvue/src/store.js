@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import users from "./store/userManagement"
-
+import commodity from "./store/commodity"
 Vue.use(Vuex);
 import storefront from "./store/storefront"
 
@@ -10,6 +10,7 @@ export default new Vuex.Store({//引入单个模块
   modules: {
     storefront,
     pet,
-    users
+    users,
+    commodity,
   }
 })
