@@ -5,7 +5,7 @@ import UserSystem from "./views/userSystem";
 import UserStore from "./views/userStore";
 import Pet from "./components/pet/pet";
 import Storefront from "./components/storefront/storefront"
-import SystemFront from "./components/systemfront/systemfront"
+// import SystemFront from "./components/systemfront/systemfront"
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -18,11 +18,11 @@ export default new Router({
       path: '/userSystem',
       name: 'userSystem',
       component: UserSystem,
-      children: [{
-        path: 'systemFront',
-        name: 'systemFront',
-        component: SystemFront
-      }]
+      // children: [{
+      //   path: 'systemFront',
+      //   name: 'systemFront',
+      //   component: SystemFront
+      // }]
     },
     {
       path: '/userStore',

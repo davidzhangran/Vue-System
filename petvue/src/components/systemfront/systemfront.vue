@@ -82,6 +82,7 @@
 
 
 <script>
+
   export default {
     methods: {
       handleClick(row) {
