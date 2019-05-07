@@ -1,4 +1,4 @@
-const getUser = async ({ } = {}) => await fetch(`/users/getUser`).then(response => response.json())
+const getUserByPgae = async ({ currentPage = 1, eachPage = 10 } = {}) => await fetch(`/users/getUserByPage?currentPage=${currentPage}&eachPage=${eachPage}`).then(response => response.json())
 
 const addUser = async (params) => await fetch("/users/addUser", {
     method: "POST",
@@ -14,6 +14,6 @@ const addUser = async (params) => await fetch("/users/addUser", {
 
 
 export default { //用对象暴露 因为后续需要在里面写多个异步请求
-    getUser,
+    getUserByPgae,
     addUser,
 }

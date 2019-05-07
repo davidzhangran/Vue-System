@@ -23,6 +23,17 @@
               </template>
             </el-table-column>
           </el-table>
+          <div class="block">
+            <el-pagination
+              @size-change="setEachPage"
+              @current-change="setCurrentPage"
+              :current-page="currentPage - 0"
+              :page-sizes="[3, 5, 10, 15]"
+              :page-size="3"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="count"
+            ></el-pagination>
+          </div>
         </div>
       </el-tab-pane>
       <el-tab-pane label="新增用户">
@@ -63,22 +74,40 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapMutations, mapState, mapActions } = createNamespacedHelpers(
-  "users"
-);
-
+const { mapMutations, mapState, mapActions } = createNamespacedHelpers("users");
 
 export default {
-  computed:{
-    ...mapState(["users"])
+  computed: {
+    ...mapState(["users", "totalPage", "count"]),
+    eachPage: {
+      get: mapState(["eachPage"]).eachPage, //获取每页显示页数
+      set: mapMutations(["setEachPage"]).setEachPage //通过input框去修改每页显示页数
+    },
+    currentPage: {
+      get: mapState(["currentPage"]).currentPage,
+      set: mapMutations(["setCurrentPage"]).setCurrentPage
+    }
   },
   methods: {
     handleClick(row) {
       console.log(row);
     },
-    ...mapActions(["addUserAsync"])
+    ...mapActions(["addUserAsync", "getUserByPageAsync"]),
+    ...mapMutations(["setEachPage", "setCurrentPage"])
   },
-
+  watch: {
+    //监听器当数据发生改变就调用异步方法更新数据
+    eachPage() {
+      this.getUserByPageAsync();
+    },
+    currentPage() {
+      this.getUserByPageAsync();
+    }
+  },
+  mounted() {
+    //生命周期 可以访问真实节点阶段
+    this.getUserByPageAsync();
+  },
   data() {
     return {
       tabPosition: "left",
