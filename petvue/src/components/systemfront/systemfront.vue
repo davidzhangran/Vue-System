@@ -1,5 +1,17 @@
 <template>
   <div>
+    <div style="display: flex;justify-content: flex-end;padding-bottom:20px; padding-top:20px;">
+      <el-select style="width:100px;text-align: center;" v-model="value" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+      <el-input style="width:260px;" v-model="inputText" placeholder="请输入内容"></el-input>
+      <el-button type="primary" @click="searchClick" icon="el-icon-search">搜索</el-button>
+    </div>
     <el-table :data="storefrontInfo" border style="width: 100%">
       <el-table-column header-align="center" align="center" fixed prop="_id" label="门店编号"></el-table-column>
       <el-table-column header-align="center" align="center" prop="name" label="名称"></el-table-column>
@@ -20,7 +32,7 @@
       <el-table-column header-align="center" align="center" prop="banner" label="头图">
         <template slot-scope="scope" style="display: flex;">
           <el-popover placement="bottom" trigger="click">
-            <div>
+            <div style="text-align: center;">
               <img
                 style="width:80px;height:80px;"
                 :key="item"
@@ -29,7 +41,7 @@
                 alt
               >
             </div>
-            <img style="width:80px;height:80px;" :src="scope.row.banner[0]" alt>
+            <img style="width:80px;height:80px;" slot="reference" :src="scope.row.banner[0]" alt>
           </el-popover>
         </template>
       </el-table-column>
@@ -54,37 +66,36 @@
     </el-table>
     <!-- 修改组件 -->
     <el-dialog title="修改门店信息" :visible.sync="dialogFormVisible">
-      <el-form style="display: flex;flex-wrap: wrap;">
-        <el-form-item label="门店编号" :label-width="formLabelWidth">
-          <el-input v-model="tableData._id" disabled style="width:300px"></el-input>
-        </el-form-item>
-        <el-form-item label="名称" :label-width="formLabelWidth">
-          <el-input v-model="tableData.name" style="width:300px"></el-input>
-        </el-form-item>
-        <el-form-item label="营业执照号码" :label-width="formLabelWidth">
-          <el-input v-model="tableData.licensenumber" style="width:300px"></el-input>
-        </el-form-item>
-        <el-form-item label="适用规格" :label-width="formLabelWidth">
-          <el-input v-model="tableData.specification" style="width:300px"></el-input>
-        </el-form-item>
-        <el-form-item label="营业地址" :label-width="formLabelWidth">
-          <el-input v-model="tableData.site" style="width:300px"></el-input>
-        </el-form-item>
-        <el-form-item label="定位" :label-width="formLabelWidth">
-          <el-input v-model="tableData.location" style="width:300px"></el-input>
-        </el-form-item>
-        <el-form-item label="法人" :label-width="formLabelWidth">
-          <el-input v-model="tableData.person" style="width:300px"></el-input>
-        </el-form-item>
-        <el-form-item label="联系电话" :label-width="formLabelWidth">
-          <el-input v-model="tableData.phone" style="width:300px"></el-input>
-        </el-form-item>
-        <el-form-item label="特色" :label-width="formLabelWidth">
-          <el-input v-model="tableData.feature" style="width:300px"></el-input>
-        </el-form-item>
-        <el-form-item label="佣金比例" :label-width="formLabelWidth">
-          <el-input v-model="tableData.commission" style="width:300px"></el-input>
-        </el-form-item>
+      <el-form style="padding-right: 120px;">
+        <div style="display: flex;justify-content: space-between;">
+          <el-form-item label="门店编号" :label-width="formLabelWidth">
+            <el-input v-model="tableData._id" disabled style="width:300px"></el-input>
+          </el-form-item>
+          <el-form-item label="名称" :label-width="formLabelWidth">
+            <el-input v-model="tableData.name" style="width:300px"></el-input>
+          </el-form-item>
+        </div>
+        <div style="display: flex;justify-content: space-between;">
+          <el-form-item label="营业执照号码" :label-width="formLabelWidth">
+            <el-input v-model="tableData.licensenumber" style="width:300px"></el-input>
+          </el-form-item>
+          <el-form-item label="营业地址" :label-width="formLabelWidth">
+            <el-input v-model="tableData.site" style="width:300px"></el-input>
+          </el-form-item>
+        </div>
+        <div style="display: flex;justify-content: space-between;">
+          <el-form-item label="法人" :label-width="formLabelWidth">
+            <el-input v-model="tableData.person" style="width:300px"></el-input>
+          </el-form-item>
+          <el-form-item label="联系电话" :label-width="formLabelWidth">
+            <el-input v-model="tableData.phone" style="width:300px"></el-input>
+          </el-form-item>
+        </div>
+        <div style="display: flex;justify-content: space-between;">
+          <el-form-item label="特色" :label-width="formLabelWidth">
+            <el-input v-model="tableData.feature" style="width:300px"></el-input>
+          </el-form-item>
+        </div>
         <el-form-item label="营业执照图片" :label-width="formLabelWidth">
           <!-- 图片 -->
           <el-upload
@@ -96,6 +107,7 @@
             :on-exceed="exceed"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
+            :file-list="tableData.license"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -131,7 +143,15 @@
       </div>
     </el-dialog>
     <!-- /修改组件 -->
-    <!-- <h1>{{form.license}}</h1> -->
+    <el-pagination
+      @size-change="setEachPage"
+      @current-change="setCurrentPage"
+      :current-page="currentPage - 0"
+      :page-sizes="[ 1, 2, 3, 4, 5]"
+      :page-size="eachPage"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="count"
+    ></el-pagination>
   </div>
 </template>
 
@@ -147,50 +167,106 @@ export default {
     dialogFormVisible() {
       if (this.dialogFormVisible) return;
       this.tableData = [];
+    },
+    eachPage() {
+      //监听eachPage，发生变化就会触发
+      this.getStorefrontByPageAsync();
+    },
+    currentPage() {
+      //监听eachPage，发生变化就会触发
+      this.getStorefrontByPageAsync();
     }
   },
   computed: {
-    ...mapState(["storefrontInfo"])
+    ...mapState(["storefrontInfo", "count"]),
+    eachPage: {
+      get: mapState(["eachPage"]).eachPage, //返回eachPage
+      set: mapMutations(["setEachPage"]).setEachPage //setEachPage方法调用
+    },
+    currentPage: {
+      get: mapState(["currentPage"]).currentPage,
+      set: mapMutations(["setCurrentPage"]).setCurrentPage
+    }
   },
   mounted() {
     this.getStorefrontByPageAsync();
   },
   methods: {
-    ...mapActions(["getStorefrontByPageAsync"]),
+    ...mapActions(["getStorefrontByPageAsync", "updateStorefrontAsync"]),
+    ...mapMutations(["setEachPage", "setCurrentPage"]),
+    //点击搜索按钮触发
+    searchClick() {
+      this.getStorefrontByPageAsync({
+        value: this.value,
+        inputText: this.inputText
+      });
+    },
+    //点击确认修改按钮
     submitUpload() {
       this.$refs.license.submit();
       this.$refs.banner.submit();
-      this.$refs.banner.clearFiles();
+      // this.$refs.banner.clearFiles();
+      // console.log(this.tableData);
+      this.updateStorefrontAsync(this.updateFrontById(this.tableData));
+      // console.log(this.tableData.license);
       this.dialogFormVisible = false;
     },
+    //点击修改按钮
     handleClick(row) {
       this.tableData = {
         ...row,
-        ...{ banner: this.fff(row) }
+        ...{ banner: this.conversion(row) },
+        ...{ license: [{ url: row.license }] }
       };
       this.dialogFormVisible = true;
     },
-    fff(row) {
+    updateFrontById(row) {
+      return {
+        ...row,
+        ...{
+          license: [...row.license[0].url],
+          banner: this.conversionUpdate(row)
+        }
+      };
+    },
+    conversionUpdate(row) {
+      const temp = [];
+      for (const item of row.banner) {
+        temp.push(item.url);
+      }
+      return temp;
+    },
+    conversion(row) {
       const temp = [];
       for (const item of row.banner) {
         temp.push({ url: item });
       }
       return temp;
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
+    handleRemove(file, fileList) {},
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
     exceed() {
-      this.$message.error("上传图片不能超过1张!");
+      this.$message.error("上传图片超出!");
     }
   },
 
   data() {
     return {
+      options: [
+        {
+          value: "name",
+          label: "名称"
+        },
+        {
+          value: "person",
+          label: "法人"
+        }
+      ],
+      value: "name",
+      inputText: "",
       dialogImageUrl: "",
       dialogVisible: false,
       tableData: {
@@ -252,5 +328,10 @@ export default {
 .sa {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  padding-right: "120px";
+  text-align: center;
+  justify-content: right;
+  margin-bottom: 20px;
 }
 </style>
