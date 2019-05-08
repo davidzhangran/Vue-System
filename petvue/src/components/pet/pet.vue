@@ -308,8 +308,11 @@ export default {
         type: this.value,
         text: this.label
       });
+<<<<<<< HEAD
       this.value="";
       this.label="";
+=======
+>>>>>>> 0e0c70a96ed1b519bc17f346229aa82c4bcae2d4
     },
     exceed() {
       this.$message.error("上传图片不能超过1张!");
