@@ -106,14 +106,15 @@ export default {
     if (to.name == "userSystem") {
       const { phone, password } = this.ruleForm;
       const result = await userService.loging({ phone, password });
-      console.log(result[0].role);
-      
       if (result.length > 0) {
-        result[0].role == "1"?  next("/userStore"):next("/userSystem")
-        document.cookie = `id=${result[0]._id}`
+        result[0].role == "1"? next("/userStore"):next()
+        document.cookie = `id=${result[0]._id}`;
       } else {
         next("/");
-         this.$message({ message: "账号或密码错误，请重新登录", type: "warning" });
+        this.$message({
+          message: "账号或密码错误，请重新登录",
+          type: "warning"
+        });
       }
     } else {
       next();
