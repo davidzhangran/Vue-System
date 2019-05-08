@@ -5,11 +5,11 @@ import Register from "./views/register"
 import UserSystem from "./views/userSystem";
 import UserStore from "./views/userStore";
 import Pet from "./components/pet/pet";
+import CommodityTab from "./components/commodity/commodityTab"
 import SystemFront from "./components/systemfront/systemfront"
 import AddStorefront from "./components/storefront/addStorefront";
 import Storefront from "./components/storefront/storefrontTab";
 import MoreSf from "./components/storefront/moreSf";
-import CommodityTab from "./components/commodity/commodityTab"
 import UserManagement from "./components/userManagement/userManagement"
 import Commodity from "./components/commodity/commodity"
 import ServePet from "./components/servePet/servePet"
