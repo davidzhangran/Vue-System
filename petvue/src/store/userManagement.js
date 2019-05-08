@@ -24,6 +24,7 @@ export default {
         }
     },
     actions: {
+        //通过当前页和每页条数获取用户信息
         async getUserByPageAsync(context) {
             const { eachPage, currentPage } = context.state//解构得到state里面的两个值
             const data = await userService.getUserByPgae({ eachPage, currentPage })
@@ -36,13 +37,25 @@ export default {
                     return item.state = "不可用"
                 }
             })
+            data.users.map(item => {
+                if (item.role == "1") {
+                    return item.role = "门户管理员"
+                }
+                return item.role = "平台管理员"
+            })
             context.commit("getUsersByPgae", data)
         },
+        //新增用户
         async addUserAsync({ dispatch }, { username, password, phone, email, name, role }) {
             const data = { username, password, phone, email, name, role: role == "平台管理员" ? "0" : "1" }
             const result = await userService.addUser(data)
-
             console.log(result);
+        },
+        //修改用户
+        async upDataUserAsync({ dispatch }, {_id, state}) {
+            const result = await userService.upDataUser({_id, state})
+            console.log(result);
+            dispatch("getUserByPageAsync")
         }
     }
 }
