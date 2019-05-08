@@ -231,8 +231,7 @@ export default {
       this.$refs[event].resetFields();
     },
     async toLogin({ username, password, phone, email, name }) {
-      const data = { username, password, phone, email, name };
-      console.log(data);
+      const data = { username, password, phone, email, name, role:"1"};
       const result = await userService.addUser(data);
       if (result) {
         this.$alert("", "注册成功", {
@@ -245,8 +244,6 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    // console.log(to.path);
-    console.log(to);
     if (to.name == "empty" || to.name == "login") {
       next();
     } else {
