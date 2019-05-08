@@ -49,7 +49,7 @@
       </el-form>
       <div class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary"  @click="add">确 定</el-button>
       </div>
     </el-dialog>
     <el-table :data="tableData" border style="width: 100%">
@@ -72,16 +72,32 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from "vuex";
+const {mapState,mapMutations,mapActions}=createNamespacedHelpers("pet");
 export default {
   name: "pet",
   methods:{
+    ...mapActions(["addPetAsync"]),
       handleRemove(file, fileList) {
         console.log(file, fileList);
       },
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
-      }
+      },
+      add() {
+      this.dialogFormVisible = false; //关闭窗口
+      const { name, category, color, price, age, gender,describe } = this;
+      this.addPetAsync({
+        name,
+        category,
+        color,
+        price,
+        age,
+        gender,
+        describe
+      });
+    }
   },
   data() {
     return {
