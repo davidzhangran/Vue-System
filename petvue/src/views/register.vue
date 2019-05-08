@@ -62,26 +62,27 @@
         ></el-input>
       </el-form-item>
 
-      <el-form-item label="密码" prop="password">
+      <el-form-item label="密码" prop="password" >
         <el-input
           type="password"
           v-model="ruleForm.password"
           autocomplete="off"
           prefix-icon="el-icon-key"
           maxlength="12"
+          show-password
         ></el-input>
       </el-form-item>
 
-      <el-form-item label="确认密码" prop="checkPassword">
+      <el-form-item label="确认密码" prop="checkPassword" >
         <el-input
           type="password"
           v-model="ruleForm.checkPassword"
           autocomplete="off"
           prefix-icon="el-icon-key"
-          maxlength="12"
+          maxlength="12" 
+          show-password
         ></el-input>
       </el-form-item>
-
       <el-form-item>
         <el-button type="primary" @click="toLogin(ruleForm)">注册</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>

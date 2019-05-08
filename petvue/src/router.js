@@ -5,6 +5,10 @@ import Register from "./views/register"
 import UserSystem from "./views/userSystem";
 import UserStore from "./views/userStore";
 import Pet from "./components/pet/pet";
+<<<<<<< HEAD
+=======
+import Storefront from "./components/storefront/storefront"
+>>>>>>> 2711f302995fb71228bbb24e27bcafc62827cb16
 import CommodityTab from "./components/commodity/commodityTab"
 import SystemFront from "./components/systemfront/systemfront"
 import AddStorefront from "./components/storefront/addStorefront";
@@ -14,9 +18,13 @@ import UserManagement from "./components/userManagement/userManagement"
 import Commodity from "./components/commodity/commodity"
 import ServePet from "./components/servePet/servePet"
 import Orders from "./components/orders/orders"
+<<<<<<< HEAD
 
 
 
+=======
+import PetMaster from "./components/petMaster/petMaster"
+>>>>>>> 2711f302995fb71228bbb24e27bcafc62827cb16
 Vue.use(Router)
 
 const router = new Router({
@@ -46,6 +54,10 @@ const router = new Router({
       }, {
         path: 'systemFront',
         component: SystemFront
+      },
+      {//宠主管理
+        path: 'petMaster',
+        component: PetMaster
       }]
     },
     {
