@@ -5,14 +5,13 @@ import Register from "./views/register"
 import UserSystem from "./views/userSystem";
 import UserStore from "./views/userStore";
 import Pet from "./components/pet/pet";
-import Storefront from "./components/storefront/storefront"
-<<<<<<< HEAD
-
-=======
 import SystemFront from "./components/systemfront/systemfront"
 import UserManagement from "./components/userManagement/userManagement"
 import Commodity from "./components/commodity/commodity"
->>>>>>> 7bf5064800f99284ece84ae4763b6de0d5a33f0c
+import AddStorefront from "./components/storefront/addStorefront";
+import Storefront from "./components/storefront/storefrontTab";
+import MoreSf from "./components/storefront/moreSf";
+
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -56,16 +55,21 @@ export default new Router({
         path: 'storefront',
         name: 'storefront',
         component: Storefront
-<<<<<<< HEAD
-      }]
-=======
       },
       {
         path: 'commodity',
         name: 'commodity',
         component: Commodity
+      },
+      {
+        path: 'addStorefront',
+        name: 'addStorefront',
+        component: AddStorefront
+      }, {
+        path: 'moreSf',
+        name: 'moreSf',
+        component: MoreSf
       },]
->>>>>>> 7bf5064800f99284ece84ae4763b6de0d5a33f0c
     }
   ]
 })
