@@ -8,13 +8,11 @@ export default {
         eachPage: 10,
         maxPage: 0,
         total: 0,
-        pets: [],
-        param:{}
+        pets: []
       },
       mutations: {//同步方法
         getPetsByPage(state, payload) {
           Object.assign(state, payload);//合并操作，相当于上一种
-          console.log(state);
       },
         setEachPage: (state, eachPage) => state.eachPage = eachPage,
         setCurrentPage: (state, currentPage) => state.currentPage = currentPage,
