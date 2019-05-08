@@ -49,10 +49,11 @@
           class="footer"
           action="/pet/addPImage"
           list-type="picture-card"
+          ref="images"
+          :auto-upload="false"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
           :on-exceed="exceed"
-          :on-success="bannerSuc"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -102,11 +103,12 @@
           class="footer"
           action="/pet/addPImage"
           list-type="picture-card"
-          auto-upload="false"
+          ref="images"
+          :auto-upload="false"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
           :on-exceed="exceed"
-          :on-success="bannerSuc"
+          :file-list="pets.images"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -234,6 +236,9 @@ export default {
     //新增
     add() {
       this.dialogFormVisible = false; //关闭窗口
+      this.$refs.images.submit();
+       this.$refs.images.clearFiles();
+        // this.images.push(response.data.url);
       const {
         name,
         category,
@@ -264,6 +269,8 @@ export default {
       this.describe="";
     },
     updata(){
+       this.$refs.images.submit();
+       this.$refs.images.clearFiles();
        this.dialogTableVisible = false; //关闭窗口
        const {
         name,
@@ -297,9 +304,9 @@ export default {
       this.$message.error("上传图片不能超过1张!");
     },
     // 上传图片
-    bannerSuc(response) {
-      this.images.push(response.data.url);
-    }
+    // bannerSuc(response) {
+    //   this.images.push(response.data.url);
+    // }
   },
   watch: {
     eachPage() {
