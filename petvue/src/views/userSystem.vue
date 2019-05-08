@@ -9,7 +9,7 @@
       active-text-color="#ffd04b"
     >
       <el-menu-item index="/userSystem/userManagement">用户管理</el-menu-item>
-      <el-menu-item index="3">宠主管理</el-menu-item>
+      <el-menu-item index="/userSystem/petMaster">宠主管理</el-menu-item>
       <el-menu-item index="/userSystem/systemFront">门店管理</el-menu-item>
       <el-menu-item index="3">评论管理</el-menu-item>
     </el-menu>
@@ -36,7 +36,7 @@ export default {
   },
   mounted() {
    const data =  document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
-   console.log(data);
+  //  console.log(data);
   }
   
 };
