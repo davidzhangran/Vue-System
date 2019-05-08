@@ -120,11 +120,7 @@
     <el-table :data="pets" border style="width: 100%">
       <el-table-column fixed prop="images" label="照片" width="150" align="center">
         <template slot-scope="scope">
-<<<<<<< HEAD
-          <img :src="scope.row.images" style="width:80px;height:80px">
-=======
           <img :src="scope.row.images" style="width:50px;height:50px"/>
->>>>>>> 30569b8595aaacd72eeb5c41694738259b95693e
         </template>
       </el-table-column>
       <el-table-column fixed prop="name" label="名称" width="150" align="center"></el-table-column>
@@ -309,17 +305,11 @@ export default {
     },
     search() {
       this.getPetsByPageAsync({
-<<<<<<< HEAD
-        type:this.value,
-        text:this.label
-      })
-      this.value="";
-      this.label="";
-=======
         type: this.value,
         text: this.label
       });
->>>>>>> 7bf4097fb7f88b97882d969993067baa293ea30d
+      this.value="";
+      this.label="";
     },
     exceed() {
       this.$message.error("上传图片不能超过1张!");

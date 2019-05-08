@@ -10,6 +10,7 @@ import Storefront from "./components/storefront/storefront"
 import SystemFront from "./components/systemfront/systemfront"
 import UserManagement from "./components/userManagement/userManagement"
 import Commodity from "./components/commodity/commodity"
+import ServePet from "./components/servePet/servePet"
 Vue.use(Router)
 
 const router = new Router({
@@ -59,6 +60,11 @@ const router = new Router({
         path: 'commodity',
         name: 'commodity',
         component: Commodity
+      },
+      {
+        path: 'servePet',
+        name: 'servePet',
+        component: ServePet
       },]
     }
   ]
