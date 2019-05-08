@@ -51,7 +51,6 @@
         </el-form-item>
         <h1>上传图片</h1>
         <div class="imageDiv">
-          <!-- /storefront/addLicense -->
           <el-upload
             action="/goods/addCommodityImg"
             list-type="picture-card"
@@ -72,8 +71,42 @@
         <el-button type="primary" @click="addCommodity ">确 定</el-button>
       </span>
     </el-dialog>
-
-    <CommodityCommodityTab />
+    <!-- 列表 -->
+    <div>
+      <el-table :data="commoditys" border style="width: 100%">
+        <el-table-column prop="name" label="商品名称"></el-table-column>
+        <el-table-column prop="images[0]" label="商品图片"></el-table-column>
+        <el-table-column prop="category" label="商品类别"></el-table-column>
+        <el-table-column prop="texture" label="商品材质"></el-table-column>
+        <el-table-column prop="specification" label="适用宠物"></el-table-column>
+        <el-table-column prop="exclusive" label="专属宠物"></el-table-column>
+        <el-table-column prop="pack" label="包装规格"></el-table-column>
+        <el-table-column prop="taste" label="口味"></el-table-column>
+        <el-table-column prop="special" label="特殊功用"></el-table-column>
+        <el-table-column prop="origin" label="产地"></el-table-column>
+        <el-table-column prop="production" label="生产日期"></el-table-column>
+        <el-table-column prop="expiration" label="保质期"></el-table-column>
+        <el-table-column prop="supplier" label="供应商"></el-table-column>
+        <el-table-column prop="feature" label="特色说明"></el-table-column>
+        <el-table-column prop="price" label="价格"></el-table-column>
+        <el-table-column label="服务" width="100"></el-table-column>
+        <el-table-column fixed="right" label="操作" width="250">
+          <template slot-scope="scope">
+            <el-button type="primary" @click="hanleClick(scope.row)" size="small">修改</el-button>
+            <el-button type="primary" @click="handleDelete(scope.row)" size="small">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        @size-change="setEachPage"
+        @current-change="setCurrentPage"
+        :current-page="currentPage"
+        :page-sizes="[3, 5, 7, 10]"
+        :page-size="eachPage"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="count"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
@@ -87,10 +120,10 @@ export default {
   data() {
     return {
       //数据
-      commoditys: [],
+      // commoditys: [],
       dialogVisible: false,
       dialogImage: false,
-      dialogVisibleImage:false,
+      dialogVisibleImage: false,
       url: "",
       commodity: {
         name: "", // 名称
@@ -112,9 +145,78 @@ export default {
       src: ""
     };
   },
+  watch: {
+    eachPage() {
+      //监听eachPage，发生变化就会触发
+      this.getCommoditysAsync();
+    },
+    currentPage() {
+      //监听eachPage，发生变化就会触发
+      this.getCommoditysAsync();
+    }
+  },
+  computed: {
+    ...mapState(["count", "totalPage", "currentPage", "commoditys"]),
+
+    eachPage: {
+      get: mapState(["eachPage"]).eachPage,
+      set: mapMutations(["setEachPage"]).setEachPage
+    }
+  },
+  mounted() {
+    this.getCommoditysAsync();
+  },
   methods: {
-    ...mapActions(["addCommodityAsync"]),
-    ...mapMutations(["licenseCom", "bannerCom"]),
+    ...mapActions(["addCommodityAsync", "getCommoditysAsync"]),
+    ...mapMutations([
+      "licenseCom",
+      "bannerCom",
+      "setCurrentPage",
+      "setEachPage"
+    ]),
+    //修改
+    hanleClick(row) {
+      this.dialogVisible = true;
+      const {
+        name,
+        category,
+        texture,
+        specification,
+        exclusive,
+        pack,
+        taste,
+        special,
+        origin,
+        production,
+        expiration,
+        supplier,
+        feature,
+        price,
+        images
+      } = row;
+      this.commodity = {
+        name,
+        category,
+        texture,
+        specification,
+        exclusive,
+        pack,
+        taste,
+        special,
+        origin,
+        production,
+        expiration,
+        supplier,
+        feature,
+        price,
+       
+      };
+      console.log(name);
+    },
+    //删除
+    handleDelete(row) {
+      console.log(row._id);
+    },
     handleClose(done) {
       this.$confirm("确认关闭？")
         .then(_ => {
@@ -123,7 +225,6 @@ export default {
         .catch(_ => {});
     },
     handlePictureCardPreview(file) {
-      
       this.dialogImageUrl = file.url;
       this.dialogVisibleImage = true;
     },
@@ -132,7 +233,7 @@ export default {
     },
     // 上传图片
     licenseSuc(response) {
-       this.commodity.images.push(response.data.url);
+      this.commodity.images.push(response.data.url);
     },
     addCommodity() {
       //所有 商品数据
@@ -170,7 +271,8 @@ export default {
         expiration, //保质期
         supplier, //供应商
         feature, //特色说明
-        price ,images
+        price,
+        images
       });
       this.dialogVisible = false;
     }
@@ -224,7 +326,7 @@ function getValue(params) {
   height: 178px;
   margin-left: 20px;
 }
-.imageDiv{
+.imageDiv {
   margin: auto;
 }
 </style>
