@@ -8,13 +8,11 @@ export default {
         eachPage: 10,
         maxPage: 0,
         total: 0,
-        pets: [],
-        param:{}
+        pets: []
       },
       mutations: {//同步方法
         getPetsByPage(state, payload) {
           Object.assign(state, payload);//合并操作，相当于上一种
-          console.log(state);
       },
         setEachPage: (state, eachPage) => state.eachPage = eachPage,
         setCurrentPage: (state, currentPage) => state.currentPage = currentPage,
@@ -27,12 +25,14 @@ export default {
         //分页
         async getPetsByPageAsync(context,{type,text}={}) {
           const { currentPage, eachPage } = context.state;
-          // if(!type&text){
-
-          // }
-          const data = await petService.getPetsByPageSer({ currentPage,eachPage,type,text});//拿到数据，通过mutations触发数据更新
-          console.log(data)
-          context.commit("getPetsByPage", data);//通过commit触发getStudentsByPage
+          if(type!=undefined){
+            const data = await petService.getPetsByPageSer({ currentPage,eachPage,type,text});//拿到数据，通过mutations触发数据更新
+            context.commit("getPetsByPage", data);//通过commit触发getStudentsByPage
+          }else{
+            const data = await petService.getPetsByPageSer({ currentPage,eachPage});//拿到数据，通过mutations触发数据更新
+            context.commit("getPetsByPage", data);//通过commit触发getStudentsByPage
+          }
+          
         },
         //删除宠物
         async removePetAsync(context,payload){

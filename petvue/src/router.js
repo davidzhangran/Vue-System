@@ -11,11 +11,12 @@ import SystemFront from "./components/systemfront/systemfront"
 import UserManagement from "./components/userManagement/userManagement"
 import Commodity from "./components/commodity/commodity"
 Vue.use(Router)
-export default new Router({
+
+const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'login',
+      name:"empty",
       component: Login
     },
     {
@@ -62,3 +63,5 @@ export default new Router({
     }
   ]
 })
+export default router
+

@@ -44,10 +44,11 @@
           class="footer"
           action="/pet/addPImage"
           list-type="picture-card"
+          ref="images"
+          :auto-upload="false"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
           :on-exceed="exceed"
-          :on-success="bannerSuc"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -97,10 +98,12 @@
           class="footer"
           action="/pet/addPImage"
           list-type="picture-card"
+          ref="images"
+          :auto-upload="false"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
           :on-exceed="exceed"
-          :on-success="bannerSuc"
+          :file-list="pets.images"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -115,19 +118,23 @@
       </div>
     </el-dialog>
     <el-table :data="pets" border style="width: 100%">
-      <el-table-column fixed prop="images" label="照片" width="150">
+      <el-table-column fixed prop="images" label="照片" width="150" align="center">
         <template slot-scope="scope">
+<<<<<<< HEAD
           <img :src="scope.row.images" style="width:80px;height:80px">
+=======
+          <img :src="scope.row.images" style="width:50px;height:50px"/>
+>>>>>>> 30569b8595aaacd72eeb5c41694738259b95693e
         </template>
       </el-table-column>
-      <el-table-column fixed prop="name" label="名称" width="150"></el-table-column>
-      <el-table-column prop="category" label="宠物品种" width="120"></el-table-column>
-      <el-table-column prop="color" label="毛色" width="120"></el-table-column>
-      <el-table-column prop="price" label="价格" width="120"></el-table-column>
-      <el-table-column prop="age" label="年龄" width="120"></el-table-column>
-      <el-table-column prop="gender" label="性别" width="120"></el-table-column>
-      <el-table-column prop="describe" label="描述" width="120"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="250">
+      <el-table-column fixed prop="name" label="名称" width="150" align="center"></el-table-column>
+      <el-table-column prop="category" label="宠物品种" width="120" align="center"></el-table-column>
+      <el-table-column prop="color" label="毛色" width="120" align="center"></el-table-column>
+      <el-table-column prop="price" label="价格" width="120" align="center"></el-table-column>
+      <el-table-column prop="age" label="年龄" width="120" align="center"></el-table-column>
+      <el-table-column prop="gender" label="性别" width="120" align="center"></el-table-column>
+      <el-table-column prop="describe" label="描述" width="120" align="center"></el-table-column>
+      <el-table-column fixed="right" label="操作" align="center" >
         <template slot-scope="scope">
           <el-button @click="hanleClick(scope.row)" type="text" size="small">修改</el-button>
           <el-button type="text" @click="handleDelete(scope.row)" size="small">删除</el-button>
@@ -242,6 +249,9 @@ export default {
     //新增
     add() {
       this.dialogFormVisible = false; //关闭窗口
+      this.$refs.images.submit();
+       this.$refs.images.clearFiles();
+        // this.images.push(response.data.url);
       const {
         name,
         category,
@@ -271,9 +281,11 @@ export default {
       this.images = "";
       this.describe = "";
     },
-    updata() {
-      this.dialogTableVisible = false; //关闭窗口
-      const {
+    updata(){
+       this.$refs.images.submit();
+       this.$refs.images.clearFiles();
+       this.dialogTableVisible = false; //关闭窗口
+       const {
         name,
         category,
         color,
@@ -305,9 +317,9 @@ export default {
       this.$message.error("上传图片不能超过1张!");
     },
     // 上传图片
-    bannerSuc(response) {
-      this.images.push(response.data.url);
-    }
+    // bannerSuc(response) {
+    //   this.images.push(response.data.url);
+    // }
   },
   watch: {
     eachPage() {

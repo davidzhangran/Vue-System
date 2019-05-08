@@ -118,7 +118,6 @@ export default {
       this.license.push(response.data.url);
     },
     bannerSuc(response) {
-      
       this.banner.push(response.data.url);
     },
     add() {

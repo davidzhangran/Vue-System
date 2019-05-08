@@ -36,12 +36,12 @@ export default {
                     return item.state = "不可用"
                 }
             })
-
             context.commit("getUsersByPgae", data)
         },
         async addUserAsync({ dispatch }, { username, password, phone, email, name, role }) {
             const data = { username, password, phone, email, name, role: role == "平台管理员" ? "0" : "1" }
             const result = await userService.addUser(data)
+
             console.log(result);
         }
     }
