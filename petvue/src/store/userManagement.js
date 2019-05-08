@@ -54,7 +54,11 @@ export default {
         //修改用户
         async upDataUserAsync({ dispatch }, {_id, state}) {
             const result = await userService.upDataUser({_id, state})
-            console.log(result);
+            dispatch("getUserByPageAsync")
+        },
+        //删除用户
+        async deleteUserAsync({dispatch}, _id) {
+            const result = await userService.deleteUser({_id})
             dispatch("getUserByPageAsync")
         }
     }

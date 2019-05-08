@@ -15,7 +15,7 @@
             <el-table-column label="操作" width="200">
               <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="primary" size="mini">修改</el-button>
-                <el-button type="danger" size="mini">删除</el-button>
+                <el-button type="danger" @click="deleteUserAsync(scope.row._id)" size="mini">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -34,7 +34,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="dialogFormVisible = false" >取 消</el-button>
-              <el-button type="primary" @click="upDataUserAsync(updata)" >确 定</el-button>
+              <el-button type="primary" @click="comfirm(updata)" >确 定</el-button>
             </div>
           </el-dialog>
 
@@ -112,7 +112,11 @@ export default {
       this.dialogFormVisible = true;
       console.log(row);
     },
-    ...mapActions(["addUserAsync", "getUserByPageAsync", "upDataUserAsync"]),
+    comfirm(form) {
+      this.upDataUserAsync(form)
+      this.dialogFormVisible = false
+    },
+    ...mapActions(["addUserAsync", "getUserByPageAsync", "upDataUserAsync", "deleteUserAsync"]),
     ...mapMutations(["setEachPage", "setCurrentPage"])
   },
   watch: {
