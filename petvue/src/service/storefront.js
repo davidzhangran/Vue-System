@@ -1,5 +1,6 @@
 // 申请门店
 const addStorefront = async (parm) => {
+    console.log(parm);
     return await fetch(`/storefront/addStorefront`,
         {
             method: 'POST',
@@ -10,23 +11,31 @@ const addStorefront = async (parm) => {
         }).then(response => response.json())
 }
 
-<<<<<<< HEAD
-// 获取门店
-const getStorefrontByPage = async ( currentPage = 1, eachPage = 10 ) => {
-    return await fetch(`/storefront/getStorefrontByPage?currentPage=${currentPage}&eachPage=${eachPage}`).then(response => response.json())
-}
-
-export default {
-    addStorefront, getStorefrontByPage
-=======
-const getStorefrontByPage = async ({ currentPage = 1, eachPage = 5 } = {}) => {
+const getStorefrontByPage = async ({ currentPage = 1, eachPage = 5, value = "name", inputText = "" } = {}) => {
+    if (inputText) {
+        let data = await fetch(`/storefront/getStorefrontByPage?currentPage=${currentPage}&eachPage=${eachPage}&value=${value}&inputText=${inputText}`)
+            .then(response => response.json())
+        return data
+    }
     let data = await fetch(`/storefront/getStorefrontByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
         .then(response => response.json())
-    return data
+    return data;
+}
+
+// 修改门店
+const updateStorefront = async (parm) => {
+    return await fetch(`/storefront/updateStorefront`,
+        {
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(parm)//参数是json格式
+        }).then(response => response.json())
 }
 
 export default {
     addStorefront,
-    getStorefrontByPage
->>>>>>> 72d7f33050b3cae9c153858324728c571fcb920d
+    getStorefrontByPage,
+    updateStorefront
 }
