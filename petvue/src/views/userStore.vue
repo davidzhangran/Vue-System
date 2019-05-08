@@ -8,15 +8,19 @@
       active-text-color="#ffd04b"
       router
     >
-      <el-submenu index="2">
+      <el-submenu index="1">
         <template slot="title">门店管理</template>
         <el-menu-item index="/userStore/storefront">门店列表</el-menu-item>
         <el-menu-item index="/userStore/addStorefront">申请门店</el-menu-item>
       </el-submenu>
-      <el-menu-item index="/userStore/commodity">商品管理</el-menu-item>
+      <el-submenu index="2">
+        <template slot="title">商品管理</template>
+        <el-menu-item index="/userStore/commodity">新增商品</el-menu-item>
+        <el-menu-item index="/userStore/commodityTab">商品列表</el-menu-item>
+      </el-submenu>
       <el-menu-item index="/userStore/pet">宠物管理</el-menu-item>
-      <el-menu-item index="4">服务管理</el-menu-item>
-      <el-menu-item index="3">订单管理</el-menu-item>
+      <el-menu-item index="/userStore/servePet">服务管理</el-menu-item>
+      <el-menu-item index="/userStore/orders">订单管理</el-menu-item>
     </el-menu>
     <router-view></router-view>
   </div>

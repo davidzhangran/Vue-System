@@ -33,7 +33,12 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     }
+  },
+  mounted() {
+   const data =  document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
+   console.log(data);
   }
+  
 };
 </script>
 

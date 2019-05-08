@@ -6,18 +6,24 @@ import UserSystem from "./views/userSystem";
 import UserStore from "./views/userStore";
 import Pet from "./components/pet/pet";
 import SystemFront from "./components/systemfront/systemfront"
-import UserManagement from "./components/userManagement/userManagement"
-import Commodity from "./components/commodity/commodity"
 import AddStorefront from "./components/storefront/addStorefront";
 import Storefront from "./components/storefront/storefrontTab";
 import MoreSf from "./components/storefront/moreSf";
+import CommodityTab from "./components/commodity/commodityTab"
+import UserManagement from "./components/userManagement/userManagement"
+import Commodity from "./components/commodity/commodity"
+import ServePet from "./components/servePet/servePet"
+import Orders from "./components/orders/orders"
+
+
 
 Vue.use(Router)
-export default new Router({
+
+const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'login',
+      name: "empty",
       component: Login
     },
     {
@@ -65,11 +71,28 @@ export default new Router({
         path: 'addStorefront',
         name: 'addStorefront',
         component: AddStorefront
-      }, {
-        path: 'moreSf',
-        name: 'moreSf',
-        component: MoreSf
+        }, {
+          path: 'moreSf',
+          name: 'moreSf',
+          component: MoreSf
+        },
+        {
+        path: 'commodityTab',
+        name: 'commodityTab',
+        component: CommodityTab
+      },
+      {
+        path: 'orders',
+        name: 'orders',
+        component: Orders
+      },
+      {
+        path: 'servePet',
+        name: 'servePet',
+        component: ServePet
       },]
     }
   ]
 })
+export default router
+
