@@ -151,7 +151,6 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-import { privateDecrypt, constants } from "crypto";
 const { mapState, mapMutations, mapActions } = createNamespacedHelpers("pet");
 export default {
   name: "pet",
@@ -258,6 +257,7 @@ export default {
         images,
         describe
       } = this;
+  
       this.addPetAsync({
         name,
         category,
@@ -266,7 +266,8 @@ export default {
         age,
         gender,
         images,
-        describe
+        describe,
+        userId:document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
       });
       this.name = "";
       this.category = "";
@@ -308,6 +309,8 @@ export default {
         type: this.value,
         text: this.label
       });
+      this.label="";
+      this.value="";
     },
     exceed() {
       this.$message.error("上传图片不能超过1张!");
