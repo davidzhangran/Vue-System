@@ -6,6 +6,7 @@ import UserSystem from "./views/userSystem";
 import UserStore from "./views/userStore";
 import Pet from "./components/pet/pet";
 import Storefront from "./components/storefront/storefront"
+import PetMaster from "./components/petMaster/petMaster" //引入宠主管理
 
 import SystemFront from "./components/systemfront/systemfront"
 import UserManagement from "./components/userManagement/userManagement"
@@ -16,7 +17,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name:"empty",
+      name: "empty",
       component: Login
     },
     {
@@ -39,6 +40,10 @@ const router = new Router({
       }, {
         path: 'systemFront',
         component: SystemFront
+      },
+      {//宠主管理
+        path: 'petMaster',
+        component: PetMaster
       }]
     },
     {
