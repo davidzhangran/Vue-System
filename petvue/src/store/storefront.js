@@ -40,12 +40,24 @@ export default {
 
       console.log(data);
     },
-    async getStorefrontByPageAsync(context) {//获取门店
+    async getStorefrontByPageAsync(context, plo) {//获取门店
       const { currentPage, eachPage } = context.state;
-      const data = await storefrontService.getStorefrontByPage({ currentPage, eachPage });//拿到数据，通过mutations触发数据更新
-      console.log(data);
+      let data = "";
+      if (plo) {
+        data = await storefrontService.getStorefrontByPage({ currentPage, eachPage, value: plo.value, inputText: plo.inputText });//拿到数据，通过mutations触发数据更新
+      } else {
+        data = await storefrontService.getStorefrontByPage({ currentPage, eachPage });//拿到数据，通过mutations触发数据更新
+      }
 
+      console.log(data);
       context.commit("getStorefrontByPage", data);//通过commit触发getStorefrontByPage
+    },
+    async updateStorefrontAsync(context, plo) {//修改门店
+      const data = await storefrontService.updateStorefront(plo);//拿到数据，通过mutations触发数据更新
+      console.log(data);
+      if (data) {
+        context.dispatch("getStorefrontByPageAsync");
+      }
     },
   },
 }

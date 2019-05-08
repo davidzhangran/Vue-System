@@ -8,12 +8,14 @@ Vue.use(Vuex);
 import storefront from "./store/storefront"
 import pet from "./store/pet"
 import servePet from "./store/servePet"
+import orders from "./store/orders"
 export default new Vuex.Store({//引入单个模块
   modules: {
     storefront,
     pet,
     users,
     commodity,
-    servePet
+    servePet,
+    orders
   }
 })
