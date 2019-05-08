@@ -14,15 +14,31 @@
             <el-table-column prop="state" label="状态" width="120"></el-table-column>
             <el-table-column label="操作" width="200">
               <template slot-scope="scope">
-                <el-button
-                  @click="handleClick(scope.$index,scope.row)"
-                  type="primary"
-                  size="mini"
-                >修改</el-button>
+                <el-button @click="handleClick(scope.row)" type="primary" size="mini">修改</el-button>
                 <el-button type="danger" size="mini">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
+
+          <el-dialog title="修改用户信息" :visible.sync="dialogFormVisible">
+            <el-form :model="updata">
+              <el-form-item label="手机号" :label-width="formLabelWidth">
+                <el-input v-model="updata.phone" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="审核状态" :label-width="formLabelWidth">
+                <el-select v-model="updata.state" placeholder="请审批">
+                  <el-option label="可用" value="2"></el-option>
+                  <el-option label="不可用" value="0"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false" >取 消</el-button>
+              <el-button type="primary" @click="upDataUserAsync(updata)" >确 定</el-button>
+            </div>
+          </el-dialog>
+
+
           <div class="block">
             <el-pagination
               @size-change="setEachPage"
@@ -78,7 +94,7 @@ const { mapMutations, mapState, mapActions } = createNamespacedHelpers("users");
 
 export default {
   computed: {
-    ...mapState(["users", "totalPage", "count"]),
+    ...mapState(["users", "totalPage", "count",]),
     eachPage: {
       get: mapState(["eachPage"]).eachPage, //获取每页显示页数
       set: mapMutations(["setEachPage"]).setEachPage //通过input框去修改每页显示页数
@@ -90,9 +106,13 @@ export default {
   },
   methods: {
     handleClick(row) {
+      this.updata._id = row._id
+      this.updata.phone = row.phone,
+      this.updata.state = row.state
+      this.dialogFormVisible = true;
       console.log(row);
     },
-    ...mapActions(["addUserAsync", "getUserByPageAsync"]),
+    ...mapActions(["addUserAsync", "getUserByPageAsync", "upDataUserAsync"]),
     ...mapMutations(["setEachPage", "setCurrentPage"])
   },
   watch: {
@@ -110,6 +130,8 @@ export default {
   },
   data() {
     return {
+      formLabelWidth: '120px',
+      dialogFormVisible: false,
       tabPosition: "left",
       form: {
         username: "",
@@ -118,6 +140,11 @@ export default {
         email: "",
         name: "",
         role: ""
+      },
+      updata:{
+        phone:"",
+        state:"",
+        _id:""        
       }
     };
   }
