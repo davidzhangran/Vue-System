@@ -230,7 +230,7 @@ export default {
     resetForm(event) {
       this.$refs[event].resetFields();
     },
-    async toLogin({ username, password, phone, email, name }) {
+    async toLogin({ username, password, phone, email, name, role = "1" }) {
       const data = { username, password, phone, email, name };
       console.log(data);
       const result = await userService.addUser(data);
