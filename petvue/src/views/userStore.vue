@@ -11,7 +11,7 @@
       <el-menu-item index="/userStore/storefront">门店管理</el-menu-item>
       <el-menu-item index="/userStore/commodity">商品管理</el-menu-item>
       <el-menu-item index="/userStore/pet">宠物管理</el-menu-item>
-      <el-menu-item index="4">服务管理</el-menu-item>
+      <el-menu-item index="/userStore/servePet">服务管理</el-menu-item>
       <el-menu-item index="3">订单管理</el-menu-item>
     </el-menu>
     <router-view></router-view>

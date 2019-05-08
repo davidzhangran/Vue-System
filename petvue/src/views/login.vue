@@ -10,15 +10,34 @@
         <el-button @click="login" class="login" type="primary">点击登陆</el-button>
         <el-button @click="register" class="reg" type="primary">点击注册</el-button>
       </div>
-    </div> -->
+    </div>-->
 
-    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="auto" class="demo-ruleForm">
+    <el-form
+      :model="ruleForm"
+      status-icon
+      :rules="rules"
+      ref="ruleForm"
+      label-width="auto"
+      class="demo-ruleForm"
+    >
       <el-form-item label="手机号" prop="phone">
-        <el-input maxlength="11" class="phone" placeholder="请输入11位手机号" prefix-icon="el-icon-mobile-phone" v-model.number="ruleForm.phone" autocomplete="off"></el-input>
+        <el-input
+          maxlength="11"
+          class="phone"
+          placeholder="请输入11位手机号"
+          prefix-icon="el-icon-mobile-phone"
+          v-model="ruleForm.phone"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
 
-      <el-form-item label="密码" prop="pass">
-        <el-input type="password" v-model="ruleForm.pass" autocomplete="off" prefix-icon="el-icon-key"></el-input>
+      <el-form-item label="密码" prop="password">
+        <el-input
+          type="password"
+          v-model="ruleForm.password"
+          autocomplete="off"
+          prefix-icon="el-icon-key"
+        ></el-input>
       </el-form-item>
 
       <el-form-item>
@@ -27,9 +46,13 @@
       </el-form-item>
     </el-form>
   </el-card>
-
 </template>
+
+
+
+
 <script>
+import userService from "../service/userManagement.js";
 export default {
   name: "login",
   data() {
@@ -43,8 +66,6 @@ export default {
     let phoneValidatePass = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("手机号不能为空"));
-      } else if (!Number.isInteger(value)) {
-        callback(new Error("不能输入除数字外其他字符！"));
       } else {
         //手机号正则验证
         if (!/^1[34578]\d{9}$/.test(value)) {
@@ -65,15 +86,11 @@ export default {
         callback();
       }
     };
-    
     return {
-      ruleForm: {
-        pass: "",
-        phone: this.$route.params.phone
-      },
+      ruleForm: { phone: this.$route.params.phone, password: "" },
       rules: {
         phone: [{ validator: phoneValidatePass, trigger: "blur" }],
-        pass: [{ validator: validatePass, trigger: "blur" }]
+        password: [{ validator: validatePass, trigger: "blur" }]
       }
     };
   },
@@ -81,9 +98,26 @@ export default {
     login: function(e) {
       this.$router.push("/userSystem");
     },
-    
     register: function(e) {
       this.$router.push("/register");
+    }
+  },
+  async beforeRouteLeave(to, from, next) {
+    if (to.name == "userSystem") {
+      const { phone, password } = this.ruleForm;
+      const result = await userService.loging({ phone, password });
+      if (result.length > 0) {
+        result[0].role == "1"? next("/userStore"):next()
+        document.cookie = `id=${result[0]._id}`;
+      } else {
+        next("/");
+        this.$message({
+          message: "账号或密码错误，请重新登录",
+          type: "warning"
+        });
+      }
+    } else {
+      next();
     }
   }
 };

@@ -51,7 +51,6 @@
         </el-form-item>
         <h1>上传图片</h1>
         <div class="imageDiv">
-          <!-- /storefront/addLicense -->
           <el-upload
             action="/goods/addCommodityImg"
             list-type="picture-card"
@@ -72,7 +71,6 @@
         <el-button type="primary" @click="addCommodity ">确 定</el-button>
       </span>
     </el-dialog>
-
     <CommodityCommodityTab />
   </div>
 </template>

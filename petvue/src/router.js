@@ -6,15 +6,18 @@ import UserSystem from "./views/userSystem";
 import UserStore from "./views/userStore";
 import Pet from "./components/pet/pet";
 import Storefront from "./components/storefront/storefront"
+
 import SystemFront from "./components/systemfront/systemfront"
 import UserManagement from "./components/userManagement/userManagement"
 import Commodity from "./components/commodity/commodity"
+import ServePet from "./components/servePet/servePet"
 Vue.use(Router)
-export default new Router({
+
+const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'login',
+      name:"empty",
       component: Login
     },
     {
@@ -57,7 +60,14 @@ export default new Router({
         path: 'commodity',
         name: 'commodity',
         component: Commodity
+      },
+      {
+        path: 'servePet',
+        name: 'servePet',
+        component: ServePet
       },]
     }
   ]
 })
+export default router
+

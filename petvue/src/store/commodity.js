@@ -27,11 +27,19 @@ export default {
         async getCommoditysAsync(context, playlod) {
             const { currentPage, eachPage } = context.state
             const data = await comService.getcommoditysByPage({ currentPage, eachPage })
-            console.log(data);
+            // console.log(data);
             data.currentPage = Number(data.currentPage)
             data.eachPage = Number(data.eachPage)
             context.commit("getCommoditysByPage", data)
         },
+        async upDataCommodityAsync(context, playlod) {
+            const data = await comService.upDataCommodity(playlod);
+            context.dispatch("getCommoditysAsync");
+        },
+        async removeCommodityAsync(context, playlod) {
+            const data = await comService.removeCommodity(playlod);
+            console.log(data)
+            context.dispatch("getCommoditysAsync");
+        },
     },
 }
-
