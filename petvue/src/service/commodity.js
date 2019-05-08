@@ -1,8 +1,17 @@
 //商品
 
-const getcommoditysByPage = async ({ currentPage = 1, eachPage = 10 } = {}) =>
-    await fetch(`/goods/getcommoditysByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
-        .then(response => response.json())
+const getcommoditysByPage = async ({ currentPage = 1, eachPage = 10, type, text } = {}) => {
+    if (type == undefined) {
+        let data = await fetch(`/goods/getcommoditysByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
+            .then(response => response.json())
+        return data
+    } else {
+        let data = await fetch(`/goods/getcommoditysByPage?currentPage=${currentPage}&eachPage=${eachPage}&type=${type}&text=${text}`)
+            .then(response => response.json())
+        return data
+    }
+}
+
 
 
 

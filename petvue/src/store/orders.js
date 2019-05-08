@@ -1,4 +1,4 @@
-import comService from "../service/commodity";
+import OrderService from "../service/orders";
 
 
 export default {
