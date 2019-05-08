@@ -6,11 +6,13 @@ import UserSystem from "./views/userSystem";
 import UserStore from "./views/userStore";
 import Pet from "./components/pet/pet";
 import Storefront from "./components/storefront/storefront"
-import PetMaster from "./components/petMaster/petMaster" //引入宠主管理
-
+import CommodityTab from "./components/commodity/commodityTab"
 import SystemFront from "./components/systemfront/systemfront"
 import UserManagement from "./components/userManagement/userManagement"
 import Commodity from "./components/commodity/commodity"
+import ServePet from "./components/servePet/servePet"
+import Orders from "./components/orders/orders"
+import PetMaster from "./components/petMaster/petMaster"
 Vue.use(Router)
 
 const router = new Router({
@@ -64,6 +66,21 @@ const router = new Router({
         path: 'commodity',
         name: 'commodity',
         component: Commodity
+      },
+      {
+        path: 'commodityTab',
+        name: 'commodityTab',
+        component: CommodityTab
+      },
+      {
+        path: 'orders',
+        name: 'orders',
+        component: Orders
+      },
+      {
+        path: 'servePet',
+        name: 'servePet',
+        component: ServePet
       },]
     }
   ]
