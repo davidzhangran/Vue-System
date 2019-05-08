@@ -231,7 +231,7 @@ export default {
       this.$refs[event].resetFields();
     },
     async toLogin({ username, password, phone, email, name }) {
-      const data = { username, password, phone, email, name, role:"1"};
+      const data = { username, password, phone, email, name, role:"0"};
       const result = await userService.addUser(data);
       if (result) {
         this.$alert("", "注册成功", {
