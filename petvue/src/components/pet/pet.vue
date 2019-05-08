@@ -148,7 +148,7 @@
       :page-sizes="[3, 5, 7, 10]"
       :page-size="eachPage"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
+      :total="pets.length"
     ></el-pagination>
   </div>
 </template>
@@ -309,9 +309,17 @@ export default {
     },
     search() {
       this.getPetsByPageAsync({
+<<<<<<< HEAD
+        type:this.value,
+        text:this.label
+      })
+      this.value="";
+      this.label="";
+=======
         type: this.value,
         text: this.label
       });
+>>>>>>> 7bf4097fb7f88b97882d969993067baa293ea30d
     },
     exceed() {
       this.$message.error("上传图片不能超过1张!");

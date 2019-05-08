@@ -4,8 +4,8 @@ export default {
    //命名空间，防止不同的状态重名
     namespaced:true,
       state: {
-        currentPage: 1,
-        eachPage: 10,
+        currentPage: 1,//当前页码
+        eachPage: 10,// 每页显示条数
         maxPage: 0,
         total: 0,
         pets: []
@@ -14,8 +14,16 @@ export default {
         getPetsByPage(state, payload) {
           Object.assign(state, payload);//合并操作，相当于上一种
       },
-        setEachPage: (state, eachPage) => state.eachPage = eachPage,
-        setCurrentPage: (state, currentPage) => state.currentPage = currentPage,
+        setEachPage: (state, eachPage) => {
+          state.eachPage = eachPage;
+          //当在最后一页进行翻页时调到以第一
+          if (state.currentPage == state.total) {
+            state.currentPage = "1";
+          }
+        },
+        setCurrentPage: (state, currentPage) =>{
+          state.currentPage = currentPage
+        },
       },
     actions: {
         async addPetAsync(context,playlod) {
