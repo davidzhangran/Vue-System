@@ -6,10 +6,7 @@ import UserSystem from "./views/userSystem";
 import UserStore from "./views/userStore";
 import Pet from "./components/pet/pet";
 import Storefront from "./components/storefront/storefront"
-<<<<<<< HEAD
-=======
 import CommodityTab from "./components/commodity/commodityTab"
->>>>>>> b80c474bf8ee497aa13f739739242371d6275d33
 import SystemFront from "./components/systemfront/systemfront"
 import UserManagement from "./components/userManagement/userManagement"
 import Commodity from "./components/commodity/commodity"
