@@ -120,7 +120,7 @@
       :page-sizes="[3, 5, 7, 10]"
       :page-size="eachPage"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="serves.length"
+      :total="total"
     ></el-pagination>
   </div>
 </template>

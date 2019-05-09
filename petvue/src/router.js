@@ -5,10 +5,6 @@ import Register from "./views/register"
 import UserSystem from "./views/userSystem";
 import UserStore from "./views/userStore";
 import Pet from "./components/pet/pet";
-<<<<<<< HEAD
-=======
-import Storefront from "./components/storefront/storefront"
->>>>>>> 2711f302995fb71228bbb24e27bcafc62827cb16
 import CommodityTab from "./components/commodity/commodityTab"
 import SystemFront from "./components/systemfront/systemfront"
 import AddStorefront from "./components/storefront/addStorefront";
@@ -18,18 +14,12 @@ import UserManagement from "./components/userManagement/userManagement"
 import Commodity from "./components/commodity/commodity"
 import ServePet from "./components/servePet/servePet"
 import Orders from "./components/orders/orders"
-<<<<<<< HEAD
-
-
-
-=======
 import PetMaster from "./components/petMaster/petMaster"
->>>>>>> 2711f302995fb71228bbb24e27bcafc62827cb16
 Vue.use(Router)
 
 const router = new Router({
   routes: [
-    {
+    {//登陆
       path: '/',
       name: "empty",
       component: Login
@@ -39,19 +29,19 @@ const router = new Router({
       name: 'login',
       component: Login
     },
-    {
+    {//注册
       path: '/register',
       name: 'register',
       component: Register
     },
-    {
+    {//平台管理系统
       path: '/userSystem',
       name: 'userSystem',
       component: UserSystem,
-      children: [{
+      children: [{//用户管理
         path: 'userManagement',
         component: UserManagement
-      }, {
+      }, {//门店管理
         path: 'systemFront',
         component: SystemFront
       },
@@ -60,45 +50,45 @@ const router = new Router({
         component: PetMaster
       }]
     },
-    {
+    {//门店管理系统
       path: '/userStore',
       name: 'userStore',
       component: UserStore,
-      children: [{
+      children: [{//宠物管理
         path: 'Pet',
         name: 'Pet',
         component: Pet,
       },
-      {
+      {//门店
         path: 'storefront',
         name: 'storefront',
         component: Storefront
       },
-      {
+      {//新增商品
         path: 'commodity',
         name: 'commodity',
         component: Commodity
       },
-      {
+      {//申请门店
         path: 'addStorefront',
         name: 'addStorefront',
         component: AddStorefront
-        }, {
-          path: 'moreSf',
-          name: 'moreSf',
-          component: MoreSf
-        },
-        {
+      }, {//更多门店信息
+        path: 'moreSf',
+        name: 'moreSf',
+        component: MoreSf
+      },
+      {//商品列表
         path: 'commodityTab',
         name: 'commodityTab',
         component: CommodityTab
       },
-      {
+      {//订单
         path: 'orders',
         name: 'orders',
         component: Orders
       },
-      {
+      {//服务
         path: 'servePet',
         name: 'servePet',
         component: ServePet
