@@ -4,7 +4,12 @@
     <el-dialog title="增加订单" :visible.sync="dialogVisible" width="80%">
       <el-form :inline="true" :model="orders" class="demo-form-inline">
         <el-form-item label="用户:">
-          <el-input v-model="orders.user" placeholder="用户"></el-input>
+          <el-autocomplete
+            v-model="value1"
+            :fetch-suggestions="petInfoAsync"
+            placeholder="请输入内容"
+            @select="handlePetInfo"
+          ></el-autocomplete>
         </el-form-item>
         <el-form-item label="商品:" class="input">
           <el-autocomplete
@@ -62,6 +67,7 @@ export default {
       dialogVisible: false,
       value: "",
       user: "",
+      value1:"",
       commodity: "",
       state: "",
       orders: {
@@ -72,10 +78,8 @@ export default {
         petId: "",
         price: ""
       },
-      //测试
       restaurants: "",
 
-      timeout: null
     };
   },
   methods: {
@@ -84,7 +88,8 @@ export default {
       "addOrdersAsync",
       "getPetsByPageAsync",
       "getServesByPageAsync",
-      "getStorefrontByPageAsync"
+      "getStorefrontByPageAsync",
+      "getPetMasterByPageAsync"
     ]),
     addOrders() {
       this.addOrdersAsync({
@@ -151,10 +156,30 @@ export default {
     },
     handleStorefrontInfo(item) {
       this.orders.storefrontId = item.address;
+    },
+    petInfoAsync(queryString, cb) {
+      console.log(this.petMasterUsers)
+      let commodity = this.petMasterUsers.map(item => {
+        //value:名称,address:_id
+        return { value: item.name, address: item._id };
+      });
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        cb(commodity);
+      }, 1000 * Math.random());
+    },
+    handlePetInfo(item) {
+      this.orders.storefrontId = item.address;
     }
   },
   computed: {
-    ...mapState(["commoditys", "pets", "serves", "storefrontInfo"])
+    ...mapState([
+      "commoditys",
+      "pets",
+      "serves",
+      "storefrontInfo",
+      "petMasterUsers"
+    ])
   },
 
   mounted() {
@@ -174,6 +199,7 @@ export default {
       )[2]
     });
     this.getStorefrontByPageAsync();
+    this.getPetMasterByPageAsync();
   }
 };
 </script>

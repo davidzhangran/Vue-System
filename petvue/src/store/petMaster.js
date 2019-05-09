@@ -35,7 +35,7 @@ export default {
         // 宠主分页
         async getPetMasterByPageAsync(context) {
             const { eachPage, currentPage } = context.state//解构得到state里面的两个值
-            const data = await petMasterService.getPetMasterByPage({ eachPage, currentPage })
+            const data = await petMasterService.getPetMasterByPage()
             console.log(data);
             context.commit("getPetMasterByPgae", data)
         }

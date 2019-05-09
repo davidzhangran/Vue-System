@@ -33,8 +33,20 @@ const removeOrders = async (parm) => {
         }).then(response => response.json())
 }
 
+const upDataOrders = async (parm) => {
+    return await fetch(`/orders/upDataOrders`,
+        {
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(parm)//参数是json格式
+        }).then(response => response.json())
+}
+
 export default {
     addOrders,
     getOrdersByPage,
     removeOrders,
+    upDataOrders
 }
