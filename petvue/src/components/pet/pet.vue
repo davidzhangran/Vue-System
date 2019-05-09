@@ -106,7 +106,6 @@
            ref="upload1"
           :auto-upload="false"
           limit:1
-          :on-success="bannerSuc1"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -117,7 +116,7 @@
       </el-form>
       <div class="dialog-footer">
         <el-button @click="dialogTableVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitUpload1">确 定</el-button>
+        <el-button type="primary" @click="updata">确 定</el-button>
       </div>
     </el-dialog>
     <el-table :data="pets" border style="width: 100%" >
@@ -252,16 +251,8 @@ export default {
       this.add();
       // this.$refs.banner.clearFiles();
     },
-    bannerSuc1(response) {
-      this.images.push(response.data.url);
-      this.updata();
-      // this.$refs.banner.clearFiles();
-    },
     submitUpload(){
        this.$refs.upload.submit();
-    },
-    submitUpload1(){
-      this.$refs.upload1.submit();
     },
     //新增
     add() {

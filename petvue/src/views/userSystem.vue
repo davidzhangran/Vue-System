@@ -9,7 +9,7 @@
       active-text-color="#ffd04b"
     >
       <el-menu-item index="/userSystem/userManagement">用户管理</el-menu-item>
-      <el-menu-item index="3">宠主管理</el-menu-item>
+      <el-menu-item index="/userSystem/petMaster">宠主管理</el-menu-item>
       <el-submenu index="2">
         <template slot="title">门店管理</template>
         <el-menu-item index="/userSystem/systemFront">门店列表</el-menu-item>

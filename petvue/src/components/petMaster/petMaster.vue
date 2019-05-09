@@ -70,7 +70,7 @@
         <el-table-column prop="integral" label="积分" width="100">
         </el-table-column>
         <!-- 查看拥有宠物的详情 -->
-        <el-table-column prop="owned" label="订单信息" width="100">
+        <!-- <el-table-column prop="owned" label="订单信息" width="100">
           <template slot-scope="scope">
             <el-button type="text" @click="dialogFormVisible = true">查看详情</el-button>
             <el-dialog title="订单详情" :visible.sync="dialogFormVisible">
@@ -84,7 +84,7 @@
               </el-table>
             </el-dialog>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <!-- 修改宠主资料 -->
         <el-table-column fixed="right" label="操作" width="150">
           <template slot-scope="scope">
