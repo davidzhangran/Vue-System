@@ -1,5 +1,6 @@
 const addOrders = async (parm) => {
-    return await fetch(`/goods/addCommodity`,
+    console.log(parm)
+    return await fetch(`/orders/addOrders`,
         {
             method: 'POST',
             headers: new Headers({

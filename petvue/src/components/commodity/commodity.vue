@@ -43,7 +43,8 @@
         <el-input v-model="commodity.supplier" placeholder="供应商"></el-input>
       </el-form-item>
       <el-form-item label="出厂日期:">
-        <el-date-picker v-model="commodity.production" type="date" placeholder="选择日期"></el-date-picker>
+        <!-- <el-date-picker v-model="commodity.production" type="date" placeholder="选择日期"></el-date-picker> -->
+        <el-date-picker v-model="commodity.production" type="date" placeholder="选择日期" format="yyyy年MM月dd日" value-format="yyyy 年 MM 月 dd 日"></el-date-picker>
       </el-form-item>
       <div class="imageDiv">
         <h1 class="imageH1">上传图片</h1>
@@ -107,7 +108,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getCommoditysAsync","addCommodityAsync"]),
+    ...mapActions(["getCommoditysAsync", "addCommodityAsync"]),
     ...mapMutations(["licenseCom", "bannerCom"]),
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -132,7 +133,7 @@ export default {
     },
     addCommodity() {
       //所有 商品数据
-      console.log(this.commodity);
+      // console.log(this.commodity.production)
       const {
         name, // 名称
         category, // 品类
@@ -151,9 +152,11 @@ export default {
         images //图片
       } = this.commodity;
       getValue(this);
-
+ 
       this.addCommodityAsync({
-        userId:document.cookie.match(new RegExp("(^|)"+"id"+"=([^;]*)(;|$)"))[2],
+        userId: document.cookie.match(
+          new RegExp("(^|)" + "id" + "=([^;]*)(;|$)")
+        )[2],
         name, // 名称
         category, // 品类
         texture, // 材质
