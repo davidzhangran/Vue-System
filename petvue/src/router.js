@@ -11,6 +11,7 @@ import SystemFront from "./components/systemfront/systemfront"
 import UserManagement from "./components/userManagement/userManagement"
 import Commodity from "./components/commodity/commodity"
 import ServePet from "./components/servePet/servePet"
+import ApplyFront from "./components/systemfront/applyfront"
 Vue.use(Router)
 
 const router = new Router({
@@ -40,6 +41,9 @@ const router = new Router({
       }, {
         path: 'systemFront',
         component: SystemFront
+      }, {
+        path: 'applyFront',
+        component: ApplyFront
       }]
     },
     {
