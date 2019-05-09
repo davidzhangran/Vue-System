@@ -57,8 +57,7 @@
         <p>The Backstage Management</p>
       </div>
     </div>
-    <WebWeb class="webweb" />
-
+    <WebWeb class="webweb"/>
   </div>
 </template>
 
@@ -117,10 +116,13 @@ export default {
     }
   },
   async beforeRouteLeave(to, from, next) {
+    console.log(from);
+    
     if (to.name == "userSystem") {
       const { phone, password } = this.ruleForm;
       const result = await userService.loging({ phone, password });
       if (result.length > 0) {
+        console.log(result);
         result[0].role == "1" ? next("/userStore") : next();
         document.cookie = `id=${result[0]._id}`;
       } else {
@@ -130,7 +132,25 @@ export default {
           type: "warning"
         });
       }
-    } else {
+    } 
+    // else if (to.name == "userStore") {
+    //   next("/");
+    //   this.$message({
+    //     message: "调皮，不要妄想偷渡哦",
+    //     type: "warning"
+    //   });
+    // }
+    //  else if (to.name == "register") {
+    //   next();
+    // } 
+    // else if (to.name != "userSystem" || to.name != "userStore") {
+    //   next("/");
+    //   this.$message({
+    //     message: "调皮，不要妄想偷渡哦",
+    //     type: "warning"
+    //   });
+    // } 
+    else {
       next();
     }
   }
@@ -138,7 +158,7 @@ export default {
 </script>
 
 <style scoped>
-.webweb{
+.webweb {
   position: fixed;
   bottom: 140px;
   right: 240px;

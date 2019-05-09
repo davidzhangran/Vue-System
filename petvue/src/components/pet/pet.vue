@@ -44,11 +44,12 @@
           class="footer"
           action="/pet/addPImage"
           list-type="picture-card"
-          ref="images"
+          ref="upload"
           :auto-upload="false"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
           :on-exceed="exceed"
+          :on-success="bannerSuc"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -59,7 +60,7 @@
       </el-form>
       <div class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="add">确 定</el-button>
+        <el-button type="primary" @click="submitUpload">确 定</el-button>
       </div>
     </el-dialog>
     <el-dialog title="修改" :visible.sync="dialogTableVisible">
@@ -98,12 +99,14 @@
           class="footer"
           action="/pet/addPImage"
           list-type="picture-card"
-          ref="images"
-          :auto-upload="false"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
           :on-exceed="exceed"
-          :file-list="pets.images"
+          :file-list="fileList"
+           ref="upload1"
+          :auto-upload="false"
+          limit:1
+          :on-success="bannerSuc1"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -114,13 +117,13 @@
       </el-form>
       <div class="dialog-footer">
         <el-button @click="dialogTableVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updata">确 定</el-button>
+        <el-button type="primary" @click="submitUpload1">确 定</el-button>
       </div>
     </el-dialog>
-    <el-table :data="pets" border style="width: 100%">
+    <el-table :data="pets" border style="width: 100%" >
       <el-table-column fixed prop="images" label="照片" width="150" align="center">
         <template slot-scope="scope">
-          <img :src="scope.row.images" style="width:50px;height:50px"/>
+          <img :src="scope.row.images[0]" style="width:50px;height:50px"/>
         </template>
       </el-table-column>
       <el-table-column fixed prop="name" label="名称" width="150" align="center"></el-table-column>
@@ -169,6 +172,7 @@ export default {
       dialogFormVisible: false,
       dialogImageUrl: "",
       dialogVisible: false,
+      fileList:[{name:"", url: ''}],
       options: [
         {
           value: "name",
@@ -221,6 +225,8 @@ export default {
       });
     },
     hanleClick(row) {
+      this.fileList[0].url=row.images[0];
+      this.images=row.images;
       this.dialogTableVisible = true;
       const {
         name,
@@ -241,12 +247,26 @@ export default {
       this.describe = describe;
       this._id = row._id;
     },
+    bannerSuc(response) {
+      this.images.push(response.data.url);
+      this.add();
+      // this.$refs.banner.clearFiles();
+    },
+    bannerSuc1(response) {
+      this.images.push(response.data.url);
+      this.updata();
+      // this.$refs.banner.clearFiles();
+    },
+    submitUpload(){
+       this.$refs.upload.submit();
+    },
+    submitUpload1(){
+      this.$refs.upload1.submit();
+    },
     //新增
     add() {
       this.dialogFormVisible = false; //关闭窗口
-      this.$refs.images.submit();
-       this.$refs.images.clearFiles();
-        // this.images.push(response.data.url);
+      // this.images.push(response.data.url);
       const {
         name,
         category,
@@ -255,7 +275,7 @@ export default {
         age,
         gender,
         images,
-        describe
+        describe,
       } = this;
   
       this.addPetAsync({
@@ -277,10 +297,9 @@ export default {
       this.gender = "";
       this.images = "";
       this.describe = "";
+      // this.$refs.upload.clearFiles();
     },
     updata(){
-       this.$refs.images.submit();
-       this.$refs.images.clearFiles();
        this.dialogTableVisible = false; //关闭窗口
        const {
         name,
@@ -342,7 +361,9 @@ export default {
     }
   },
   mounted() {
-    this.getPetsByPageAsync();
+    this.getPetsByPageAsync({
+      userId:document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
+    });
   }
 };
 </script>
