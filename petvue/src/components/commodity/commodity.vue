@@ -1,77 +1,74 @@
 <template>
-  <div>
-    <el-button type="primary" @click="dialogVisible = true">新增</el-button>
-    <el-dialog title="增加商品" :visible.sync="dialogVisible" width="60%" :before-close="handleClose">
-      <el-form :inline="true" :model="commodity" class="demo-form-inline">
-        <el-form-item label="商品名称">
-          <el-input v-model="commodity.name" placeholder="商品名称"></el-input>
-        </el-form-item>
-        <el-form-item label="品类">
-          <el-input v-model="commodity.category" placeholder="品类"></el-input>
-        </el-form-item>
-        <el-form-item label="材质">
-          <el-input v-model="commodity.texture" placeholder="材质"></el-input>
-        </el-form-item>
-        <el-form-item label="适用规格">
-          <el-input v-model="commodity.specification" placeholder="适用规格"></el-input>
-        </el-form-item>
-        <el-form-item label="专属规格">
-          <el-input v-model="commodity.exclusive" placeholder="专属规格"></el-input>
-        </el-form-item>
-        <el-form-item label="包装规格">
-          <el-input v-model="commodity.pack" placeholder="包装规格"></el-input>
-        </el-form-item>
-        <el-form-item label="口味">
-          <el-input v-model="commodity.taste" placeholder="口味"></el-input>
-        </el-form-item>
-        <el-form-item label="特殊功用">
-          <el-input v-model="commodity.special" placeholder="特殊功用"></el-input>
-        </el-form-item>
+  <div class="add">
+    <!-- <el-button type="primary" @click="dialogVisible = true">新增</el-button> -->
+    <h1 class="font">新增商品</h1>
+    <el-form :inline="true" :model="commodity" class="demo-form-inline">
+      <el-form-item label="商品名称:">
+        <el-input v-model="commodity.name" placeholder="商品名称"></el-input>
+      </el-form-item>
+      <el-form-item label="品类:" class="input">
+        <el-input v-model="commodity.category" placeholder="品类"></el-input>
+      </el-form-item>
+      <el-form-item label="材质:" class="input">
+        <el-input v-model="commodity.texture" placeholder="材质"></el-input>
+      </el-form-item>
+      <el-form-item label="适用规格:">
+        <el-input v-model="commodity.specification" placeholder="适用规格"></el-input>
+      </el-form-item>
+      <el-form-item label="专属规格:">
+        <el-input v-model="commodity.exclusive" placeholder="专属规格"></el-input>
+      </el-form-item>
+      <el-form-item label="包装规格:">
+        <el-input v-model="commodity.pack" placeholder="包装规格"></el-input>
+      </el-form-item>
+      <el-form-item label="口味:" class="input">
+        <el-input v-model="commodity.taste" placeholder="口味"></el-input>
+      </el-form-item>
+      <el-form-item label="特殊功用:">
+        <el-input v-model="commodity.special" placeholder="特殊功用"></el-input>
+      </el-form-item>
+      <el-form-item label="产地:" class="input">
+        <el-input v-model="commodity.origin" placeholder="产地"></el-input>
+      </el-form-item>
+      <el-form-item label="特色说明:">
+        <el-input v-model="commodity.feature" placeholder="特色说明"></el-input>
+      </el-form-item>
+      <el-form-item label="价格:" class="input">
+        <el-input v-model="commodity.price" placeholder="价格"></el-input>
+      </el-form-item>
+      <el-form-item label="保质期:" class="input1">
+        <el-input v-model="commodity.expiration" placeholder="保质期"></el-input>
+      </el-form-item>
+      <el-form-item label="供应商:" class="input1">
+        <el-input v-model="commodity.supplier" placeholder="供应商"></el-input>
+      </el-form-item>
+      <el-form-item label="出厂日期:">
+        <!-- <el-date-picker v-model="commodity.production" type="date" placeholder="选择日期"></el-date-picker> -->
+        <el-date-picker v-model="commodity.production" type="date" placeholder="选择日期" format="yyyy年MM月dd日" value-format="yyyy 年 MM 月 dd 日"></el-date-picker>
+      </el-form-item>
+      <div class="imageDiv">
+        <h1 class="imageH1">上传图片</h1>
+        <el-upload
+          action="/goods/addCommodityImg"
+          list-type="picture-card"
+          :on-preview="handlePictureCardPreview"
+          :limit="2"
+          :on-exceed="exceed"
+          :on-success="licenseSuc"
+        >
+          <i class="el-icon-plus"></i>
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisibleImage">
+          <img width="100%" :src="url" alt>
+        </el-dialog>
+      </div>
+    </el-form>
+    <div class="go">
+      <el-button @click="cancel">取 消</el-button>
+      <el-button type="primary" @click="addCommodity ">确 定</el-button>
+    </div>
 
-        <el-form-item label="产地">
-          <el-input v-model="commodity.origin" placeholder="产地"></el-input>
-        </el-form-item>
-
-        <el-form-item label="出厂日期">
-          <el-input v-model="commodity.production" placeholder="出厂日期"></el-input>
-        </el-form-item>
-
-        <el-form-item label="保质期">
-          <el-input v-model="commodity.expiration" placeholder="保质期"></el-input>
-        </el-form-item>
-
-        <el-form-item label="供应商">
-          <el-input v-model="commodity.supplier" placeholder="供应商"></el-input>
-        </el-form-item>
-        <el-form-item label="特色说明">
-          <el-input v-model="commodity.feature" placeholder="特色说明"></el-input>
-        </el-form-item>
-        <el-form-item label="价格">
-          <el-input v-model="commodity.price" placeholder="价格"></el-input>
-        </el-form-item>
-        <h1>上传图片</h1>
-        <div class="imageDiv">
-          <el-upload
-            action="/goods/addCommodityImg"
-            list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            :limit="2"
-            :on-exceed="exceed"
-            :on-success="licenseSuc"
-          >
-            <i class="el-icon-plus"></i>
-          </el-upload>
-          <el-dialog :visible.sync="dialogVisibleImage">
-            <img width="100%" :src="url" alt>
-          </el-dialog>
-        </div>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addCommodity ">确 定</el-button>
-      </span>
-    </el-dialog>
-    <CommodityCommodityTab />
+    <!-- <CommodityCommodityTab /> -->
   </div>
 </template>
 
@@ -86,9 +83,9 @@ export default {
     return {
       //数据
       commoditys: [],
-      dialogVisible: false,
+      dialogVisible: true,
       dialogImage: false,
-      dialogVisibleImage:false,
+      dialogVisibleImage: false,
       url: "",
       commodity: {
         name: "", // 名称
@@ -111,7 +108,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addCommodityAsync"]),
+    ...mapActions(["getCommoditysAsync", "addCommodityAsync"]),
     ...mapMutations(["licenseCom", "bannerCom"]),
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -121,7 +118,6 @@ export default {
         .catch(_ => {});
     },
     handlePictureCardPreview(file) {
-      
       this.dialogImageUrl = file.url;
       this.dialogVisibleImage = true;
     },
@@ -130,11 +126,14 @@ export default {
     },
     // 上传图片
     licenseSuc(response) {
-       this.commodity.images.push(response.data.url);
+      this.commodity.images.push(response.data.url);
+    },
+    cancel() {
+      getValue(this);
     },
     addCommodity() {
       //所有 商品数据
-      console.log(this.commodity);
+      // console.log(this.commodity.production)
       const {
         name, // 名称
         category, // 品类
@@ -153,8 +152,11 @@ export default {
         images //图片
       } = this.commodity;
       getValue(this);
-
+ 
       this.addCommodityAsync({
+        userId: document.cookie.match(
+          new RegExp("(^|)" + "id" + "=([^;]*)(;|$)")
+        )[2],
         name, // 名称
         category, // 品类
         texture, // 材质
@@ -168,9 +170,10 @@ export default {
         expiration, //保质期
         supplier, //供应商
         feature, //特色说明
-        price ,images
+        price,
+        images
       });
-      this.dialogVisible = false;
+      this.url = "";
     }
   }
 };
@@ -194,35 +197,42 @@ function getValue(params) {
 }
 </script>
 <style>
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+.add {
+  width: 80%;
+  margin: auto;
 }
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
+.input {
+  padding-left: 27px;
 }
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
+.input1 {
+  padding-left: 15px;
 }
 .inputStyle {
   width: 178px;
   height: 178px;
   margin-left: 20px;
 }
-.imageDiv{
+.imageDiv {
+  width: 28%;
   margin: auto;
+}
+.font {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-size: 32px;
+  text-align: center;
+  padding: 20px 0;
+}
+.imageH1 {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-size: 24px;
+  text-align: center;
+  padding: 20px 0;
+}
+.go {
+  width: 28%;
+  margin: auto;
+  margin-top: 30px;
 }
 </style>

@@ -1,5 +1,5 @@
+import OrderService from "../service/orders";
 import comService from "../service/commodity";
-
 
 export default {
     //命名空间，防止不同的状态重名
@@ -25,31 +25,21 @@ export default {
         },
     },
     actions: {
-        async addCommodityAsync(context, playlod) {
+        async addOrdersAsync(context, playlod) {
             // const { currentPage, eachPage } = context.state
-            const data = await comService.addCommodity(playlod);
+            const data = await OrderService.addOrders(playlod);
             console.log(data)
         },
+        // 获取商品
         async getCommoditysAsync(context, { type, text, userId } = {}) {
             const { currentPage, eachPage } = context.state
             if (type == undefined) {
                 const data = await comService.getcommoditysByPage({ currentPage, eachPage, userId })
                 context.commit("getCommoditysByPage", data)
             } else {
-                const data = await comService.getcommoditysByPage({ currentPage, eachPage, type, text, userId })
-                console.log(data)
+                const data = await comService.getcommoditysByPage({ currentPage, eachPage, type, text })
                 context.commit("getCommoditysByPage", data)
             }
-
-
         },
-        async upDataCommodityAsync(context, playlod) {
-            const data = await comService.upDataCommodity(playlod);
-            context.dispatch("getCommoditysAsync");
-        },
-        async removeCommodityAsync(context, playlod) {
-            const data = await comService.removeCommodity(playlod);
-            context.dispatch("getCommoditysAsync");
-        },
-    },
+    }
 }

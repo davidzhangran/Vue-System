@@ -1,13 +1,13 @@
 <template>
   <div>
     <el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
-    <el-select v-model="value" placeholder="请选择">
+    <el-select v-model="value" style="width:100px;" placeholder="请选择">
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
     </el-select>
     <div class="name1">
-      <el-input v-model="label" placeholder="请输入内容"></el-input>
+      <el-input v-model="label" style="" placeholder="请输入内容"></el-input>
     </div>
-    <el-button icon="el-icon-search" @click="search"></el-button>
+    <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
     <el-dialog title="新增" :visible.sync="dialogFormVisible">
       <el-form class="form">
         <div class="name">
@@ -132,15 +132,15 @@
       <el-table-column prop="describe" label="描述" width="120" align="center"></el-table-column>
       <el-table-column fixed="right" label="操作" align="center" >
         <template slot-scope="scope">
-          <el-button @click="hanleClick(scope.row)" type="text" size="small">修改</el-button>
-          <el-button type="text" @click="handleDelete(scope.row)" size="small">删除</el-button>
+          <el-button type="success" plain @click="hanleClick(scope.row)"  size="small">修改</el-button>
+          <el-button type="danger" plain  @click="handleDelete(scope.row)" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
       @size-change="setEachPage"
       @current-change="setCurrentPage"
-      :current-page="currentPage"
+      :current-page="currentPage-0"
       :page-sizes="[3, 5, 7, 10]"
       :page-size="eachPage"
       layout="total, sizes, prev, pager, next, jumper"
@@ -255,7 +255,7 @@ export default {
         age,
         gender,
         images,
-        describe
+        describe,
       } = this;
   
       this.addPetAsync({
@@ -342,7 +342,9 @@ export default {
     }
   },
   mounted() {
-    this.getPetsByPageAsync();
+    this.getPetsByPageAsync({
+      userId:document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
+    });
   }
 };
 </script>
@@ -364,7 +366,8 @@ export default {
   justify-content: space-between;
 }
 .name1 {
-  width: 100px;
+  width: 120px;
+  height:30px;
   display: inline-block;
 }
 </style>

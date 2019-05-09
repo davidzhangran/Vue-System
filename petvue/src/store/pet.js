@@ -31,13 +31,14 @@ export default {
       context.dispatch("getPetsByPageAsync");
     },
     //分页
-    async getPetsByPageAsync(context, { type, text } = {}) {
+    async getPetsByPageAsync(context, { type, text,userId } = {}) {  
+      userId=document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
       const { currentPage, eachPage } = context.state;
       if (type != undefined) {
-        const data = await petService.getPetsByPageSer({ currentPage, eachPage, type, text });//拿到数据，通过mutations触发数据更新
+        const data = await petService.getPetsByPageSer({ currentPage, eachPage, type, text,userId });//拿到数据，通过mutations触发数据更新
         context.commit("getPetsByPage", data);//通过commit触发getStudentsByPage
       } else {
-        const data = await petService.getPetsByPageSer({ currentPage, eachPage });//拿到数据，通过mutations触发数据更新
+        const data = await petService.getPetsByPageSer({ currentPage, eachPage,userId });//拿到数据，通过mutations触发数据更新
         context.commit("getPetsByPage", data);//通过commit触发getStudentsByPage
       }
 

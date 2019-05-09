@@ -1,7 +1,14 @@
 <template>
   <div>
    <el-button type="primary" @click="dialogVisible = true">新增</el-button>
-    <el-dialog
+    <el-select v-model="value" style="width:100px;" placeholder="请选择">
+      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+    </el-select>
+    <div class="name1">
+      <el-input v-model="label" style="" placeholder="请输入内容"></el-input>
+    </div>
+    <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+  <el-dialog
     title="新增"
     :visible.sync="dialogVisible"
     width="50%"
@@ -16,16 +23,6 @@
      <el-form-item label="品类">
     <el-input v-model="category"></el-input>
    </el-form-item>
-  </div>
-    <div class="name">
-    <span class="demonstration">排期</span>
-    <el-date-picker
-      v-model="schedule"
-      type="datetime"
-      placeholder="选择日期时间"
-      align="center"
-      :picker-options="pickerOptions">
-    </el-date-picker>
   </div>
    <div  class="name">
      <el-form-item label="适用规格">
@@ -52,10 +49,80 @@
     <el-input v-model="price" ></el-input>
    </el-form-item>
    </div>
+    <div class="name">
+      <el-form-item label="排期">
+    <el-date-picker
+      v-model="schedule"
+      type="date"
+      placeholder="选择日期"
+      format="yyyy 年 MM 月 dd 日"
+      value-format="yyyy-MM-dd">
+    </el-date-picker>
+      </el-form-item>
+  </div>
 </el-form>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="add">确 定</el-button>
+  </span>
+</el-dialog>
+<el-dialog
+    title="修改"
+    :visible.sync="dialogVisible1"
+    width="50%"
+    >
+    <el-form class="f" label-width="100px" size="mini">
+     <div class="name">
+       <el-form-item label="服务类型">
+      <el-input v-model="name"></el-input>
+      </el-form-item>
+     </div>
+  <div  class="name">
+     <el-form-item label="品类">
+    <el-input v-model="category"></el-input>
+   </el-form-item>
+  </div>
+   
+   <div  class="name">
+     <el-form-item label="适用规格">
+    <el-input v-model="specification" ></el-input>
+   </el-form-item>
+   </div>
+   <div  class="name">
+     <el-form-item label="服务规格">
+    <el-input v-model="service" ></el-input>
+   </el-form-item>
+   </div>
+   <div  class="name">
+     <el-form-item label="耗时">
+    <el-input v-model="consuming"></el-input>
+   </el-form-item>
+   </div>
+   <div  class="name">
+     <el-form-item label="服务员等级">
+    <el-input v-model="grade" ></el-input>
+   </el-form-item>
+   </div>
+   <div  class="name">
+     <el-form-item label="价格">
+    <el-input v-model="price" ></el-input>
+   </el-form-item>
+   </div>
+   <div class="name">
+      <el-form-item label="排期">
+    <el-date-picker
+      v-model="schedule"
+      type="date"
+      placeholder="选择日期"
+      format="yyyy 年 MM 月 dd 日"
+      value-format="yyyy-MM-dd">
+    </el-date-picker>
+      </el-form-item>
+  </div>
+</el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible1 = false">取 消</el-button>
+    <el-button type="primary" @click="updata">确 定</el-button>
   </span>
 </el-dialog>
     <el-table
@@ -63,53 +130,62 @@
     border
     style="width: 100%">
     <el-table-column
+      align="center"
       fixed
       prop="name"
       label="服务类型"
       width="150">
     </el-table-column>
     <el-table-column
+     align="center"
       prop="category"
       label="品类"
       width="120">
     </el-table-column>
     <el-table-column
+     align="center"
       prop="schedule"
       label="排期"
       width="120">
     </el-table-column>
     <el-table-column
+      align="center"
       prop="specification"
       label="适用规格"
       width="120">
     </el-table-column>
     <el-table-column
+       align="center"
       prop="service"
       label="服务规格"
       width="120">
     </el-table-column>
     <el-table-column
+     align="center"
       prop="consuming"
       label="耗时"
       width="120">
     </el-table-column>
      <el-table-column
+      align="center"
       prop="grade"
       label="服务员等级"
       width="120">
     </el-table-column>
      <el-table-column
+      align="center"
       prop="price"
       label="价格"
       width="120">
     </el-table-column>
     <el-table-column
+       align="center"
       fixed="right"
       label="操作"
-      width="100">
+      width="250">
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">修改</el-button>
-        <el-button type="text" size="small">删除</el-button>
+        <el-button type="success" plain @click="hanleClick(scope.row)"  size="small">修改</el-button>
+        <el-button type="danger" plain @click="handleDelete(scope.row)" size="small">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -132,6 +208,8 @@ export default {
   name: "serve",
     data(){
      return{
+        label:"",
+        value:"",
         name:"",
         category:"",
         schedule:"",
@@ -140,6 +218,38 @@ export default {
         consuming:"",
         grade:"",
         price:"",
+        _id:"",
+        options: [
+        {
+          value: "name",
+          label: "服务类型"
+        },
+        {
+          value: "category",
+          label: "品类"
+        },
+        {
+          value: "schedule",
+          label: "排期"
+        },
+        {
+          value: "specification",
+          label: "适用规格"
+        },
+        {
+          value: "service",
+          label: "服务规格"
+        },
+        {
+          value: "consuming",
+          label: "耗时"
+        },
+        {
+          value: "price",
+          label: "价格"
+        }
+      ],
+        dialogVisible1:false,
         dialogVisible:false,
           pickerOptions: {
           shortcuts: [{
@@ -169,6 +279,8 @@ export default {
     ...mapActions([
       "addPetAsync",
       "getPetsByPageAsync",
+      "removePetAsync",
+      "updatePetAsync"
     ]),
       ...mapMutations(["setEachPage", "setCurrentPage"]),
     //新增
@@ -204,9 +316,70 @@ export default {
       this.grade = "";
       this.price = "";
     },
+     //删除
+    handleDelete(row) {
+      this.removePetAsync({
+        _id: row._id
+      });
+    },
+    search() {
+      this.getPetsByPageAsync({
+        type: this.value,
+        text: this.label
+      });
+      this.label="";
+      this.value="";
+    },
+    hanleClick(row) {
+      this.dialogVisible1 = true;
+      const {
+        name,
+        category,
+        color,
+        price,
+        age,
+        gender,
+        images,
+        describe
+      } = row;
+      this.name = name;
+      this.category = category;
+      this.color = color;
+      this.price = price;
+      this.age = age;
+      this.gender = gender;
+      this.describe = describe;
+      this._id = row._id;
+    },
+    updata(){
+       this.dialogVisible1 = false; //关闭窗口
+       const {
+        name,
+        category,
+        schedule,
+        specification,
+        service,
+        consuming,
+        grade,
+        price
+      } = this;
+      this.updatePetAsync({
+        _id: this._id,
+        name,
+        category,
+        schedule,
+        specification,
+        service,
+        consuming,
+        grade,
+        price
+      });
+    },
  },
  mounted(){
-    this.getPetsByPageAsync();
+    this.getPetsByPageAsync({
+      userId:document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
+    });
  },
   watch: {
     eachPage() {
@@ -247,6 +420,11 @@ export default {
 }
 .demonstration{
   margin-left: 50px;
+}
+.name1 {
+  width: 120px;
+  height:30px;
+  display: inline-block;
 }
 
 </style>

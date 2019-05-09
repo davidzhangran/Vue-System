@@ -3,6 +3,7 @@ import userService from '../service/userManagement'
 export default {
     namespaced: true,
     state: {
+        loading:false,
         currentPage: 1, //当前页码
         eachPage: 3, //每页显示的条数
         totalPage: 10, //总页数
@@ -21,9 +22,16 @@ export default {
         },
         setCurrentPage: (state, currentPage) => {
             state.currentPage = currentPage
+        },
+        open(state) {
+            state.loading = true;
+        },
+        close(state) {
+            state.loading = false;
         }
     },
     actions: {
+        //通过当前页和每页条数获取用户信息
         async getUserByPageAsync(context) {
             const { eachPage, currentPage } = context.state//解构得到state里面的两个值
             const data = await userService.getUserByPgae({ eachPage, currentPage })
@@ -36,13 +44,32 @@ export default {
                     return item.state = "不可用"
                 }
             })
+            data.users.map(item => {
+                if (item.role == "1") {
+                    return item.role = "门户管理员"
+                }
+                return item.role = "平台管理员"
+            })
             context.commit("getUsersByPgae", data)
+            context.commit("close")
         },
+        //新增用户
         async addUserAsync({ dispatch }, { username, password, phone, email, name, role }) {
             const data = { username, password, phone, email, name, role: role == "平台管理员" ? "0" : "1" }
             const result = await userService.addUser(data)
-
             console.log(result);
+        },
+        //修改用户
+        async upDataUserAsync({ dispatch,commit }, {_id, state}) {
+           commit("open")
+            const result = await userService.upDataUser({_id, state})
+            dispatch("getUserByPageAsync")
+        },
+        //删除用户
+        async deleteUserAsync({dispatch, commit}, _id) {
+            commit("open")
+            const result = await userService.deleteUser({_id})
+            dispatch("getUserByPageAsync")
         }
     }
 }
