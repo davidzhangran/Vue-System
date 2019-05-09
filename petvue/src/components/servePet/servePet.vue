@@ -128,7 +128,8 @@
     <el-table
     :data="serves"
     border
-    style="width: 100%">
+    style="width: 100%"
+    :default-sort="{prop:'schedule', order: 'descending'}">
     <el-table-column
       align="center"
       fixed
@@ -146,7 +147,8 @@
      align="center"
       prop="schedule"
       label="排期"
-      width="120">
+      width="120"
+      sortable>
     </el-table-column>
     <el-table-column
       align="center"
@@ -304,7 +306,7 @@ export default {
         service,
         consuming,
         grade,
-        price:price-0,
+        price,
         userId:document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
       });
       this.name = "";

@@ -1,14 +1,14 @@
 <template>
   <div style>
-    <el-tabs :tab-position="tabPosition" router>
-      <el-tab-pane index="/userSystem/userManagement/userList" label="用户列表">
+    <el-tabs :tab-position="tabPosition">
+      <el-tab-pane label="用户列表">
         <div class="user">
-          <el-table :data="users" style="width: 100%">
+          <el-table v-loading="loading" :data="users" style="width: 100%">
             <el-table-column type="index" label="ID"></el-table-column>
-            <el-table-column prop="username" label="登录名" width="150"></el-table-column>
+            <el-table-column prop="username" label="登录名" width="200"></el-table-column>
             <el-table-column prop="password" label="密码" width="120"></el-table-column>
             <el-table-column prop="phone" label="手机号" width="120"></el-table-column>
-            <el-table-column prop="email" label="邮箱" width="120"></el-table-column>
+            <el-table-column prop="email" label="邮箱" width="190"></el-table-column>
             <el-table-column prop="name" label="姓名" width="100"></el-table-column>
             <el-table-column prop="role" label="角色" width="120"></el-table-column>
             <el-table-column prop="state" label="状态" width="120"></el-table-column>
@@ -19,35 +19,41 @@
               </template>
             </el-table-column>
           </el-table>
-
           <el-dialog title="修改用户信息" :visible.sync="dialogFormVisible">
             <el-form :model="updata">
+              <el-form-item label="登录名" :label-width="formLabelWidth">
+                <el-input v-model="updata.username" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="密码" :label-width="formLabelWidth">
+                <el-input v-model="updata.password" autocomplete="off"></el-input>
+              </el-form-item>
               <el-form-item label="手机号" :label-width="formLabelWidth">
                 <el-input v-model="updata.phone" autocomplete="off"></el-input>
               </el-form-item>
+              <el-form-item label="邮箱" :label-width="formLabelWidth">
+                <el-input v-model="updata.email" autocomplete="off"></el-input>
+              </el-form-item>
               <el-form-item label="审核状态" :label-width="formLabelWidth">
                 <el-select v-model="updata.state" placeholder="请审批">
+                  <el-option label="审核中" value="1"></el-option>
                   <el-option label="可用" value="2"></el-option>
                   <el-option label="不可用" value="0"></el-option>
                 </el-select>
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button @click="dialogFormVisible = false" >取 消</el-button>
-              <el-button type="primary" @click="comfirm(updata)" >确 定</el-button>
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="comfirm(updata)">确 定</el-button>
             </div>
           </el-dialog>
-
-
           <div class="block">
-            <el-pagination
-              @size-change="setEachPage"
-              @current-change="setCurrentPage"
-              :current-page="currentPage - 0"
-              :page-sizes="[3, 5, 10, 15]"
-              :page-size="3"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="count"
+            <el-pagination @size-change="setEachPage" 
+            @current-change="setCurrentPage" 
+            :current-page="currentPage - 0" 
+            :page-sizes="[3, 5, 10, 15]" 
+            :page-size="3" 
+            layout="total, sizes, prev, pager, next, jumper" 
+            :total="count"
             ></el-pagination>
           </div>
         </div>
@@ -94,7 +100,7 @@ const { mapMutations, mapState, mapActions } = createNamespacedHelpers("users");
 
 export default {
   computed: {
-    ...mapState(["users", "totalPage", "count",]),
+    ...mapState(["users", "totalPage", "count", "loading"]),
     eachPage: {
       get: mapState(["eachPage"]).eachPage, //获取每页显示页数
       set: mapMutations(["setEachPage"]).setEachPage //通过input框去修改每页显示页数
@@ -106,25 +112,30 @@ export default {
   },
   methods: {
     handleClick(row) {
-      this.updata._id = row._id
-      this.updata.phone = row.phone,
-      this.updata.state = row.state
+      this.updata = row;
       this.dialogFormVisible = true;
       console.log(row);
     },
     comfirm(form) {
-      this.upDataUserAsync(form)
-      this.dialogFormVisible = false
+      this.dialogFormVisible = false;
+      this.upDataUserAsync(form);
     },
-    ...mapActions(["addUserAsync", "getUserByPageAsync", "upDataUserAsync", "deleteUserAsync"]),
+    ...mapActions([
+      "addUserAsync",
+      "getUserByPageAsync",
+      "upDataUserAsync",
+      "deleteUserAsync"
+    ]),
     ...mapMutations(["setEachPage", "setCurrentPage"])
   },
   watch: {
     //监听器当数据发生改变就调用异步方法更新数据
     eachPage() {
+      
       this.getUserByPageAsync();
     },
     currentPage() {
+      
       this.getUserByPageAsync();
     }
   },
@@ -134,9 +145,9 @@ export default {
   },
   data() {
     return {
-      formLabelWidth: '120px',
+      formLabelWidth: "120px",
       dialogFormVisible: false,
-      tabPosition: "left",
+      tabPosition: "top",
       form: {
         username: "",
         password: "",
@@ -145,10 +156,10 @@ export default {
         name: "",
         role: ""
       },
-      updata:{
-        phone:"",
-        state:"",
-        _id:""        
+      updata: {
+        phone: "",
+        state: "",
+        _id: ""
       }
     };
   }

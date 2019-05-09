@@ -65,78 +65,10 @@
       </el-table-column>
     </el-table>
     <!-- 修改组件 -->
-    <el-dialog title="修改门店信息" :visible.sync="dialogFormVisible">
-      <el-form style="padding-right: 120px;">
-        <div style="display: flex;justify-content: space-between;">
-          <el-form-item label="门店编号" :label-width="formLabelWidth">
-            <el-input v-model="tableData._id" disabled style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="名称" :label-width="formLabelWidth">
-            <el-input v-model="tableData.name" style="width:300px"></el-input>
-          </el-form-item>
-        </div>
-        <div style="display: flex;justify-content: space-between;">
-          <el-form-item label="营业执照号码" :label-width="formLabelWidth">
-            <el-input v-model="tableData.licensenumber" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="营业地址" :label-width="formLabelWidth">
-            <el-input v-model="tableData.site" style="width:300px"></el-input>
-          </el-form-item>
-        </div>
-        <div style="display: flex;justify-content: space-between;">
-          <el-form-item label="法人" :label-width="formLabelWidth">
-            <el-input v-model="tableData.person" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="联系电话" :label-width="formLabelWidth">
-            <el-input v-model="tableData.phone" style="width:300px"></el-input>
-          </el-form-item>
-        </div>
-        <div style="display: flex;justify-content: space-between;">
-          <el-form-item label="特色" :label-width="formLabelWidth">
-            <el-input v-model="tableData.feature" style="width:300px"></el-input>
-          </el-form-item>
-        </div>
-        <el-form-item label="营业执照图片" :label-width="formLabelWidth">
-          <!-- 图片 -->
-          <el-upload
-            action="/storefront/addLicense2"
-            list-type="picture-card"
-            ref="license"
-            :auto-upload="false"
-            :limit="1"
-            :on-exceed="exceed"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
-            :file-list="tableData.license"
-          >
-            <i class="el-icon-plus"></i>
-          </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt>
-          </el-dialog>
-          <!-- /图片 -->
-        </el-form-item>
-        <el-form-item label="头图" :label-width="formLabelWidth">
-          <!-- 图片 -->
-          <el-upload
-            action="/storefront/addLicense2"
-            list-type="picture-card"
-            ref="banner"
-            :auto-upload="false"
-            :limit="3"
-            :on-exceed="exceed"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
-            :file-list="tableData.banner"
-          >
-            <i class="el-icon-plus"></i>
-          </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt>
-          </el-dialog>
-          <!-- /图片 -->
-        </el-form-item>
-      </el-form>
+    <el-dialog title="审核" width="400px" :visible.sync="dialogFormVisible">
+      <!-- <el-input v-model="tableData.state" style="width:300px"></el-input> -->
+      <el-radio v-model="tableData.state" label="2" border>通过</el-radio>
+      <el-radio v-model="tableData.state" label="0" border>拒绝</el-radio>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="submitUpload">确 定</el-button>
@@ -170,11 +102,11 @@ export default {
     },
     eachPage() {
       //监听eachPage，发生变化就会触发
-      this.getStorefrontByPageAsync();
+      this.getStorefrontByPageAsync({ state: this.state });
     },
     currentPage() {
       //监听eachPage，发生变化就会触发
-      this.getStorefrontByPageAsync();
+      this.getStorefrontByPageAsync({ state: this.state });
     }
   },
   computed: {
@@ -190,7 +122,7 @@ export default {
   },
   mounted() {
     if (this.currentPage === 1) {
-      this.getStorefrontByPageAsync();
+      this.getStorefrontByPageAsync({ state: this.state });
     } else {
       this.setCurrentPage(1);
     }
@@ -208,12 +140,7 @@ export default {
     },
     //点击确认修改按钮
     submitUpload() {
-      this.$refs.license.submit();
-      this.$refs.banner.submit();
-      // this.$refs.banner.clearFiles();
-      // console.log(this.tableData);
       this.updateStorefrontAsync(this.updateFrontById(this.tableData));
-      // console.log(this.tableData.license);
       this.dialogFormVisible = false;
     },
     //点击修改按钮
@@ -229,7 +156,7 @@ export default {
       return {
         ...row,
         ...{
-          newState: 2,
+          newState: 1,
           license: [...row.license[0].url],
           banner: this.conversionUpdate(row)
         }
@@ -258,10 +185,11 @@ export default {
       this.$message.error("上传图片超出!");
     }
   },
+
   data() {
     return {
-      state: 2, //根据该状态显示当前页面的数据
-      options: [ //搜索框中的下拉列表
+      state: 1,
+      options: [
         {
           value: "name",
           label: "名称"
@@ -271,11 +199,11 @@ export default {
           label: "法人"
         }
       ],
-      value: "name", // 搜索框中下拉列表的值
-      inputText: "", //搜索框中文本框的值
+      value: "name",
+      inputText: "",
       dialogImageUrl: "",
       dialogVisible: false,
-      tableData: { 
+      tableData: {
         _id: "123456",
         name: "卖点狗粮",
         licensenumber: "111111",

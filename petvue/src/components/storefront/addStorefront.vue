@@ -124,6 +124,9 @@ export default {
       this.$refs.banner.submit();
     },
     add() {
+      const userId =  document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
+    
+      
       const {
         name,
         site,
@@ -142,7 +145,7 @@ export default {
         feature,
         phone,
         license,
-        banner
+        banner,userId
       });
     }
   }

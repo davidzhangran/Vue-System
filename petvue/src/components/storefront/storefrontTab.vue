@@ -116,7 +116,6 @@ export default {
   },
   data() {
     return {
-     
       dialogTableVisible: false,
       dialogFormVisible: false,
       form: {
@@ -155,6 +154,7 @@ export default {
   },
   mounted() {
     this.getStorefrontByPageAsync();
+    
   }
 };
 </script>
