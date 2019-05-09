@@ -6,7 +6,7 @@
         <el-form-item label="用户:">
           <!-- <el-input v-model="orders.user" placeholder="用户"></el-input> -->
           <el-select v-model="userId" placeholder="请选择">
-            <el-option v-for="item in user" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            <el-option v-for="item in adc" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="商品:" class="input">
@@ -35,6 +35,10 @@
   </div>
 </template>
 <script>
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapMutations, mapActions } = createNamespacedHelpers(
+  "orders"
+);
 export default {
   name: "orders",
   data() {
@@ -71,26 +75,38 @@ export default {
     };
   },
   methods: {
-    addOrders() {},
+    ...mapActions(["getCommoditysAsync", "addOrdersAsync"]),
+    addOrders() {
+      this.addOrdersAsync({
+        user: "1",
+        commodity: "2",
+        storefront: "3",
+        serve: "4",
+        pet: "5",
+        price: "6"
+      });
+    },
     adc() {
-      return [
-        {
-          id: "name",
-          name: "商品名称"
-        },
-        {
-          id: "category",
-          name: "商品类别"
-        },
-        {
-          id: "texture",
-          name: "商品材质"
-        },
-        {
-          id: "price",
-          name: "价格"
-        }
-      ];
+      console.log("123");
+
+      //   return [
+      //     {
+      //       id: "name",
+      //       name: "商品名称"
+      //     },
+      //     {
+      //       id: "category",
+      //       name: "商品类别"
+      //     },
+      //     {
+      //       id: "texture",
+      //       name: "商品材质"
+      //     },
+      //     {
+      //       id: "price",
+      //       name: "价格"
+      //     }
+      //   ];
     }
   }
 };
