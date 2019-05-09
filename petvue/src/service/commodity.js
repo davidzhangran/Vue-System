@@ -1,12 +1,13 @@
 //商品
 
-const getcommoditysByPage = async ({ currentPage = 1, eachPage = 10, type, text } = {}) => {
+const getcommoditysByPage = async ({ currentPage = 1, eachPage = 10, type, text,userId } = {}) => {
     if (type == undefined) {
-        let data = await fetch(`/goods/getcommoditysByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
+        let data = await fetch(`/goods/getcommoditysByPage?currentPage=${currentPage}&eachPage=${eachPage}&userId=${userId}`)
             .then(response => response.json())
         return data
     } else {
-        let data = await fetch(`/goods/getcommoditysByPage?currentPage=${currentPage}&eachPage=${eachPage}&type=${type}&text=${text}`)
+        let data = await fetch(`/goods/getcommoditysByPage?currentPage=${currentPage}&eachPage=${eachPage}
+        &type=${type}&text=${text}&userId=${userId}`)
             .then(response => response.json())
         return data
     }

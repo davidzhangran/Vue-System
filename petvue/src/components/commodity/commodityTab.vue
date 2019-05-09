@@ -39,7 +39,6 @@
       <el-table-column prop="price" label="价格" align="center"></el-table-column>
       <el-table-column fixed="right" label="操作" width="200" align="center">
         <template slot-scope="scope">
-         
           <el-button type="success" plain @click="hanleClick(scope.row)" size="small">修改</el-button>
           <el-button type="danger" plain @click="handleDelete(scope.row)" size="small">删除</el-button>
         </template>
@@ -98,7 +97,13 @@
             <el-input v-model="commodity.supplier" placeholder="供应商"></el-input>
           </el-form-item>
           <el-form-item label="出厂日期:">
-          <el-date-picker v-model="commodity.production" type="date" placeholder="选择日期" format="yyyy年MM月dd日" value-format="yyyy 年 MM 月 dd 日"></el-date-picker>
+            <el-date-picker
+              v-model="commodity.production"
+              type="date"
+              placeholder="选择日期"
+              format="yyyy年MM月dd日"
+              value-format="yyyy 年 MM 月 dd 日"
+            ></el-date-picker>
           </el-form-item>
           <h1>修改图片</h1>
           <div class="imageDiv">
@@ -345,11 +350,21 @@ export default {
     search() {
       const type = this.value;
       const text = this.label;
-      this.getCommoditysAsync({ type, text });
+      this.getCommoditysAsync({
+        type,
+        text,
+        userId: document.cookie.match(
+          new RegExp("(^|)" + "id" + "=([^;]*)(;|$)")
+        )[2]
+      });
     }
   },
   mounted() {
-    this.getCommoditysAsync();
+    this.getCommoditysAsync({
+      userId: document.cookie.match(
+        new RegExp("(^|)" + "id" + "=([^;]*)(;|$)")
+      )[2]
+    });
   }
 };
 </script>
