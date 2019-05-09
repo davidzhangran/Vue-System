@@ -33,21 +33,19 @@
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button @click="dialogFormVisible = false" >取 消</el-button>
-              <el-button type="primary" @click="upDataUserAsync(updata)" >确 定</el-button>
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="upDataUserAsync(updata)">确 定</el-button>
             </div>
           </el-dialog>
 
-
           <div class="block">
-            <el-pagination
-              @size-change="setEachPage"
-              @current-change="setCurrentPage"
-              :current-page="currentPage - 0"
-              :page-sizes="[3, 5, 10, 15]"
-              :page-size="3"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="count"
+            <el-pagination @size-change="setEachPage" 
+            @current-change="setCurrentPage" 
+            :current-page="currentPage - 0" 
+            :page-sizes="[3, 5, 10, 15]" 
+            :page-size="3" 
+            layout="total, sizes, prev, pager, next, jumper" 
+            :total="count"
             ></el-pagination>
           </div>
         </div>
@@ -94,7 +92,7 @@ const { mapMutations, mapState, mapActions } = createNamespacedHelpers("users");
 
 export default {
   computed: {
-    ...mapState(["users", "totalPage", "count",]),
+    ...mapState(["users", "totalPage", "count"]),
     eachPage: {
       get: mapState(["eachPage"]).eachPage, //获取每页显示页数
       set: mapMutations(["setEachPage"]).setEachPage //通过input框去修改每页显示页数
@@ -106,9 +104,8 @@ export default {
   },
   methods: {
     handleClick(row) {
-      this.updata._id = row._id
-      this.updata.phone = row.phone,
-      this.updata.state = row.state
+      this.updata._id = row._id;
+      (this.updata.phone = row.phone), (this.updata.state = row.state);
       this.dialogFormVisible = true;
       console.log(row);
     },
@@ -118,9 +115,11 @@ export default {
   watch: {
     //监听器当数据发生改变就调用异步方法更新数据
     eachPage() {
+      
       this.getUserByPageAsync();
     },
     currentPage() {
+      
       this.getUserByPageAsync();
     }
   },
@@ -130,7 +129,7 @@ export default {
   },
   data() {
     return {
-      formLabelWidth: '120px',
+      formLabelWidth: "120px",
       dialogFormVisible: false,
       tabPosition: "left",
       form: {
@@ -141,10 +140,10 @@ export default {
         name: "",
         role: ""
       },
-      updata:{
-        phone:"",
-        state:"",
-        _id:""        
+      updata: {
+        phone: "",
+        state: "",
+        _id: ""
       }
     };
   }
