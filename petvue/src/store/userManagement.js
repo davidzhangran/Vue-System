@@ -3,6 +3,7 @@ import userService from '../service/userManagement'
 export default {
     namespaced: true,
     state: {
+        loading:false,
         currentPage: 1, //当前页码
         eachPage: 3, //每页显示的条数
         totalPage: 10, //总页数
@@ -21,6 +22,12 @@ export default {
         },
         setCurrentPage: (state, currentPage) => {
             state.currentPage = currentPage
+        },
+        open(state) {
+            state.loading = true;
+        },
+        close(state) {
+            state.loading = false;
         }
     },
     actions: {
@@ -44,6 +51,7 @@ export default {
                 return item.role = "平台管理员"
             })
             context.commit("getUsersByPgae", data)
+            context.commit("close")
         },
         //新增用户
         async addUserAsync({ dispatch }, { username, password, phone, email, name, role }) {
@@ -52,12 +60,14 @@ export default {
             console.log(result);
         },
         //修改用户
-        async upDataUserAsync({ dispatch }, {_id, state}) {
+        async upDataUserAsync({ dispatch,commit }, {_id, state}) {
+           commit("open")
             const result = await userService.upDataUser({_id, state})
             dispatch("getUserByPageAsync")
         },
         //删除用户
-        async deleteUserAsync({dispatch}, _id) {
+        async deleteUserAsync({dispatch, commit}, _id) {
+            commit("open")
             const result = await userService.deleteUser({_id})
             dispatch("getUserByPageAsync")
         }
