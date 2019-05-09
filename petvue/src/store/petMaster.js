@@ -15,9 +15,12 @@ export default {
     },
     actions: { //异步
         async addPetMasterAsync(context, p) {
-
+        
+            
             const result = await petMasterService.addPetMaster(p)
             console.log(result);
+            
+            // console.log(result);
         }
 
     }
