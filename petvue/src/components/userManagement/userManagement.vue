@@ -43,18 +43,24 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="dialogFormVisible = false">取 消</el-button>
+<<<<<<< HEAD
+              <el-button type="primary" @click="upDataUserAsync(updata)">确 定</el-button>
+            </div>
+          </el-dialog>
+
+=======
               <el-button type="primary" @click="comfirm(updata)">确 定</el-button>
             </div>
           </el-dialog>
+>>>>>>> 46b87e1246369eb638edb089b32abcb2f79d66d5
           <div class="block">
-            <el-pagination
-              @size-change="setEachPage"
-              @current-change="setCurrentPage"
-              :current-page="currentPage - 0"
-              :page-sizes="[3, 5, 10, 15]"
-              :page-size="3"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="count"
+            <el-pagination @size-change="setEachPage" 
+            @current-change="setCurrentPage" 
+            :current-page="currentPage - 0" 
+            :page-sizes="[3, 5, 10, 15]" 
+            :page-size="3" 
+            layout="total, sizes, prev, pager, next, jumper" 
+            :total="count"
             ></el-pagination>
           </div>
         </div>
@@ -101,7 +107,11 @@ const { mapMutations, mapState, mapActions } = createNamespacedHelpers("users");
 
 export default {
   computed: {
+<<<<<<< HEAD
+    ...mapState(["users", "totalPage", "count"]),
+=======
     ...mapState(["users", "totalPage", "count", "loading"]),
+>>>>>>> 46b87e1246369eb638edb089b32abcb2f79d66d5
     eachPage: {
       get: mapState(["eachPage"]).eachPage, //获取每页显示页数
       set: mapMutations(["setEachPage"]).setEachPage //通过input框去修改每页显示页数
@@ -113,7 +123,12 @@ export default {
   },
   methods: {
     handleClick(row) {
+<<<<<<< HEAD
+      this.updata._id = row._id;
+      (this.updata.phone = row.phone), (this.updata.state = row.state);
+=======
       this.updata = row;
+>>>>>>> 46b87e1246369eb638edb089b32abcb2f79d66d5
       this.dialogFormVisible = true;
       console.log(row);
     },
@@ -132,9 +147,11 @@ export default {
   watch: {
     //监听器当数据发生改变就调用异步方法更新数据
     eachPage() {
+      
       this.getUserByPageAsync();
     },
     currentPage() {
+      
       this.getUserByPageAsync();
     }
   },
