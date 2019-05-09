@@ -1,6 +1,13 @@
 <template>
   <div>
    <el-button type="primary" @click="dialogVisible = true">新增</el-button>
+    <el-select v-model="value" style="width:100px;" placeholder="请选择">
+      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+    </el-select>
+    <div class="name1">
+      <el-input v-model="label" style="" placeholder="请输入内容"></el-input>
+    </div>
+    <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
   <el-dialog
     title="新增"
     :visible.sync="dialogVisible"
@@ -189,7 +196,7 @@
       :page-sizes="[3, 5, 7, 10]"
       :page-size="eachPage"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
+      :total="serves.length"
     ></el-pagination>
   </div>
 </template>
@@ -201,6 +208,8 @@ export default {
   name: "serve",
     data(){
      return{
+        label:"",
+        value:"",
         name:"",
         category:"",
         schedule:"",
@@ -210,6 +219,36 @@ export default {
         grade:"",
         price:"",
         _id:"",
+        options: [
+        {
+          value: "name",
+          label: "服务类型"
+        },
+        {
+          value: "category",
+          label: "品类"
+        },
+        {
+          value: "schedule",
+          label: "排期"
+        },
+        {
+          value: "specification",
+          label: "适用规格"
+        },
+        {
+          value: "service",
+          label: "服务规格"
+        },
+        {
+          value: "consuming",
+          label: "耗时"
+        },
+        {
+          value: "price",
+          label: "价格"
+        }
+      ],
         dialogVisible1:false,
         dialogVisible:false,
           pickerOptions: {
@@ -283,6 +322,14 @@ export default {
         _id: row._id
       });
     },
+    search() {
+      this.getPetsByPageAsync({
+        type: this.value,
+        text: this.label
+      });
+      this.label="";
+      this.value="";
+    },
     hanleClick(row) {
       this.dialogVisible1 = true;
       const {
@@ -330,7 +377,9 @@ export default {
     },
  },
  mounted(){
-    this.getPetsByPageAsync();
+    this.getPetsByPageAsync({
+      userId:document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
+    });
  },
   watch: {
     eachPage() {
@@ -371,6 +420,11 @@ export default {
 }
 .demonstration{
   margin-left: 50px;
+}
+.name1 {
+  width: 120px;
+  height:30px;
+  display: inline-block;
 }
 
 </style>
