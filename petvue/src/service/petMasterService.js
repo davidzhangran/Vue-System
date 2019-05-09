@@ -1,26 +1,24 @@
 //宠主
+// 获取宠主
+const getPetMasterByPage = async ({ currentPage = 1, eachPage = 10 } = {}) =>
 
-// const getcommoditysByPage = async ({ currentPage = 1, eachPage = 10 } = {}) =>
-//     await fetch(`/goods/getcommoditysByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
-//         .then(response => response.json())
+    await fetch(`/petMember/getPetMasterByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
+        .then(response => response.json())
 
-
-
-// 新增
-const addPetMaster = async (parm) => {
-    let data = await fetch(`/petMember/addPetMaster`,
-        {
-            method: 'POST',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify(parm)//参数是json格式
-        }).then(response => response.json())
-    console.log(data);
-    return data;
+// 增加
+const addPetMaster = async (params) => await fetch("/petMember/addPetMaster", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+        // "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(params)
 }
+).then(response => response.json())
 
 
 export default {
-    addPetMaster
+    addPetMaster,
+    getPetMasterByPage
 }

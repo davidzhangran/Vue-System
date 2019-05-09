@@ -10,7 +10,13 @@
     >
       <el-menu-item index="/userSystem/userManagement">用户管理</el-menu-item>
       <el-menu-item index="/userSystem/petMaster">宠主管理</el-menu-item>
-      <el-menu-item index="/userSystem/systemFront">门店管理</el-menu-item>
+      <el-submenu index="2">
+        <template slot="title">门店管理</template>
+        <el-menu-item index="/userSystem/systemFront">门店列表</el-menu-item>
+        <el-menu-item index="/userSystem/applyFront">
+          <el-badge :value="value" class="item">申请列表</el-badge>
+        </el-menu-item>
+      </el-submenu>
       <el-menu-item index="3">评论管理</el-menu-item>
     </el-menu>
     <router-view></router-view>
@@ -20,10 +26,13 @@
 
 <script>
 export default {
+  computed: {
+  },
   name: "system",
   data() {
     return {
-      isCollapse: true
+      isCollapse: true,
+      value: 99 + "+"
     };
   },
   methods: {
@@ -38,7 +47,6 @@ export default {
    const data =  document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
   //  console.log(data);
   }
-  
 };
 </script>
 
@@ -46,5 +54,13 @@ export default {
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
+}
+.el-dropdown-link {
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+}
+.demonstration {
+  display: block;
+  color: #8492a6;
 }
 </style>

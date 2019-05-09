@@ -33,11 +33,22 @@ const upDataUser = async (params) => await fetch("/users/upDataUser", {
     body: JSON.stringify(params)
 }
 ).then(response => response.json())
-
+//删除用户
+const deleteUser = async (params) => await fetch("/users/deleteUser", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+        // "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type":"application/json"
+    },
+    body: JSON.stringify(params)
+}
+).then(response => response.json())
 
 export default { //用对象暴露 因为后续需要在里面写多个异步请求
     getUserByPgae,
     addUser,
     loging,
-    upDataUser
+    upDataUser,
+    deleteUser
 }

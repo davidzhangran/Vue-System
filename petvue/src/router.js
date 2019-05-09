@@ -13,6 +13,7 @@ import MoreSf from "./components/storefront/moreSf";
 import UserManagement from "./components/userManagement/userManagement"
 import Commodity from "./components/commodity/commodity"
 import ServePet from "./components/servePet/servePet"
+import ApplyFront from "./components/systemfront/applyfront"
 import Orders from "./components/orders/orders"
 import PetMaster from "./components/petMaster/petMaster"
 Vue.use(Router)
@@ -44,6 +45,9 @@ const router = new Router({
       }, {//门店管理
         path: 'systemFront',
         component: SystemFront
+      }, {
+        path: 'applyFront',
+        component: ApplyFront
       },
       {//宠主管理
         path: 'petMaster',
