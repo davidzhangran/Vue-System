@@ -17,7 +17,8 @@ export default new Vuex.Store({//引入单个模块
     users,
     commodity,
     petMaster,
-    orders,
     servePet,
+    orders
+
   }
 })
