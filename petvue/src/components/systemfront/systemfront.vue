@@ -252,7 +252,6 @@ export default {
       this.$message.error("上传图片超出!");
     }
   },
-
   data() {
     return {
       options: [
