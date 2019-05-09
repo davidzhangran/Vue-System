@@ -34,8 +34,24 @@ const updateStorefront = async (parm) => {
         }).then(response => response.json())
 }
 
+
+// 增加店员
+const addStaff = async (parm) => {
+    console.log(parm);
+    
+    return await fetch(`/storefront/addStaff`,
+        {
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(parm)//参数是json格式
+        }).then(response => response.json())
+}
+
 export default {
     addStorefront,
     getStorefrontByPage,
+    addStaff,
     updateStorefront
 }
