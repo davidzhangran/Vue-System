@@ -7,6 +7,7 @@ import storefront from "./store/storefront"
 import pet from "./store/pet"
 import petMaster from "./store/petMaster"
 import servePet from "./store/servePet"
+import storesystemfront from "./store/storesystemfront"
 import orders from "./store/orders"
 Vue.use(Vuex);
 export default new Vuex.Store({//引入单个模块
@@ -15,6 +16,8 @@ export default new Vuex.Store({//引入单个模块
     pet,
     users,
     commodity,
+    servePet,
+    storesystemfront,
     petMaster,
     servePet,
     // orders
