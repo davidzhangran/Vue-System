@@ -6,19 +6,18 @@
 
 
 
-// 新增
-const addPetMaster = async (parm) => {
-    let data = await fetch(`/petMember/addPetMaster`,
-        {
-            method: 'POST',
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify(parm)//参数是json格式
-        }).then(response => response.json())
-    console.log(data);
-    return data;
+
+
+const addPetMaster = async (params) => await fetch("/petMember/addPetMaster", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+        // "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type":"application/json"
+    },
+    body: JSON.stringify(params)
 }
+).then(response => response.json())
 
 
 export default {
