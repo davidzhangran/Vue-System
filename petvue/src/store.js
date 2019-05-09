@@ -1,5 +1,4 @@
 // 所有仓库的东西都会放到这个仓库里面来
-
 import Vue from 'vue'
 import Vuex from 'vuex'
 import users from "./store/userManagement"
@@ -18,10 +17,6 @@ export default new Vuex.Store({//引入单个模块
     commodity,
     petMaster,
     servePet,
-    orders
-<<<<<<< HEAD
-=======
-
->>>>>>> e342e6ec1cb0cad802d0dea6b319de47fb790f03
+    // orders
   }
 })

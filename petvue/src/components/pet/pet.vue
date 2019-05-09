@@ -255,7 +255,7 @@ export default {
         age,
         gender,
         images,
-        describe
+        describe,
       } = this;
   
       this.addPetAsync({
@@ -342,7 +342,9 @@ export default {
     }
   },
   mounted() {
-    this.getPetsByPageAsync();
+    this.getPetsByPageAsync({
+      userId:document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
+    });
   }
 };
 </script>

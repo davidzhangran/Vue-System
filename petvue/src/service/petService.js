@@ -10,13 +10,13 @@ const addPet = async (parm) => {
         }).then(response => response.json())
 }
 //分页
-const getPetsByPageSer = async ({ currentPage = 1, eachPage = 3,type,text } = {}) => {
+const getPetsByPageSer = async ({ currentPage = 1, eachPage = 3,type,text,userId } = {}) => {
     if(type!=undefined){
-        let data = await fetch(`/pet/getPetsByPage?currentPage=${currentPage}&eachPage=${eachPage}&type=${type}&text=${text}`)
+        let data = await fetch(`/pet/getPetsByPage?currentPage=${currentPage}&eachPage=${eachPage}&type=${type}&text=${text}&userId=${userId}`)
         .then(response => response.json())
         return data
     }else{
-        let data = await fetch(`/pet/getPetsByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
+        let data = await fetch(`/pet/getPetsByPage?currentPage=${currentPage}&eachPage=${eachPage}&userId=${userId}`)
         .then(response => response.json())
         return data
     }
