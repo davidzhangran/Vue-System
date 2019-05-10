@@ -117,7 +117,7 @@ export default {
   },
   async beforeRouteLeave(to, from, next) {
     console.log(from);
-
+    
     if (to.name == "userSystem") {
       const { phone, password } = this.ruleForm;
       const result = await userService.loging({ phone, password });
@@ -152,23 +152,6 @@ export default {
         });
       }
     }
-    // else if (to.name == "userStore") {
-    //   next("/");
-    //   this.$message({
-    //     message: "调皮，不要妄想偷渡哦",
-    //     type: "warning"
-    //   });
-    // }
-    //  else if (to.name == "register") {
-    //   next();
-    // }
-    // else if (to.name != "userSystem" || to.name != "userStore") {
-    //   next("/");
-    //   this.$message({
-    //     message: "调皮，不要妄想偷渡哦",
-    //     type: "warning"
-    //   });
-    // }
     else {
       next();
     }
