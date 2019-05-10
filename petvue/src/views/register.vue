@@ -279,7 +279,7 @@ export default {
     },
     async toLogin({ username, password, phone, email, name }) {
       //  
-      const data = { username, password, phone, email, name, role: "0" };
+      const data = { username, password, phone, email, name, role: "1" };
       const result = await userService.addUser(data);
       if (result) {
         console.log(result);

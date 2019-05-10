@@ -249,7 +249,6 @@ export default {
     bannerSuc(response) {
       this.images.push(response.data.url);
       this.add();
-      // this.$refs.banner.clearFiles();
     },
     submitUpload(){
        this.$refs.upload.submit();
