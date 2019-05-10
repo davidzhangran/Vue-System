@@ -1,5 +1,4 @@
 const addOrders = async (parm) => {
-    console.log(parm)
     return await fetch(`/orders/addOrders`,
         {
             method: 'POST',
@@ -11,7 +10,7 @@ const addOrders = async (parm) => {
 }
 const getOrdersByPage = async ({ currentPage = 1, eachPage = 10, type, text, userId } = {}) => {
     if (type == undefined) {
-        let data = await fetch(`/orders/getOrdersByPage?currentPage=${currentPage}&eachPage=${eachPage}&userId=${userId}`)
+        let data = await fetch(`/orders/getOrdersByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
             .then(response => response.json())
         return data
     } else {

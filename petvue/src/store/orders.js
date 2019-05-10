@@ -11,8 +11,8 @@ export default {
     state: {
         currentPage: 1,//当前页
         eachPage: 3,//每页显示条数
-        totalPage: 0,
-        count: 0,
+        totalPage: 0,//总页数
+        count: 0,//总条数
         commoditys: [],
         pets: [],
         serves: [],
@@ -22,31 +22,31 @@ export default {
     },
     mutations: {//同步方法
         getCommoditysByPage: (state, payload) => {
-            Object.assign(state, payload)
+            Object.assign(state.commoditys, payload.commoditys)
         },
         getPetsByPage: (state, payload) => {
-            Object.assign(state, payload)
+            Object.assign(state.pets, payload.pets)
         },
         getServesByPage: (state, payload) => {
-            Object.assign(state, payload)
+            Object.assign(state.serves, payload.serves)
         },
         getStorefrontByPage: (state, payload) => {
-            Object.assign(state, payload)
+            Object.assign(state.storefrontInfo, payload.storefrontInfo)
         },
         getPetMasterByPgae: (state, payload) => {
-            Object.assign(state, payload)
+            Object.assign(state.petMasterUsers, payload.petMasterUsers)
         },
         getOrdersByPage: (state, payload) => {
             Object.assign(state, payload)
         },
-        setEachPage: (state, eachPage) => state.eachPage = eachPage,
+        // setEachPage: (state, eachPage) => state.eachPage = eachPage,
         setCurrentPage: (state, currentPage) => state.currentPage = currentPage,
-        // setEachPage: (state, eachPage) => {//当在最后一页进行翻页时调到以第一
-        //     state.eachPage = eachPage;
-        //     if (state.currentPage == state.totalPage) {
-        //         state.currentPage = 1;
-        //     }
-        // },
+        setEachPage: (state, eachPage) => {//当在最后一页进行翻页时调到以第一
+            state.eachPage = eachPage;
+            if (state.currentPage == state.totalPage) {
+                state.currentPage = 1;
+            }
+        },
     },
     actions: {
         async addOrdersAsync(context, playlod) {
@@ -56,13 +56,9 @@ export default {
         // 获取订单
         async getOrdersAsync(context, { type, text, userId } = {}) {
             const { currentPage, eachPage } = context.state
-            if (type == undefined) {
-                const data = await OrderService.getOrdersByPage({ currentPage, eachPage, userId })
-                context.commit("getOrdersByPage", data)
-            } else {
-                const data = await OrderService.getOrdersByPage({ currentPage, eachPage, type, text })
-                context.commit("getOrdersByPage", data)
-            }
+            const data = await OrderService.getOrdersByPage({ currentPage, eachPage })
+            context.commit("getOrdersByPage", data)
+
         },
         // 
         async removeOrdersAsync(context, playlod) {
