@@ -39,6 +39,16 @@ const router = new Router({
       path: '/userSystem',
       name: 'userSystem',
       component: UserSystem,
+      beforeEnter: (to, from, next) => {
+        console.log(from.path.slice(0, 10));
+        if (from.path.slice(0, 10) == "/userStore") {
+          console.log(from.path.slice(0, 10));
+          next(false)
+        } else {
+          next()
+        }
+
+      },
       children: [{//用户管理
         path: 'userManagement',
         component: UserManagement
@@ -58,6 +68,14 @@ const router = new Router({
       path: '/userStore',
       name: 'userStore',
       component: UserStore,
+      beforeEnter: (to, from, next) => {
+        console.log(from.path.slice(0, 11));
+        if (from.path.slice(0, 11) == "/userSystem") {
+          next(false)
+        } else {
+          next()
+        }
+      },
       children: [{//宠物管理
         path: 'Pet',
         name: 'Pet',

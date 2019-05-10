@@ -39,6 +39,8 @@ export default {
     actions: { //异步
         // 增加宠主
         async addPetMasterAsync({ dispatch, commit }, p) {
+            const {banner} = p
+            console.log(banner);
             const result = await petMasterService.addPetMaster(p)
             commit("close")
             dispatch("getPetMasterByPageAsync")
