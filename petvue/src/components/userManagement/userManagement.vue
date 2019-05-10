@@ -102,7 +102,6 @@ const { mapMutations, mapState, mapActions } = createNamespacedHelpers("users");
 export default {
   computed: {
 
-
     ...mapState(["users", "totalPage", "count", "loading","eachPage","currentPage"]),
 
     // eachPage: {
@@ -112,8 +111,7 @@ export default {
     // currentPage: {
     //   get: mapState(["currentPage"]).currentPage,
     //   set: mapMutations(["setCurrentPage"]).setCurrentPage
-    // }
-
+    // }2350b33ad78efccbf77672ccc553b4ef54ff0d
   },
   methods: {
     handleClick(row) {
