@@ -20,6 +20,6 @@ export default new Vuex.Store({//引入单个模块
     storesystemfront,
     petMaster,
     servePet,
-    // orders
+    orders
   }
 })
