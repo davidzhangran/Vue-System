@@ -354,21 +354,19 @@ export default {
       const {
         name,
         category,
-        color,
+        schedule,
+        specification,
+        service,
+        grade,
         price,
-        age,
-        gender,
-        images,
-        describe,
-        schedule
       } = row;
       this.name = name;
       this.category = category;
-      this.color = color;
+      this.schedule = schedule;
+      this.specification = specification;
+      this.service = service;
+      this.grade = grade;
       this.price = price;
-      this.age = age;
-      this.gender = gender;
-      this.describe = describe;
       this._id = row._id;
       this.schedule=schedule;
     },
