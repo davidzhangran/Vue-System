@@ -28,7 +28,6 @@ export default {
         async addCommodityAsync(context, playlod) {
             // const { currentPage, eachPage } = context.state
             const data = await comService.addCommodity(playlod);
-            console.log(data)
         },
         async getCommoditysAsync(context, { type, text, userId } = {}) {
             const { currentPage, eachPage } = context.state
@@ -37,11 +36,9 @@ export default {
                 context.commit("getCommoditysByPage", data)
             } else {
                 const data = await comService.getcommoditysByPage({ currentPage, eachPage, type, text, userId })
-                console.log(data)
+
                 context.commit("getCommoditysByPage", data)
             }
-
-
         },
         async upDataCommodityAsync(context, playlod) {
             const data = await comService.upDataCommodity(playlod);
