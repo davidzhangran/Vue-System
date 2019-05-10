@@ -61,7 +61,7 @@ export default {
         },
         //修改用户
         async upDataUserAsync({ dispatch,commit }, {_id, state}) {
-           commit("open")
+            commit("open")
             const result = await userService.upDataUser({_id, state})
             dispatch("getUserByPageAsync")
         },
