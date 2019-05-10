@@ -1,6 +1,6 @@
 // 申请门店
 
-const userId =  document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
+// const userId =  document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
 
 const addStorefront = async (parm) => {
     console.log(parm);
@@ -56,12 +56,20 @@ const addGoods = async ({ _id, goodsId }) => {
     return await fetch(`/storefront/addGoods?_id=${_id}&goodsId=${goodsId}`)
         .then(response => response.json())
 }
-const addServe = async ({ _id }) => {
-    return await fetch(`/storefront/addServe?_id=${_id}`)
+const addServe = async ({ _id, serveId }) => {
+    return await fetch(`/storefront/addServe?_id=${_id}&serveId=${serveId}`)
         .then(response => response.json())
 }
-const addPet = async ({ _id }) => {
-    return await fetch(`/storefront/addPet?_id=${_id}`)
+const addPet = async ({ _id, petId }) => {
+    return await fetch(`/storefront/addPet?_id=${_id}&petId=${petId}`)
+        .then(response => response.json())
+}
+const remove = async ({ _id, typeId, type }) => {
+    return await fetch(`/storefront/remove?_id=${_id}&typeId=${typeId}&type=${type}`)
+        .then(response => response.json())
+}
+const removeStaff = async ({ _id,  phone }) => {
+    return await fetch(`/storefront/removeStaff?_id=${_id}&phone=${phone}`)
         .then(response => response.json())
 }
 
@@ -72,6 +80,8 @@ export default {
     updateStorefront,
     addGoods,
     addServe,
-    addPet
+    addPet,
+    remove,
+    removeStaff
 }
 
