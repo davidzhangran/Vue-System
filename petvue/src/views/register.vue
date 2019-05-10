@@ -279,8 +279,9 @@ export default {
     },
     async toLogin({ username, password, phone, email, name }) {
       //  
-      const data = { username, password, phone, email, name, role: "0" };
+      const data = { username, password, phone, email, name, role: "1" };
       const result = await userService.addUser(data);
+      this.ruleForm.username = ""
       if (result) {
         console.log(result);
         this.$alert("", "注册成功,管理员审核通过即可登陆！", {

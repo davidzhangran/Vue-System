@@ -18,12 +18,39 @@ import Orders from "./components/orders/orders"
 import PetMaster from "./components/petMaster/petMaster"
 Vue.use(Router)
 
+
+
+function getCookie() {
+  const arr = document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))
+  if(arr) {
+    return arr[2]
+  }
+  return null
+}
+
+function delcookie() {
+  const exp = new Date();
+  exp.setTime(exp.getTime() - 1);
+  var cval = getCookie("id");
+  if (cval != null) {
+    document.cookie = "id" + "=" + cval + ";expires=" + exp.toGMTString();
+  }
+}
+
+
+
 const router = new Router({
   routes: [
     {//登陆
       path: '/',
       name: "empty",
-      component: Login
+      component: Login,
+      beforeEnter: (to, from, next) => {
+        console.log(1);
+        
+        delcookie()
+        next()
+      }
     },
     {
       path: '/login/:phone',
@@ -39,6 +66,16 @@ const router = new Router({
       path: '/userSystem',
       name: 'userSystem',
       component: UserSystem,
+      beforeEnter: (to, from, next) => {
+        console.log(from.path.slice(0, 10));
+        if (from.path.slice(0, 10) == "/userStore") {
+          console.log(from.path.slice(0, 10));
+          next(false)
+        } else {
+          next()
+        }
+
+      },
       children: [{//用户管理
         path: 'userManagement',
         component: UserManagement
@@ -58,6 +95,14 @@ const router = new Router({
       path: '/userStore',
       name: 'userStore',
       component: UserStore,
+      beforeEnter: (to, from, next) => {
+        console.log(from.path.slice(0, 11));
+        if (from.path.slice(0, 11) == "/userSystem") {
+          next(false)
+        } else {
+          next()
+        }
+      },
       children: [{//宠物管理
         path: 'Pet',
         name: 'Pet',

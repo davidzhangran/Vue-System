@@ -253,6 +253,7 @@ export default {
       ],
         dialogVisible1:false,
         dialogVisible:false,
+        flag:true,
           pickerOptions: {
           shortcuts: [{
             text: '今天',
@@ -317,41 +318,57 @@ export default {
       this.consuming = "";
       this.grade = "";
       this.price = "";
+      this.open2();
     },
      //删除
     handleDelete(row) {
+      const that=this;
       this.removePetAsync({
         _id: row._id
+      }).then(()=>{
+         that.open3();
       });
     },
     search() {
+      this.flag=false;
       this.getPetsByPageAsync({
         type: this.value,
         text: this.label
       });
-      this.label="";
-      this.value="";
     },
+    async open3() {
+      await this.$notify({
+          title: '成功',
+          message: '删除成功',
+          type: 'success'
+        });
+    },
+    async open2() {
+      await this.$message({
+          message: '新增成功!',
+          type: 'success'
+        });
+      },
     hanleClick(row) {
       this.dialogVisible1 = true;
       const {
         name,
         category,
-        color,
+        schedule,
+        specification,
+        service,
+        grade,
         price,
-        age,
-        gender,
-        images,
-        describe
       } = row;
       this.name = name;
       this.category = category;
-      this.color = color;
+      this.schedule = schedule;
+      this.specification = specification;
+      this.service = service;
+      this.grade = grade;
       this.price = price;
-      this.age = age;
-      this.gender = gender;
-      this.describe = describe;
       this._id = row._id;
+      this.schedule=schedule;
     },
     updata(){
        this.dialogVisible1 = false; //关闭窗口
@@ -379,6 +396,7 @@ export default {
     },
  },
  mounted(){
+    this.flag=true;
     this.getPetsByPageAsync({
       userId:document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
     });
@@ -386,11 +404,25 @@ export default {
   watch: {
     eachPage() {
       //监听eachPage，发生变化就会触发
-      this.getPetsByPageAsync();
+      if(this.flag){
+         this.getPetsByPageAsync();
+      }else{
+         this.getPetsByPageAsync({
+        type: this.value,
+        text: this.label
+      });
+      } 
     },
     currentPage() {
       //监听eachPage，发生变化就会触发
-      this.getPetsByPageAsync();
+        if(this.flag){
+         this.getPetsByPageAsync();
+      }else{
+         this.getPetsByPageAsync({
+        type: this.value,
+        text: this.label
+      });
+      } 
     }
   },
   computed: {
