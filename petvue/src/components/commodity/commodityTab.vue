@@ -343,7 +343,7 @@ export default {
         images
       });
       this.dialogVisible = false;
-       this.fileList = [];
+      this.fileList = [];
     },
     handleRemove(file, fileList) {
       this.images = this.fileList.map(item => {
