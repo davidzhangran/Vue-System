@@ -44,20 +44,12 @@ export default {
             dispatch("getPetMasterByPageAsync")
         },
         // 宠主分页
-<<<<<<< HEAD
         async getPetMasterByPageAsync({ commit, state }) {
             commit("openLoading")
             const { eachPage, currentPage } = state//解构得到state里面的两个值
             const data = await petMasterService.getPetMasterByPage({ eachPage, currentPage })
             commit("getPetMasterByPage", data)
             commit("closeLoaing")
-=======
-        async getPetMasterByPageAsync(context) {
-            const { eachPage, currentPage } = context.state//解构得到state里面的两个值
-            const data = await petMasterService.getPetMasterByPage()
-            console.log(data);
-            context.commit("getPetMasterByPgae", data)
->>>>>>> 22cdc89c8e7d24dd9a47ba2c8bafd86268450ec8
         }
     }
 }
