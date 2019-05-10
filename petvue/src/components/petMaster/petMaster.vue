@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button @click="open">新增宠主</el-button>
+    <el-button size="small" type="success" @click="open">新增宠主</el-button>
     <el-dialog title="新增宠主详情" :before-close="close" :visible="dialogTableVisible" width="30%">
       <el-form status-icon v-model="petMaster" label-width="auto" class="petMaster">
         <el-form-item label="头像" prop="banner">
@@ -51,36 +51,47 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-table :data="petMasterUsers" v-loading="loading" border style="width: 100%">
-      <el-table-column prop="banner" label="头像" width="150">
+    <el-table
+      highlight-current-row
+      @current-change="handleCurrentChange"
+      stripe
+      :data="petMasterUsers"
+      v-loading="loading"
+      style="width: 100%"
+      
+    >
+      <el-table-column label="序号" type="index"></el-table-column>
+      <el-table-column prop="banner" label="头像" width="80">
         <template slot-scope="scope">
           <img :src="scope.row.banner[0]" style="width:50px;height:50px">
         </template>
       </el-table-column>
-      <el-table-column prop="phone" label="电话号码" width="120"></el-table-column>
-      <el-table-column prop="username" label="昵称" width="120"></el-table-column>
-      <el-table-column prop="name" label="真实姓名" width="120"></el-table-column>
-      <el-table-column prop="city" label="城市" width="120"></el-table-column>
-      <el-table-column prop="area" label="区域" width="120"></el-table-column>
-      <el-table-column prop="site" label="送货地址" width="220"></el-table-column>
+      <el-table-column prop="phone" label="电话号码"></el-table-column>
+      <el-table-column prop="username" label="昵称"></el-table-column>
+      <el-table-column prop="name" label="真实姓名"></el-table-column>
+      <el-table-column prop="city" label="城市"></el-table-column>
+      <el-table-column prop="area" label="区域"></el-table-column>
+      <el-table-column prop="site" label="送货地址"></el-table-column>
       <el-table-column prop="integral" label="积分" width="100"></el-table-column>
-      <el-table-column label="操作" width="100">
+      <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button @click="handleClick(scope.row)" type="primary" size="small">修改</el-button>
+          <el-button type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <div class="block">
+    <div class="block"  >
       <el-pagination
+        background
         @size-change="setEachPage"
         @current-change="setCurrentPage"
         :page-sizes="[3, 5, 10, 15]"
         :page-size="3"
         :current-page="~~currentPage"
-        layout="total, sizes, prev, pager, next, jumper"
+        layout="prev, pager, next, sizes, total"
         :total="count"
       ></el-pagination>
+
     </div>
   </div>
 </template>
@@ -103,17 +114,23 @@ export default {
     },
     async handleSuccess(file, row) {
       this.petMaster.banner.push(file.data.url);
-      console.log( this.petMaster.banner);
-      await this.addPetMasterAsync(this.petMaster)
-      this.petMaster.banner = []
-      this.$refs.upload.clearFiles()
+      console.log(this.petMaster.banner);
+      await this.addPetMasterAsync(this.petMaster);
+      this.petMaster.banner = [];
+      this.$refs.upload.clearFiles();
     },
     remove(file, fileList) {
       console.log(file);
     },
     submitUpload() {
       this.$refs.upload.submit();
-    }
+    },
+    handleCurrentChange(val) {
+      console.log(val);
+
+      this.currentRow = val;
+    },
+   
   },
   computed: {
     ...mapState([
@@ -159,6 +176,11 @@ export default {
 };
 </script>
 <style>
+
+.block {
+  text-align: center;
+  margin-top: 50px;
+}
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
