@@ -103,9 +103,10 @@
           :on-remove="handleRemove"
           :on-exceed="exceed"
           :file-list="fileList"
-           ref="upload1"
+          ref="upload1"
           :auto-upload="false"
           limit:1
+          :on-success="success"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -116,13 +117,13 @@
       </el-form>
       <div class="dialog-footer">
         <el-button @click="dialogTableVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updata">确 定</el-button>
+        <el-button type="primary" @click="submitUpload1">确 定</el-button>
       </div>
     </el-dialog>
     <el-table :data="pets" border style="width: 100%" >
       <el-table-column fixed prop="images" label="照片" width="150" align="center">
         <template slot-scope="scope">
-          <img :src="scope.row.images[0]" style="width:50px;height:50px"/>
+          <img :src="scope.row.images[0]" style="width:80px;height:80px"/>
         </template>
       </el-table-column>
       <el-table-column fixed prop="name" label="名称" width="150" align="center"></el-table-column>
@@ -153,6 +154,7 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
+import { setInterval } from 'timers';
 const { mapState, mapMutations, mapActions } = createNamespacedHelpers("pet");
 export default {
   name: "pet",
@@ -212,7 +214,7 @@ export default {
     ]),
     ...mapMutations(["setEachPage", "setCurrentPage"]),
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
@@ -220,9 +222,12 @@ export default {
     },
     //删除
     handleDelete(row) {
+      const that=this;
       this.removePetAsync({
         _id: row._id
-      });
+      }).then(()=>{
+         that.open3();
+      });;
     },
     hanleClick(row) {
       this.fileList[0].url=row.images[0];
@@ -251,8 +256,18 @@ export default {
       this.images.push(response.data.url);
       this.add();
     },
+    success(response){
+     this.images[0]=response.data.url;
+     this.updata();
+    },
     submitUpload(){
        this.$refs.upload.submit();
+    },
+    submitUpload1(){
+      if(this.images[0]!=""){
+        this.updata();
+      }
+       this.$refs.upload1.submit();
     },
     //新增
     add() {
@@ -289,6 +304,7 @@ export default {
       this.images = "";
       this.describe = "";
       this.$refs.upload.clearFiles();
+      this.open2();
     },
     updata(){
        this.dialogTableVisible = false; //关闭窗口
@@ -324,6 +340,20 @@ export default {
     exceed() {
       this.$message.error("上传图片不能超过1张!");
     },
+     //删除成功之后的提示
+    async open3() {
+       await this.$notify({
+          title: '成功',
+          message: '删除成功',
+          type: 'success'
+        });
+    },
+    async open2() {
+      await this.$message({
+          message: '新增成功!',
+          type: 'success'
+        });
+      },
     // 上传图片
     // bannerSuc(response) {
     //   this.images.push(response.data.url);

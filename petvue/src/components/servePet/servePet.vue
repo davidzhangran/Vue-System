@@ -318,11 +318,15 @@ export default {
       this.consuming = "";
       this.grade = "";
       this.price = "";
+      this.open2();
     },
      //删除
     handleDelete(row) {
+      const that=this;
       this.removePetAsync({
         _id: row._id
+      }).then(()=>{
+         that.open3();
       });
     },
     search() {
@@ -332,6 +336,19 @@ export default {
         text: this.label
       });
     },
+    async open3() {
+      await this.$notify({
+          title: '成功',
+          message: '删除成功',
+          type: 'success'
+        });
+    },
+    async open2() {
+      await this.$message({
+          message: '新增成功!',
+          type: 'success'
+        });
+      },
     hanleClick(row) {
       this.dialogVisible1 = true;
       const {

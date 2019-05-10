@@ -1,7 +1,4 @@
 // 申请门店
-
-const userId =  document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
-
 const addStorefront = async (parm) => {
     console.log(parm);
     return await fetch(`/storefront/addStorefront`,
