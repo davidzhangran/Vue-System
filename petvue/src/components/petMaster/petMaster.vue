@@ -114,7 +114,8 @@ export default {
     },
     async handleSuccess(file, row) {
       this.petMaster.banner.push(file.data.url);
-      console.log(this.petMaster.banner);
+      console.log( this.petMaster.banner);
+      
       await this.addPetMasterAsync(this.petMaster);
       this.petMaster.banner = [];
       this.$refs.upload.clearFiles();
@@ -127,7 +128,6 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(val);
-
       this.currentRow = val;
     },
    

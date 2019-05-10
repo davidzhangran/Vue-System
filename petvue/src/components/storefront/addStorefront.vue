@@ -1,75 +1,80 @@
 <template>
-  <div class="wrap">
-    <div>
-      <div class="input">
-        门店名称：
-        <el-input suffix-icon="el-icon-date" v-model="name"></el-input>
-      </div>
-      <div class="input">
-        营业地址：
-        <el-input suffix-icon="el-icon-date" v-model="site"></el-input>
-      </div>
-      <div class="input">
-        联系电话：
-        <el-input suffix-icon="el-icon-date" v-model="phone"></el-input>
-      </div>
-      <div class="input">
-        特色：
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 4}"
-          placeholder="请输入内容"
-          v-model="feature"
-        ></el-input>
-      </div>
+  <div class="exothecium">
+    <div class="h1">
+      <h1>申请门店</h1>
     </div>
-    <div>
-      <div class="input">
-        法人：
-        <el-input suffix-icon="el-icon-date" v-model="person"></el-input>
-      </div>
-      <div class="input">
-        营业执照号码：
-        <el-input suffix-icon="el-icon-date" v-model="licensenumber"></el-input>
-      </div>
+    <div class="wrap">
       <div>
-        营业执照：
-        <!-- /storefront/addLicense -->
-        <el-upload
-          action="/storefront/addLicense2"
-          list-type="picture-card"
-          :on-preview="handlePictureCardPreview"
-          :limit="1"
-          :on-exceed="exceed"
-          :on-success="licenseSuc"
-          :auto-upload="false"
-          ref="license"
-        >
-          <i class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt>
-        </el-dialog>
+        <div class="input">
+          门店名称：
+          <el-input suffix-icon="el-icon-date" v-model="uploadInfo.name"></el-input>
+        </div>
+        <div class="input">
+          营业地址：
+          <el-input suffix-icon="el-icon-date" v-model="uploadInfo.site"></el-input>
+        </div>
+        <div class="input">
+          联系电话：
+          <el-input suffix-icon="el-icon-date" v-model="uploadInfo.phone"></el-input>
+        </div>
+        <div class="input">
+          特色：
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4}"
+            placeholder="请输入内容"
+            v-model="uploadInfo.feature"
+          ></el-input>
+        </div>
       </div>
+
       <div>
-        头图：
-        <!-- /storefront/addLicense -->
-        <el-upload
-          action="/storefront/addLicense2"
-          list-type="picture-card"
-          :on-preview="handlePictureCardPreview"
-          :limit="5"
-          :on-success="bannerSuc"
-          :auto-upload="false"
-          ref="banner"
-        >
-          <i class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt>
-        </el-dialog>
+        <div class="input">
+          法人：
+          <el-input suffix-icon="el-icon-date" v-model="uploadInfo.person"></el-input>
+        </div>
+        <div class="input">
+          营业执照号码：
+          <el-input suffix-icon="el-icon-date" v-model="uploadInfo.licensenumber"></el-input>
+        </div>
+        <div>
+          营业执照：
+          <!-- /storefront/addLicense -->
+          <el-upload
+            action="/storefront/addLicense2"
+            list-type="picture-card"
+            :on-preview="handlePictureCardPreview"
+            :limit="1"
+            :on-exceed="exceed"
+            :on-success="licenseSuc"
+            :auto-upload="false"
+            ref="license"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt>
+          </el-dialog>
+        </div>
+        <div>
+          头图：
+          <el-upload
+            action="/storefront/addLicense2"
+            list-type="picture-card"
+            :on-preview="handlePictureCardPreview"
+            :limit="5"
+            :on-success="bannerSuc"
+            :auto-upload="false"
+            ref="banner"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt>
+          </el-dialog>
+        </div>
+        <el-button type="primary" @click="handleClick">确 定</el-button>
       </div>
-      <el-button type="primary" @click="handleClick">确 定</el-button>
     </div>
   </div>
 </template>
@@ -88,19 +93,25 @@ export default {
       formLabelWidth: "120px",
       dialogImageUrl: "",
       dialogVisible: false,
-      name: "",
-      site: "",
-      phone: "",
-      feature: "",
-      person: "",
-      licensenumber: "",
-      license: [], //营业执照
-      banner: [] //头图
+      flag: false,
+      uploadInfo: {
+        name: "",
+        site: "",
+        phone: "",
+        feature: "",
+        person: "",
+        licensenumber: "",
+        license: [], //营业执照
+        banner: [], //头图
+        userId: document.cookie.match(
+          new RegExp("(^| )" + "id" + "=([^;]*)(;|$)")
+        )[2]
+      }
     };
   },
   methods: {
     ...mapActions(["addStorefrontAsync"]),
-    ...mapMutations(["exceed", "licenseSuc", "bannerSuc"]),
+    ...mapMutations(["exceed", "licenseSuc", "bannerSuc", "openFlag"]),
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
@@ -110,23 +121,28 @@ export default {
     },
     // 上传图片
     licenseSuc(response) {
-      this.license.push(response.data.url);
-      // this.add();
+      this.uploadInfo.license.push(response.data.url);
     },
     bannerSuc(response) {
-      this.banner.push(response.data.url);
+      this.uploadInfo.banner.push(response.data.url);
 
-      this.add();
-      // this.$refs.banner.clearFiles();
+      
+      if (this.flag) return;
+
+      this.flag = true;
+      Promise.resolve().then(() => {
+        console.log(this.uploadInfo);
+        this.addStorefrontAsync(this.uploadInfo);
+      });
     },
     handleClick() {
-      this.$refs.license.submit();
       this.$refs.banner.submit();
+      this.$refs.license.submit();
     },
     add() {
-      const userId =  document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
-    
-      
+      const userId = document.cookie.match(
+        new RegExp("(^| )" + "id" + "=([^;]*)(;|$)")
+      )[2];
       const {
         name,
         site,
@@ -145,20 +161,36 @@ export default {
         feature,
         phone,
         license,
-        banner,userId
+        banner,
+        userId
       });
     }
+  },
+  computed: {
+    // ...mapState(["flag"])
   }
 };
 </script>
 <style scoped>
+.h1 > h1 {
+  font-size: 30px;
+}
+.h1 {
+  width: 200px;
+  margin: auto;
+}
 .input {
   width: 250px;
   margin-bottom: 20px;
 }
 .wrap {
   display: flex;
-  /* flex-wrap: wrap; */
+  width: 700px;
+  margin: auto;
+}
+.wrap > div {
+  margin-right: 40px;
+  /* margin-left: 40px; */
 }
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;

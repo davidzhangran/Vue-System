@@ -101,7 +101,13 @@ const { mapMutations, mapState, mapActions } = createNamespacedHelpers("users");
 
 export default {
   computed: {
+<<<<<<< HEAD
     ...mapState(["users", "totalPage", "count", "loading","eachPage","currentPage"]),
+=======
+
+    ...mapState(["users", "totalPage", "count", "loading","eachPage","currentPage"]),
+
+>>>>>>> 84a70befe8d4646b925c08a04d16023733942f79
     // eachPage: {
     //   get: mapState(["eachPage"]).eachPage, //获取每页显示页数
     //   set: mapMutations(["setEachPage"]).setEachPage //通过input框去修改每页显示页数
@@ -109,7 +115,7 @@ export default {
     // currentPage: {
     //   get: mapState(["currentPage"]).currentPage,
     //   set: mapMutations(["setCurrentPage"]).setCurrentPage
-    // }
+    // }2350b33ad78efccbf77672ccc553b4ef54ff0d
   },
   methods: {
     handleClick(row) {
