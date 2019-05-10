@@ -1,4 +1,7 @@
 // 申请门店
+
+const userId =  document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
+
 const addStorefront = async (parm) => {
     console.log(parm);
     return await fetch(`/storefront/addStorefront`,
@@ -11,13 +14,13 @@ const addStorefront = async (parm) => {
         }).then(response => response.json())
 }
 
-const getStorefrontByPage = async ({ currentPage = 1, eachPage = 5, value = "name", inputText = "" } = {}) => {
-    if (inputText) {
-        let data = await fetch(`/storefront/getStorefrontByPage?currentPage=${currentPage}&eachPage=${eachPage}&value=${value}&inputText=${inputText}`)
-            .then(response => response.json())
-        return data
-    }
-    let data = await fetch(`/storefront/getStorefrontByPage?currentPage=${currentPage}&eachPage=${eachPage}`)
+const getStorefrontByPage = async ({ currentPage = 1, eachPage = 5, value = "name", inputText = "", userId = "" } = {}) => {
+    // if (inputText) {
+    //     let data = await fetch(`/storefront/getStorefrontByPage?currentPage=${currentPage}&eachPage=${eachPage}&value=${value}&inputText=${inputText}&userId=${userId}`)
+    //         .then(response => response.json())
+    //     return data
+    // }
+    let data = await fetch(`/storefront/getStorefrontByPage?currentPage=${currentPage}&eachPage=${eachPage}&userId=${userId}`)
         .then(response => response.json())
     return data;
 }
@@ -38,7 +41,7 @@ const updateStorefront = async (parm) => {
 // 增加店员
 const addStaff = async (parm) => {
     console.log(parm);
-    
+
     return await fetch(`/storefront/addStaff`,
         {
             method: 'POST',
@@ -49,9 +52,26 @@ const addStaff = async (parm) => {
         }).then(response => response.json())
 }
 
+const addGoods = async ({ _id, goodsId }) => {
+    return await fetch(`/storefront/addGoods?_id=${_id}&goodsId=${goodsId}`)
+        .then(response => response.json())
+}
+const addServe = async ({ _id }) => {
+    return await fetch(`/storefront/addServe?_id=${_id}`)
+        .then(response => response.json())
+}
+const addPet = async ({ _id }) => {
+    return await fetch(`/storefront/addPet?_id=${_id}`)
+        .then(response => response.json())
+}
+
 export default {
     addStorefront,
     getStorefrontByPage,
     addStaff,
-    updateStorefront
+    updateStorefront,
+    addGoods,
+    addServe,
+    addPet
 }
+

@@ -258,7 +258,6 @@ export default {
       this.$message.error("上传图片超出!");
     }
   },
-
   data() {
     return {
       state: 2, //根据该状态显示当前页面的数据

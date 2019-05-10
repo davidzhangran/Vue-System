@@ -8,7 +8,8 @@ export default {
     totalPage: 0,//总页数
     count: 0,//总条数
     storefrontInfo: [],//门店数据,
-    moreSf: {}
+    moreSf: {},
+    user: {}
   },
   mutations: {//同步方法
     getStorefrontByPage(state, payload) {
@@ -31,8 +32,10 @@ export default {
       }
     },
     moreInfo: (state, row) => {
+      console.log(row);
+      
       state.moreSf = row;
-      console.log(state);
+      // console.log(state);
     },//增加单个门户信息
     getStaff: (state, payload) => {
       state.moreSf = payload;
@@ -45,13 +48,16 @@ export default {
       // context.commit("getStorefrontByPage", data);//通过commit触发getStorefrontByPage
     },
     async getStorefrontByPageAsync(context, plo) {//获取门店
+      const userId = document.cookie.match(
+        new RegExp("(^| )" + "id" + "=([^;]*)(;|$)")
+      )[2];
       const { currentPage, eachPage } = context.state;
-      let data = "";
-      if (plo) {
-        data = await storefrontService.getStorefrontByPage({ currentPage, eachPage, value: plo.value, inputText: plo.inputText });//拿到数据，通过mutations触发数据更新
-      } else {
-        data = await storefrontService.getStorefrontByPage({ currentPage, eachPage });//拿到数据，通过mutations触发数据更新
-      }
+      // // let data = "";
+      // // if (plo) {
+      // //   data = await storefrontService.getStorefrontByPage({ currentPage, eachPage, value: plo.value, inputText: plo.inputText });//拿到数据，通过mutations触发数据更新
+      // // } else {
+      const data = await storefrontService.getStorefrontByPage({ currentPage, eachPage, userId });//拿到数据，通过mutations触发数据更新
+      // // }
       console.log(data);
       context.commit("getStorefrontByPage", data);//通过commit触发getStorefrontByPage
     },
@@ -59,7 +65,6 @@ export default {
     async addStaffAsync(context, payload) {//增加店员
       const data = await storefrontService.addStaff(payload);//拿到数据，通过mutations触发数据更新
       context.commit("getStaff", data);//通过commit触发getStorefrontByPage
-
     },
     async updateStorefrontAsync(context, plo) {//修改门店
       const data = await storefrontService.updateStorefront(plo);//拿到数据，通过mutations触发数据更新
@@ -68,5 +73,18 @@ export default {
         context.dispatch("getStorefrontByPageAsync");
       }
     },
+    async addGoodsAsync(context, { _id }) {//添加商品
+      const [data] = await storefrontService.addGoods({ _id: context.state.moreSf._id, goodsId: _id });//拿到数据，通过mutations触发数据更新
+      context.commit("getStaff", data);//通过commit触发getStorefrontByPage
+    },
+    async addServeAsync(context, { _id }) {//添加服务
+      const [data] = await storefrontService.addServe({ _id });
+      context.commit("getStaff", data);
+    },
+    async addPetAsync(context, { _id }) {//添加宠物
+      const [data] = await storefrontService.addPet({ _id });
+      context.commit("getStaff", data);
+    },
+
   },
 }
