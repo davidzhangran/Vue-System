@@ -5,17 +5,17 @@
         <div class="user">
           <el-table v-loading="loading" :data="users" style="width: 100%">
             <el-table-column type="index" label="ID"></el-table-column>
-            <el-table-column prop="username" label="登录名" width="200"></el-table-column>
-            <el-table-column prop="password" label="密码" width="120"></el-table-column>
-            <el-table-column prop="phone" label="手机号" width="120"></el-table-column>
-            <el-table-column prop="email" label="邮箱" width="190"></el-table-column>
-            <el-table-column prop="name" label="姓名" width="100"></el-table-column>
-            <el-table-column prop="role" label="角色" width="120"></el-table-column>
-            <el-table-column prop="state" label="状态" width="120"></el-table-column>
-            <el-table-column label="操作" width="200">
+            <el-table-column prop="username" label="登录名"></el-table-column>
+            <el-table-column prop="password" label="密码"></el-table-column>
+            <el-table-column prop="phone" label="手机号"></el-table-column>
+            <el-table-column prop="email" label="邮箱"></el-table-column>
+            <el-table-column prop="name" label="姓名" w></el-table-column>
+            <el-table-column prop="role" label="角色"></el-table-column>
+            <el-table-column prop="state" label="状态"></el-table-column>
+            <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button @click="handleClick(scope.row)" type="primary" size="mini">修改</el-button>
-                <el-button type="danger" @click="deleteUserAsync(scope.row._id)" size="mini">删除</el-button>
+                <el-button @click="handleClick(scope.row)" type="primary" size="small">修改</el-button>
+                <el-button type="danger" @click="deleteUser(scope.row._id)" size="small">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -47,13 +47,14 @@
             </div>
           </el-dialog>
           <div class="block">
-            <el-pagination @size-change="setEachPage" 
-            @current-change="setCurrentPage" 
-            :current-page="currentPage - 0" 
-            :page-sizes="[3, 5, 10, 15]" 
-            :page-size="3" 
-            layout="total, sizes, prev, pager, next, jumper" 
-            :total="count"
+            <el-pagination
+              @size-change="setEachPage"
+              @current-change="setCurrentPage"
+              :current-page="currentPage - 0"
+              :page-sizes="[3, 5, 10, 15]"
+              :page-size="3"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="count"
             ></el-pagination>
           </div>
         </div>
@@ -100,7 +101,14 @@ const { mapMutations, mapState, mapActions } = createNamespacedHelpers("users");
 
 export default {
   computed: {
-    ...mapState(["users", "totalPage", "count", "loading","eachPage","currentPage"]),
+    ...mapState([
+      "users",
+      "totalPage",
+      "count",
+      "loading",
+      "eachPage",
+      "currentPage"
+    ])
     // eachPage: {
     //   get: mapState(["eachPage"]).eachPage, //获取每页显示页数
     //   set: mapMutations(["setEachPage"]).setEachPage //通过input框去修改每页显示页数
@@ -112,7 +120,7 @@ export default {
   },
   methods: {
     handleClick(row) {
-      this.updata = row;
+      this.updata = { ...row };
       this.dialogFormVisible = true;
       console.log(row);
     },
@@ -126,7 +134,37 @@ export default {
       "upDataUserAsync",
       "deleteUserAsync"
     ]),
-    ...mapMutations(["setEachPage", "setCurrentPage"])
+    ...mapMutations(["setEachPage", "setCurrentPage"]),
+    deleteUser(row) {
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.deleteUserAsync(row);
+          // this.$message({
+          //   type: 'success',
+          //   message: '删除成功!'
+          // });
+          this.$notify({
+            title: "消息",
+            message: "删除成功",
+            type: "success"
+          });
+        })
+        .catch(() => {
+          // this.$message({
+          //   type: "info",
+          //   message: "已取消删除"
+          // });
+
+          this.$notify.info({
+            title: "消息",
+            message: "取消删除"
+          });
+        });
+    }
   },
   watch: {
     //监听器当数据发生改变就调用异步方法更新数据
