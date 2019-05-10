@@ -1,6 +1,5 @@
 // 申请门店
 
-
 const addStorefront = async (parm) => {
     return await fetch(`/storefront/addStorefront`,
         {

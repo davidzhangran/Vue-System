@@ -18,12 +18,39 @@ import Orders from "./components/orders/orders"
 import PetMaster from "./components/petMaster/petMaster"
 Vue.use(Router)
 
+
+
+function getCookie() {
+  const arr = document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))
+  if(arr) {
+    return arr[2]
+  }
+  return null
+}
+
+function delcookie() {
+  const exp = new Date();
+  exp.setTime(exp.getTime() - 1);
+  var cval = getCookie("id");
+  if (cval != null) {
+    document.cookie = "id" + "=" + cval + ";expires=" + exp.toGMTString();
+  }
+}
+
+
+
 const router = new Router({
   routes: [
     {//登陆
       path: '/',
       name: "empty",
-      component: Login
+      component: Login,
+      beforeEnter: (to, from, next) => {
+        console.log(1);
+        
+        delcookie()
+        next()
+      }
     },
     {
       path: '/login/:phone',

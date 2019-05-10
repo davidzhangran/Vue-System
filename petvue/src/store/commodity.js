@@ -30,12 +30,23 @@ export default {
             const data = await comService.addCommodity(playlod);
         },
         async getCommoditysAsync(context, { type, text, userId } = {}) {
+
             const { currentPage, eachPage } = context.state
             if (type == undefined) {
-                const data = await comService.getcommoditysByPage({ currentPage, eachPage, userId })
+
+                const data = await comService.getcommoditysByPage({
+                    currentPage, eachPage, userId: document.cookie.match(
+                        new RegExp("(^|)" + "id" + "=([^;]*)(;|$)")
+                    )[2]
+                })
                 context.commit("getCommoditysByPage", data)
             } else {
-                const data = await comService.getcommoditysByPage({ currentPage, eachPage, type, text, userId })
+
+                const data = await comService.getcommoditysByPage({
+                    currentPage, eachPage, type, text, serId: document.cookie.match(
+                        new RegExp("(^|)" + "id" + "=([^;]*)(;|$)")
+                    )[2]
+                })
 
                 context.commit("getCommoditysByPage", data)
             }
