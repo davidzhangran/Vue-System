@@ -146,7 +146,7 @@
       :page-sizes="[3, 5, 7, 10]"
       :page-size="eachPage"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="pets.length"
+      :total="total"
     ></el-pagination>
   </div>
 </template>
@@ -171,6 +171,7 @@ export default {
       dialogFormVisible: false,
       dialogImageUrl: "",
       dialogVisible: false,
+      flag:true,
       fileList:[{name:"", url: ''}],
       options: [
         {
@@ -249,7 +250,6 @@ export default {
     bannerSuc(response) {
       this.images.push(response.data.url);
       this.add();
-      // this.$refs.banner.clearFiles();
     },
     submitUpload(){
        this.$refs.upload.submit();
@@ -288,7 +288,7 @@ export default {
       this.gender = "";
       this.images = "";
       this.describe = "";
-      // this.$refs.upload.clearFiles();
+      this.$refs.upload.clearFiles();
     },
     updata(){
        this.dialogTableVisible = false; //关闭窗口
@@ -315,12 +315,11 @@ export default {
       });
     },
     search() {
+      this.flag=false;
       this.getPetsByPageAsync({
         type: this.value,
         text: this.label
       });
-      this.label="";
-      this.value="";
     },
     exceed() {
       this.$message.error("上传图片不能超过1张!");
@@ -333,11 +332,25 @@ export default {
   watch: {
     eachPage() {
       //监听eachPage，发生变化就会触发
-      this.getPetsByPageAsync();
+      if(this.flag){
+         this.getPetsByPageAsync();
+      }else{
+        this.getPetsByPageAsync({
+        type: this.value,
+        text: this.label
+      });
+      }
     },
     currentPage() {
       //监听eachPage，发生变化就会触发
-      this.getPetsByPageAsync();
+     if(this.flag){
+         this.getPetsByPageAsync();
+      }else{
+        this.getPetsByPageAsync({
+        type: this.value,
+        text: this.label
+      });
+      }
     }
   },
   computed: {
@@ -352,6 +365,7 @@ export default {
     }
   },
   mounted() {
+    this.flag=true;
     this.getPetsByPageAsync({
       userId:document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
     });

@@ -253,6 +253,7 @@ export default {
       ],
         dialogVisible1:false,
         dialogVisible:false,
+        flag:true,
           pickerOptions: {
           shortcuts: [{
             text: '今天',
@@ -325,12 +326,11 @@ export default {
       });
     },
     search() {
+      this.flag=false;
       this.getPetsByPageAsync({
         type: this.value,
         text: this.label
       });
-      this.label="";
-      this.value="";
     },
     hanleClick(row) {
       this.dialogVisible1 = true;
@@ -342,7 +342,8 @@ export default {
         age,
         gender,
         images,
-        describe
+        describe,
+        schedule
       } = row;
       this.name = name;
       this.category = category;
@@ -352,6 +353,7 @@ export default {
       this.gender = gender;
       this.describe = describe;
       this._id = row._id;
+      this.schedule=schedule;
     },
     updata(){
        this.dialogVisible1 = false; //关闭窗口
@@ -379,6 +381,7 @@ export default {
     },
  },
  mounted(){
+    this.flag=true;
     this.getPetsByPageAsync({
       userId:document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
     });
@@ -386,11 +389,25 @@ export default {
   watch: {
     eachPage() {
       //监听eachPage，发生变化就会触发
-      this.getPetsByPageAsync();
+      if(this.flag){
+         this.getPetsByPageAsync();
+      }else{
+         this.getPetsByPageAsync({
+        type: this.value,
+        text: this.label
+      });
+      } 
     },
     currentPage() {
       //监听eachPage，发生变化就会触发
-      this.getPetsByPageAsync();
+        if(this.flag){
+         this.getPetsByPageAsync();
+      }else{
+         this.getPetsByPageAsync({
+        type: this.value,
+        text: this.label
+      });
+      } 
     }
   },
   computed: {
