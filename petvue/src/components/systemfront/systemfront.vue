@@ -1,6 +1,7 @@
 <template>
   <div>
     <div style="display: flex;justify-content: flex-end;padding-bottom:20px; padding-top:20px;">
+      <el-button @click="whole" type="primary">全部</el-button>
       <el-select style="width:100px;text-align: center;" v-model="value" placeholder="请选择">
         <el-option
           v-for="item in options"
@@ -13,8 +14,8 @@
       <el-button type="primary" @click="searchClick" icon="el-icon-search">搜索</el-button>
     </div>
     <el-table :data="storefrontInfo" border style="width: 100%">
-      <el-table-column header-align="center" align="center" fixed prop="_id" label="门店编号"></el-table-column>
-      <el-table-column header-align="center" align="center" prop="name" label="名称"></el-table-column>
+      <!-- <el-table-column header-align="center" align="center" fixed prop="_id" label="门店编号"></el-table-column> -->
+      <el-table-column header-align="center" align="center" prop="name" label="门店名称"></el-table-column>
       <el-table-column header-align="center" align="center" prop="licensenumber" label="营业执照号码"></el-table-column>
       <el-table-column header-align="center" align="center" prop="license" label="营业执照图片">
         <template slot-scope="scope">
@@ -35,7 +36,7 @@
             <div style="text-align: center;">
               <img
                 style="width:80px;height:80px;"
-                :key="item"
+                :key="item.value"
                 v-for="item in scope.row.banner"
                 :src="item"
                 alt
@@ -46,16 +47,18 @@
         </template>
       </el-table-column>
       <el-table-column header-align="center" align="center" prop="feature" label="特色"></el-table-column>
-      <el-table-column width="120" header-align="center" align="center" label="店员属性">
-        <el-button type="primary">店员详情</el-button>
+      <el-table-column width="120" header-align="center" align="center" label="店员">
+        <template slot-scope="scope">
+          <el-button @click="clerkDetails(scope.row)" type="primary">店员详情</el-button>
+        </template>
       </el-table-column>
-      <el-table-column width="120" header-align="center" align="center" prop="goodsId" label="商品id">
+      <el-table-column width="120" header-align="center" align="center" prop="goodsId" label="商品">
         <el-button type="primary">商品详情</el-button>
       </el-table-column>
-      <el-table-column width="120" header-align="center" align="center" prop="serveId" label="服务id">
+      <el-table-column width="120" header-align="center" align="center" prop="serveId" label="服务">
         <el-button type="primary">服务详情</el-button>
       </el-table-column>
-      <el-table-column width="120" header-align="center" align="center" prop="petId" label="宠物id">
+      <el-table-column width="120" header-align="center" align="center" prop="petId" label="宠物">
         <el-button type="primary">宠物详情</el-button>
       </el-table-column>
       <el-table-column width="120" header-align="center" align="center" fixed="right" label="操作">
@@ -65,7 +68,7 @@
       </el-table-column>
     </el-table>
     <!-- 修改组件 -->
-    <el-dialog title="修改门店信息" :visible.sync="dialogFormVisible">
+    <el-dialog width="900px" title="修改门店信息" :visible.sync="dialogFormVisible">
       <el-form style="padding-right: 120px;">
         <div style="display: flex;justify-content: space-between;">
           <el-form-item label="门店编号" :label-width="formLabelWidth">
@@ -108,6 +111,10 @@
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
             :file-list="tableData.license"
+            :on-change="licenseCha"
+            :on-success="licenseSuc"
+            :before-upload="licenseUp"
+            :on-progress="licensePro"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -128,6 +135,8 @@
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
             :file-list="tableData.banner"
+            :on-change="bannerCha"
+            :on-success="bannerSuc"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -152,6 +161,15 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="count"
     ></el-pagination>
+    <el-dialog title="店员详情" :visible.sync="clerkDialog">
+      <el-table :data="clerkDate" border>
+        <el-table-column property="name" label="姓名"></el-table-column>
+        <el-table-column property="date" label="入职日期"></el-table-column>
+        <el-table-column property="site" label="住址"></el-table-column>
+        <el-table-column property="phone" label="联系电话"></el-table-column>
+        <el-table-column property="value" label="职位"></el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -166,15 +184,15 @@ export default {
   watch: {
     dialogFormVisible() {
       if (this.dialogFormVisible) return;
-      this.tableData = [];
+      // this.tableData = [];
     },
     eachPage() {
       //监听eachPage，发生变化就会触发
-      this.getStorefrontByPageAsync();
+      this.ISSearch();
     },
     currentPage() {
       //监听eachPage，发生变化就会触发
-      this.getStorefrontByPageAsync();
+      this.ISSearch();
     }
   },
   computed: {
@@ -194,12 +212,14 @@ export default {
     } else {
       this.setCurrentPage(1);
     }
+    this.flag = true;
   },
   methods: {
     ...mapActions(["getStorefrontByPageAsync", "updateStorefrontAsync"]),
     ...mapMutations(["setEachPage", "setCurrentPage"]),
     //点击搜索按钮触发
     searchClick() {
+      this.flag = false;
       this.getStorefrontByPageAsync({
         value: this.value,
         inputText: this.inputText,
@@ -210,10 +230,6 @@ export default {
     submitUpload() {
       this.$refs.license.submit();
       this.$refs.banner.submit();
-      // this.$refs.banner.clearFiles();
-      // console.log(this.tableData);
-      this.updateStorefrontAsync(this.updateFrontById(this.tableData));
-      // console.log(this.tableData.license);
       this.dialogFormVisible = false;
     },
     //点击修改按钮
@@ -230,7 +246,7 @@ export default {
         ...row,
         ...{
           newState: 2,
-          license: [...row.license[0].url],
+          license: [row.license[0].url],
           banner: this.conversionUpdate(row)
         }
       };
@@ -240,6 +256,7 @@ export default {
       for (const item of row.banner) {
         temp.push(item.url);
       }
+      console.log(temp);
       return temp;
     },
     conversion(row) {
@@ -249,20 +266,81 @@ export default {
       }
       return temp;
     },
-    handleRemove(file, fileList) {},
+    handleRemove(file, fileList) {
+      console.log(file.url);
+      let data = [];
+      data = this.tableData.banner = this.tableData.banner.filter(
+        item => item.url != file.url
+      );
+      console.log(this.tableData.banner);
+      this.tableData.banner = this.bannerDate = data;
+      console.log(this.bannerDate);
+      this.updateStorefrontAsync(this.updateFrontById(this.tableData));
+    },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
     exceed() {
       this.$message.error("上传图片超出!");
+    },
+    ISSearch() {
+      // 根据是不是搜索状态，发送不同带参数的请求
+      if (this.flag) {
+        this.getStorefrontByPageAsync();
+      } else {
+        this.getStorefrontByPageAsync({
+          value: this.value,
+          inputText: this.inputText,
+          state: this.state
+        });
+      }
+    },
+    whole() {
+      //全部按钮点击事件
+      this.flag = true;
+      this.inputText = "";
+      if (this.currentPage === 1) {
+        this.getStorefrontByPageAsync();
+      } else {
+        this.setCurrentPage(1);
+      }
+    },
+    licenseSuc(response, file, fileList) {
+      //营业执照上传成功的执行的函数
+      this.tableData.license[0].url = response.data.url;
+      this.updateStorefrontAsync(this.updateFrontById(this.tableData));
+      this.tableData = [];
+    },
+    bannerSuc(response, file, fileList) {
+      //头图上传成功的执行的函数
+      console.log(this.tableData.banner);
+      this.bannerDate.push({ url: response.data.url });
+      this.tableData.banner = this.bannerDate;
+      this.updateStorefrontAsync(this.updateFrontById(this.tableData));
+      this.tableData = [];
+    },
+    licenseCha(file, fileList) {},
+    bannerCha(file, fileList) {
+      //头图片修改
+    },
+    licenseUp(file) {},
+    licensePro(event, file, fileList) {},
+    clerkDetails({ _id }) {
+      //店员详情点击事件
+      this.clerkDialog = true;
+      const [newData] = this.storefrontInfo.filter(item => item._id == _id);
+      this.clerkDate = newData.clerk;
     }
   },
 
   data() {
     return {
+      bannerDate: [],
+      flag: true, //IS 搜索 状态
       state: 2, //根据该状态显示当前页面的数据
-      options: [ //搜索框中的下拉列表
+      options: [
+        //搜索框中的下拉列表
         {
           value: "name",
           label: "名称"
@@ -276,56 +354,13 @@ export default {
       inputText: "", //搜索框中文本框的值
       dialogImageUrl: "",
       dialogVisible: false,
-      tableData: { 
-        _id: "123456",
-        name: "卖点狗粮",
-        licensenumber: "111111",
-        license: "../../../introduceBG.jpg",
-        specification: "都适用",
-        site: "上海市普陀区金沙江路 1518 弄",
-        location: "定位",
-        person: "小明",
-        phone: "13547006776",
-        banner: [
-          {
-            name: "",
-            url: ""
-          }
-        ],
-        feature: "超好吃的狗粮",
-        vip: "心悦3",
-        commission: "1:1",
-        clerk: [
-          {
-            name: "张三",
-            age: 18
-          },
-          {
-            name: "李四",
-            age: 15
-          }
-        ],
-        goodsId: [
-          {
-            _id: "001",
-            name: "超好吃的狗粮"
-          }
-        ],
-        serveId: [
-          {
-            _id: "001",
-            name: "洗澡澡"
-          }
-        ],
-        petId: [
-          {
-            _id: "001",
-            name: "山野一号"
-          }
-        ]
+      tableData: {
+        //
       },
       dialogFormVisible: false,
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
+      clerkDate: [],
+      clerkDialog: false // 店员详情面板的状态
     };
   }
 };
