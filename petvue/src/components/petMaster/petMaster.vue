@@ -1,19 +1,22 @@
-<template slot-scope="scope">
+<template>
   <div>
-    <el-button @click="dialogTableVisible = true">新增宠主</el-button>
-    <el-dialog title="新增宠主详情" :visible.sync="dialogTableVisible" width="30%">
+    <el-button size="small" type="success" @click="open">新增宠主</el-button>
+    <el-dialog title="新增宠主详情" :before-close="close" :visible="dialogTableVisible" width="30%">
       <el-form status-icon v-model="petMaster" label-width="auto" class="petMaster">
-
-        <!-- 头像上传 -->
-        <el-form-item label="头像：" prop="banner">
-          <!-- <el-upload action="/petMember/addPetMaster" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
+        <el-form-item label="头像" prop="banner">
+          <el-upload
+            action="/petMember/addPetMasterPicture"
+            list-type="picture-card"
+            :limit="1"
+            :on-preview="handlePreview"
+            :on-success="handleSuccess"
+            :on-remove="remove"
+            :auto-upload="false"
+            ref="upload"
+          >
             <i class="el-icon-plus"></i>
           </el-upload>
-          <el-dialog >
-            <img width="100%"  alt="">
-          </el-dialog> -->
         </el-form-item>
-
         <el-form-item label="电话：" prop="phone">
           <el-input v-model="petMaster.phone" autocomplete="off"></el-input>
         </el-form-item>
@@ -43,136 +46,185 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="addpetMaster(petMaster)">提交</el-button>
+          <el-button type="primary" @click="submitUpload">提交</el-button>
           <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
         </el-form-item>
       </el-form>
     </el-dialog>
-
-    <el-table :data="petMarterData" border style="width: 100%">
-      <el-table-column prop="banner" label="头像" width="120">
-      </el-table-column>
-      <el-table-column fixed prop="phone" label="电话号码" width="150">
-      </el-table-column>
-      <el-table-column prop="username" label="昵称" width="120">
-      </el-table-column>
-      <el-table-column prop="name" label="真实姓名" width="120">
-      </el-table-column>
-      <el-table-column prop="city" label="城市" width="100">
-      </el-table-column>
-      <el-table-column prop="area" label="区域" width="100">
-      </el-table-column>
-      <el-table-column prop="site" label="送货地址" width="220">
-      </el-table-column>
-      <el-table-column prop="integral" label="积分" width="100">
-      </el-table-column>
-
-      <!-- 查看拥有宠物的详情 -->
-      <el-table-column prop="owned" label="订单信息" width="100">
+    <el-table
+      highlight-current-row
+      @current-change="handleCurrentChange"
+      stripe
+      :data="petMasterUsers"
+      v-loading="loading"
+      style="width: 100%"
+      
+    >
+      <el-table-column label="序号" type="index"></el-table-column>
+      <el-table-column prop="banner" label="头像" width="80">
         <template slot-scope="scope">
-          <el-button type="text" @click="dialogFormVisible = true">查看详情</el-button>
-          <el-dialog title="订单详情" :visible.sync="dialogFormVisible">
-            <el-table :data="owned">
-              <el-table-column property="petName" label="宠物名字" width="80"></el-table-column>
-              <el-table-column property="petCategory" label="宠物种类" width="80"></el-table-column>
-              <el-table-column property="petType" label="宠物品种" width="80"></el-table-column>
-              <el-table-column property="petColor" label="宠物颜色" width="70"></el-table-column>
-              <el-table-column property="petDateOfBirth" label="宠物出生时间" width="120"></el-table-column>
-              <el-table-column property="petCharacter" label="宠物性格"></el-table-column>
-            </el-table>
-          </el-dialog>
+          <img :src="scope.row.banner[0]" style="width:50px;height:50px">
         </template>
       </el-table-column>
-
-      <el-table-column fixed="right" label="操作" width="150">
+      <el-table-column prop="phone" label="电话号码"></el-table-column>
+      <el-table-column prop="username" label="昵称"></el-table-column>
+      <el-table-column prop="name" label="真实姓名"></el-table-column>
+      <el-table-column prop="city" label="城市"></el-table-column>
+      <el-table-column prop="area" label="区域"></el-table-column>
+      <el-table-column prop="site" label="送货地址"></el-table-column>
+      <el-table-column prop="integral" label="积分" width="100"></el-table-column>
+      <el-table-column label="操作">
         <template slot-scope="scope">
-          <!-- <el-button @click="seepetMaster(scope.row)" type="text" size="small">查看</el-button> -->
-
-          <!-- 修改宠主资料 -->
-          <el-button @click="editpetMaster(scope.row)" type="text" size="small">修改宠主资料</el-button>
-
+          <el-button @click="handleClick(scope.row)" type="primary" size="small">修改</el-button>
+          <el-button type="danger" size="small">删除</el-button>
         </template>
-
       </el-table-column>
     </el-table>
+    <div class="block"  >
+      <el-pagination
+        background
+        @size-change="setEachPage"
+        @current-change="setCurrentPage"
+        :page-sizes="[3, 5, 10, 15]"
+        :page-size="3"
+        :current-page="~~currentPage"
+        layout="prev, pager, next, sizes, total"
+        :total="count"
+      ></el-pagination>
+
+    </div>
   </div>
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex"; //命名空间的辅助函数
-const { mapActions, addPetMasterAsync } = createNamespacedHelpers("petMaster"); //具体到某一个仓库
+import { createNamespacedHelpers } from "vuex";
+const { mapMutations, mapState, mapActions } = createNamespacedHelpers(
+  "petMaster"
+);
 
 export default {
   methods: {
-    ...mapActions(["addPetMasterAsync"]),
-
-    editpetMaster(row) {
+    ...mapMutations(["open", "setEachPage", "setCurrentPage", "close"]),
+    ...mapActions(["addPetMasterAsync", "getPetMasterByPageAsync"]),
+    handleClick(row) {
       console.log(row);
     },
-    // 点击提交新增宠主信息
-    addpetMaster(row) {
-      //   console.log(row);
-      this.addPetMasterAsync(row);
+    handlePreview(file) {
+      console.log(file);
     },
-    // // 头像上传相关
-    // handleRemove(file, fileList) {
-    //   console.log(file, fileList);
-    // },
-    // handlePictureCardPreview(file) {
-    //   this.dialogImageUrl = file.url;
-    //   this.dialogVisible = true;
-    // }
+    async handleSuccess(file, row) {
+      this.petMaster.banner.push(file.data.url);
+      console.log( this.petMaster.banner);
+      
+      await this.addPetMasterAsync(this.petMaster);
+      this.petMaster.banner = [];
+      this.$refs.upload.clearFiles();
+    },
+    remove(file, fileList) {
+      console.log(file);
+    },
+    submitUpload() {
+      this.$refs.upload.submit();
+    },
+    handleCurrentChange(val) {
+      console.log(val);
+      this.currentRow = val;
+    },
+   
+  },
+  computed: {
+    ...mapState([
+      "petMasterUsers",
+      "dialogTableVisible",
+      "currentPage",
+      "eachPage",
+      "count",
+      "loading",
+      "autoUpload"
+    ])
+  },
+  watch: {
+    currentPage() {
+      this.getPetMasterByPageAsync();
+    },
+    eachPage() {
+      this.getPetMasterByPageAsync();
+    }
   },
   data() {
-    return (
-      {
-        // 添加宠主数据
-        petMaster: {
-          banner: "", //头像
-          phone: "18998998888", //电话
-          username: "相信毛哥相信爱", //昵称
-          name: "张然", //真实姓名
-          city: "达州", //所在城市
-          area: "大州区", //所在城市区域
-          site: "成都青羊区抚琴西南路朗沃人才培训中心 ", //具体地址
-          integral: "999999" //积分
-        },
-
-        // 默认值
-        petMarterData: [
-          {
-            banner: "", //头像
-            phone: "13566666666", //电话
-            username: "相信毛哥", //昵称
-            name: "王小虎", //真实姓名
-            city: "成都", //所在城市
-            area: "青羊区", //所在城市区域
-            site: "成都青羊区抚琴西南路朗沃人才培训中心 ", //具体地址
-            integral: "999999" //积分
-          }
-        ],
-        dialogFormVisible: false,
-        dialogTableVisible: false,
-        //拥有的宠物
-        owned: [
-          {
-            petName: "然然", //宠物名字
-            petCategory: "猫", //宠物种类
-            petType: "英国短尾猫", //宠物品种
-            petColor: "白色", //宠物颜色
-            petDateOfBirth: "2019年5月8日", //宠物出生时间
-            petCharacter: "攻击性" //宠物性格
-          }
-        ],
-
+    return {
+      dialogFormVisible: false,
+      dialogImageUrl: "",
+      dialogVisible: false,
+      imageUrl: "",
+      tableData: [],
+      petMaster: {
+        banner: [], //头像
+        phone: "18998998881", //电话
+        username: "相信毛哥相信爱", //昵称
+        name: "张然", //真实姓名
+        city: "达州", //所在城市
+        area: "大州区", //所在城市区域
+        site: "成都青羊区抚琴西南路朗沃人才培训中心 ", //具体地址
+        integral: "999999" //积分
       }
-      
-    );
+    };
+  },
+  mounted() {
+    this.getPetMasterByPageAsync();
   }
 };
 </script>
-<style scoped>
-.petMaster {
-  width: 350px;
+<style>
+
+.block {
+  text-align: center;
+  margin-top: 50px;
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

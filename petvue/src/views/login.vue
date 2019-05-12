@@ -125,31 +125,33 @@ export default {
         console.log(result);
         result[0].role == "1" ? next("/userStore") : next();
         document.cookie = `id=${result[0]._id}`;
+        if (result[0].role == "1" && result[0].state == "2") {
+          next("/userStore");
+          this.$message({
+            message: "登录成功",
+            type: "success"
+          });
+        } else if (result[0].role == "0") {
+          next();
+           this.$message({
+            message: "登录成功",
+            type: "success"
+          });
+        } else {
+          next("/");
+          this.$message({
+            message: "账号正在审核中，请稍后再试",
+            type: "warning"
+          });
+        }
       } else {
-        next("/");
+        next(false);
         this.$message({
           message: "账号或密码错误，请重新登录",
           type: "warning"
         });
       }
-    } 
-    // else if (to.name == "userStore") {
-    //   next("/");
-    //   this.$message({
-    //     message: "调皮，不要妄想偷渡哦",
-    //     type: "warning"
-    //   });
-    // }
-    //  else if (to.name == "register") {
-    //   next();
-    // } 
-    // else if (to.name != "userSystem" || to.name != "userStore") {
-    //   next("/");
-    //   this.$message({
-    //     message: "调皮，不要妄想偷渡哦",
-    //     type: "warning"
-    //   });
-    // } 
+    }
     else {
       next();
     }

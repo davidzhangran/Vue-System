@@ -1,6 +1,6 @@
 //商品
 
-const getcommoditysByPage = async ({ currentPage = 1, eachPage = 10, type, text,userId } = {}) => {
+const getcommoditysByPage = async ({ currentPage = 1, eachPage = 10, type, text, userId } = {}) => {
     if (type == undefined) {
         let data = await fetch(`/goods/getcommoditysByPage?currentPage=${currentPage}&eachPage=${eachPage}&userId=${userId}`)
             .then(response => response.json())

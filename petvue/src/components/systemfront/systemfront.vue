@@ -333,7 +333,6 @@ export default {
       this.clerkDate = newData.clerk;
     }
   },
-
   data() {
     return {
       bannerDate: [],
