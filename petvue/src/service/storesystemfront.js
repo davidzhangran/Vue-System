@@ -11,15 +11,15 @@ const addStorefront = async (parm) => {
         }).then(response => response.json())
 }
 
-const getStorefrontByPage = async ({ currentPage, eachPage, value = "name", inputText = "", state,userId } = {}) => {
+const getStorefrontByPage = async ({ currentPage, eachPage, value = "name", inputText = "", state } = {}) => {
     if (inputText) {
         let data = await fetch(`/storesystemfrontRouter/getStorefrontByPage?currentPage=${currentPage}&eachPage=${eachPage}&value=${value}&inputText=${inputText}&state=${state}
-        &userId=${userId}`)
+        `)
             .then(response => response.json())
         return data
     }
     let data = await fetch(`/storesystemfrontRouter/getStorefrontByPage?currentPage=${currentPage}&eachPage=${eachPage}&state=${state}
-    &userId=${userId}`)
+    `)
         .then(response => response.json())
     return data;
 }
