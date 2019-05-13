@@ -351,14 +351,6 @@ export default {
         grade,
         price
       });
-      this.name = "";
-      this.category = "";
-      this.schedule = "";
-      this.specification = "";
-      this.service = "";
-      this.consuming = "";
-      this.grade = "";
-      this.price = "";
     },
  },
  mounted(){
