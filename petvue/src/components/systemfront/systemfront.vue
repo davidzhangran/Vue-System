@@ -332,11 +332,6 @@ export default {
         ...{ license: [{ url: row.license }] }
       };
       this.dialogFormVisible = true;
-      this.$notify({
-          title: '成功',
-          message: '修改成功！',
-          type: 'success'
-        });
       this.bannerDate = [...this.tableData.banner];
     },
     updateFrontById(row) {

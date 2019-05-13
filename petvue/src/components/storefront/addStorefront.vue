@@ -12,7 +12,7 @@
     <div class="wrap">
       <div class="input">
         门店名称：
-        <el-input suffix-icon="el-icon-s-shop" placeholder="门店名称" v-model="uploadInfo.name"></el-input>
+        <el-input suffix-icon="el-icon-s-shop"  placeholder="门店名称" v-model="uploadInfo.name"></el-input>
       </div>
       <div class="input">
         营业地址：
@@ -20,19 +20,15 @@
       </div>
       <div class="input">
         联系电话：
-        <el-input suffix-icon="el-icon-phone" placeholder="联系电话" v-model="uploadInfo.phone"></el-input>
+        <el-input suffix-icon="el-icon-phone"  placeholder="联系电话" v-model="uploadInfo.phone"></el-input>
       </div>
       <div class="input">
         法人：
-        <el-input suffix-icon="el-icon-s-check" placeholder="法人" v-model="uploadInfo.person"></el-input>
+        <el-input suffix-icon="el-icon-s-check"  placeholder="法人" v-model="uploadInfo.person"></el-input>
       </div>
       <div class="input">
         营业执照号码：
-        <el-input
-          suffix-icon="el-icon-platform-eleme"
-          placeholder="营业执照号码"
-          v-model="uploadInfo.licensenumber"
-        ></el-input>
+        <el-input suffix-icon="el-icon-platform-eleme"  placeholder="营业执照号码"  v-model="uploadInfo.licensenumber"></el-input>
       </div>
       <div class="input">
         特色：

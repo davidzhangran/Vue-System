@@ -118,11 +118,11 @@ export default {
 
             if (plo) {
                  data = await storefrontService.getStorefrontByPage({ value: plo.value, inputText: plo.inputText,userId });
-                console.log(data)
+               
                 //拿到数据，通过mutations触发数据更新
             } else {
                  data = await storefrontService.getStorefrontByPage({ currentPage, eachPage,userId });
-                console.log(data)//拿到数据，通过mutations触发数据更新
+               //拿到数据，通过mutations触发数据更新
             }
             context.commit("getStorefrontByPage", data);//通过commit触发getStorefrontByPage
         },
