@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="display: flex;justify-content: flex-end;padding-bottom:20px; padding-top:20px;">
+    <div style="display: flex;padding-bottom:20px; padding-top:20px;">
       <el-button @click="whole" type="primary">全部</el-button>
       <el-select style="width:100px;text-align: center;" v-model="value" placeholder="请选择">
         <el-option
@@ -279,7 +279,7 @@ export default {
   justify-content: space-between;
   padding-right: "120px";
   text-align: center;
-  justify-content: right;
+  /* justify-content: right; */
   margin-bottom: 20px;
 }
 </style>

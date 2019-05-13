@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div style="display: flex;justify-content: flex-end;padding-bottom:20px; padding-top:20px;">
-      <el-button @click="whole" type="primary">全部</el-button>
+    <div class="search">
+      <el-button @click="whole" type="primary" size="mini">全部</el-button>
       <el-select style="width:100px;text-align: center;" v-model="value" placeholder="请选择">
         <el-option
           v-for="item in options"
@@ -11,7 +11,7 @@
         ></el-option>
       </el-select>
       <el-input style="width:260px;" v-model="inputText" placeholder="请输入内容"></el-input>
-      <el-button type="primary" @click="searchClick" icon="el-icon-search">搜索</el-button>
+      <el-button type="primary" @click="searchClick" size="mini" icon="el-icon-search">搜索</el-button>
     </div>
     <el-table :data="storefrontInfo" border style="width: 100%">
       <!-- <el-table-column header-align="center" align="center" fixed prop="_id" label="门店编号"></el-table-column> -->
@@ -375,5 +375,9 @@ export default {
   text-align: center;
   justify-content: right;
   margin-bottom: 20px;
+}
+.search{
+  display: flex;
+  /* height: 28px; */
 }
 </style>
