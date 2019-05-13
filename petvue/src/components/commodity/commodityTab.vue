@@ -10,7 +10,7 @@
     </div>
     <el-button type="primary" icon="el-icon-search" @click="search" size="small">搜索</el-button>
     <el-table :data="commoditys" border style="width: 100%">
-      <el-table-column prop="name" label="商品名称" width="150" align="center"></el-table-column>
+      <el-table-column prop="name" label="商品名称" width="150" show-overflow-tooltip align="center"></el-table-column>
       <el-table-column label="商品图片" align="center" width="150">
         <template slot-scope="scope">
           <el-popover placement="bottom" trigger="click">
@@ -25,20 +25,20 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column prop="category" label="商品类别" align="center" width="150"></el-table-column>
-      <el-table-column prop="texture" label="商品材质" align="center" width="150"></el-table-column>
-      <el-table-column prop="specification" label="适用宠物" align="center" width="150"></el-table-column>
-      <el-table-column prop="exclusive" label="专属宠物" align="center" width="150"></el-table-column>
-      <el-table-column prop="pack" label="包装规格" align="center" width="150"></el-table-column>
-      <el-table-column prop="taste" label="口味" align="center" width="150"></el-table-column>
-      <el-table-column prop="special" label="特殊功用" align="center" width="150"></el-table-column>
-      <el-table-column prop="origin" label="产地" align="center" width="150"></el-table-column>
-      <el-table-column prop="production" label="生产日期" width="150" align="center"></el-table-column>
-      <el-table-column prop="expiration" label="保质期" align="center" width="150"></el-table-column>
-      <el-table-column prop="supplier" label="供应商" align="center" width="150"></el-table-column>
-      <el-table-column prop="feature" label="特色说明" align="center" width="150"></el-table-column>
-      <el-table-column prop="price" label="价格" align="center" width="150"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="200" align="center">
+      <el-table-column prop="category" label="商品类别" show-overflow-tooltip align="center" width="150"></el-table-column>
+      <el-table-column prop="texture" label="商品材质" show-overflow-tooltip align="center" width="150"></el-table-column>
+      <el-table-column prop="specification" label="适用宠物" show-overflow-tooltip align="center" width="150"></el-table-column>
+      <el-table-column prop="exclusive" label="专属宠物" show-overflow-tooltip align="center" width="150"></el-table-column>
+      <el-table-column prop="pack" label="包装规格" show-overflow-tooltip align="center" width="150"></el-table-column>
+      <el-table-column prop="taste" label="口味" show-overflow-tooltip align="center" width="150"></el-table-column>
+      <el-table-column prop="special" label="特殊功用" show-overflow-tooltip align="center" width="150"></el-table-column>
+      <el-table-column prop="origin" label="产地" show-overflow-tooltip align="center" width="150"></el-table-column>
+      <el-table-column prop="production" label="生产日期" show-overflow-tooltip width="150" align="center"></el-table-column>
+      <el-table-column prop="expiration" label="保质期" show-overflow-tooltip align="center" width="150"></el-table-column>
+      <el-table-column prop="supplier" label="供应商" show-overflow-tooltip align="center" width="150"></el-table-column>
+      <el-table-column prop="feature" label="特色说明" show-overflow-tooltip align="center" width="150"></el-table-column>
+      <el-table-column prop="price" label="价格" show-overflow-tooltip align="center" width="150"></el-table-column>
+      <el-table-column fixed="right" label="操作" show-overflow-tooltip width="200" align="center">
         <template slot-scope="scope">
           <el-button type="primary" @click="hanleClick(scope.row)" size="small">修改</el-button>
           <el-button type="danger" @click="handleDelete(scope.row)" size="small">删除</el-button>

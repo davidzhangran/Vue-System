@@ -123,14 +123,14 @@
       style="width: 100%"
       :default-sort="{prop:'schedule', order: 'descending'}"
     >
-      <el-table-column align="center" fixed prop="name" label="服务类型" ></el-table-column>
-      <el-table-column align="center" prop="category" label="品类" ></el-table-column>
-      <el-table-column align="center" prop="schedule" label="排期"  sortable></el-table-column>
-      <el-table-column align="center" prop="specification" label="适用规格" ></el-table-column>
-      <el-table-column align="center" prop="service" label="服务规格" ></el-table-column>
-      <el-table-column align="center" prop="consuming" label="耗时" ></el-table-column>
-      <el-table-column align="center" prop="grade" label="服务员等级" ></el-table-column>
-      <el-table-column align="center" prop="price" label="价格" ></el-table-column>
+      <el-table-column show-overflow-tooltip align="center" fixed prop="name" label="服务类型" ></el-table-column>
+      <el-table-column show-overflow-tooltip align="center" prop="category" label="品类" ></el-table-column>
+      <el-table-column show-overflow-tooltip align="center" prop="schedule" label="排期"  sortable></el-table-column>
+      <el-table-column show-overflow-tooltip align="center" prop="specification" label="适用规格" ></el-table-column>
+      <el-table-column show-overflow-tooltip align="center" prop="service" label="服务规格" ></el-table-column>
+      <el-table-column show-overflow-tooltip align="center" prop="consuming" label="耗时" ></el-table-column>
+      <el-table-column show-overflow-tooltip align="center" prop="grade" label="服务员等级" ></el-table-column>
+      <el-table-column show-overflow-tooltip align="center" prop="price" label="价格" ></el-table-column>
       <el-table-column align="center" label="操作" >
         <template slot-scope="scope">
           <el-button type="success"  @click="hanleClick(scope.row)" size="small">修改</el-button>

@@ -11,7 +11,7 @@
           stripe
           highlight-current-row
         >
-          <el-table-column width="150" align="center" prop="name" label="商品名称"></el-table-column>
+          <el-table-column width="150" show-overflow-tooltip align="center" prop="name" label="商品名称"></el-table-column>
           <el-table-column label="商品图片" width="150" align="center" prop="images">
             <template slot-scope="scope">
               <el-popover placement="bottom" trigger="click">
@@ -35,19 +35,19 @@
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column width="150" align="center" prop="category" label="商品类别"></el-table-column>
-          <el-table-column width="150" align="center" prop="texture" label="商品材质"></el-table-column>
-          <el-table-column width="150" align="center" prop="specification" label="适用宠物"></el-table-column>
-          <el-table-column width="150" align="center" prop="exclusive" label="专属宠物"></el-table-column>
-          <el-table-column width="150" align="center" prop="pack" label="包装规格"></el-table-column>
-          <el-table-column width="150" align="center" prop="taste" label="口味"></el-table-column>
-          <el-table-column width="150" align="center" prop="special" label="特殊功用"></el-table-column>
-          <el-table-column width="150" align="center" prop="origin" label="产地"></el-table-column>
-          <el-table-column width="150" align="center" prop="production" label="生产日期"></el-table-column>
-          <el-table-column align="center" prop="expiration" label="保质期"></el-table-column>
-          <el-table-column align="center" prop="supplier" label="供应商"></el-table-column>
-          <el-table-column align="center" prop="feature" label="特色说明"></el-table-column>
-          <el-table-column align="center" prop="price" label="价格"></el-table-column>
+          <el-table-column width="150" show-overflow-tooltip align="center" prop="category" label="商品类别"></el-table-column>
+          <el-table-column width="150" show-overflow-tooltip align="center" prop="texture" label="商品材质"></el-table-column>
+          <el-table-column width="150" show-overflow-tooltip align="center" prop="specification" label="适用宠物"></el-table-column>
+          <el-table-column width="150" show-overflow-tooltip align="center" prop="exclusive" label="专属宠物"></el-table-column>
+          <el-table-column width="150" show-overflow-tooltip align="center" prop="pack" label="包装规格"></el-table-column>
+          <el-table-column width="150" show-overflow-tooltip align="center" prop="taste" label="口味"></el-table-column>
+          <el-table-column width="150" show-overflow-tooltip align="center" prop="special" label="特殊功用"></el-table-column>
+          <el-table-column width="150" show-overflow-tooltip align="center" prop="origin" label="产地"></el-table-column>
+          <el-table-column width="150" show-overflow-tooltip align="center" prop="production" label="生产日期"></el-table-column>
+          <el-table-column show-overflow-tooltip align="center" prop="expiration" label="保质期"></el-table-column>
+          <el-table-column show-overflow-tooltip align="center" prop="supplier" label="供应商"></el-table-column>
+          <el-table-column show-overflow-tooltip align="center" prop="feature" label="特色说明"></el-table-column>
+          <el-table-column show-overflow-tooltip align="center" prop="price" label="价格"></el-table-column>
           <el-table-column align="center" fixed="right" label="操作" width="150">
             <template slot-scope="scope">
               <el-button @click="handleDeleteGoods(scope.row)" type="danger" size="small">移除商品</el-button>
@@ -118,14 +118,14 @@
             stripe
             highlight-current-row
           >
-            <el-table-column align="center" fixed prop="name" label="服务类型"></el-table-column>
-            <el-table-column align="center" prop="category" label="品类"></el-table-column>
-            <el-table-column align="center" prop="schedule" label="排期"></el-table-column>
-            <el-table-column align="center" prop="specification" label="适用规格"></el-table-column>
-            <el-table-column align="center" prop="service" label="服务规格"></el-table-column>
-            <el-table-column align="center" prop="consuming" label="耗时"></el-table-column>
-            <el-table-column align="center" prop="grade" label="服务员等级"></el-table-column>
-            <el-table-column align="center" prop="price" label="价格"></el-table-column>
+            <el-table-column show-overflow-tooltip align="center" fixed prop="name" label="服务类型"></el-table-column>
+            <el-table-column show-overflow-tooltip align="center" prop="category" label="品类"></el-table-column>
+            <el-table-column show-overflow-tooltip align="center" prop="schedule" label="排期"></el-table-column>
+            <el-table-column show-overflow-tooltip align="center" prop="specification" label="适用规格"></el-table-column>
+            <el-table-column show-overflow-tooltip align="center" prop="service" label="服务规格"></el-table-column>
+            <el-table-column show-overflow-tooltip align="center" prop="consuming" label="耗时"></el-table-column>
+            <el-table-column show-overflow-tooltip align="center" prop="grade" label="服务员等级"></el-table-column>
+            <el-table-column show-overflow-tooltip align="center" prop="price" label="价格"></el-table-column>
             <el-table-column align="center" label="操作">
               <template slot-scope="scope">
                 <el-button @click="handleDeleteServe(scope.row)" type="danger" size="small">移除服务</el-button>
@@ -206,14 +206,14 @@
                 <img :src="scope.row.images[0]" style="width:50px;height:50px">
               </template>
             </el-table-column>
-            <el-table-column fixed prop="name" label="名称" align="center"></el-table-column>
-            <el-table-column prop="category" label="宠物品种" align="center"></el-table-column>
-            <el-table-column prop="color" label="毛色" align="center"></el-table-column>
-            <el-table-column prop="price" label="价格" align="center"></el-table-column>
-            <el-table-column prop="age" label="年龄" align="center"></el-table-column>
-            <el-table-column prop="gender" label="性别" align="center"></el-table-column>
-            <el-table-column prop="describe" label="描述" align="center"></el-table-column>
-            <el-table-column fixed="right" label="操作" align="center">
+            <el-table-column fixed prop="name" label="名称" show-overflow-tooltip align="center"></el-table-column>
+            <el-table-column prop="category" label="宠物品种" show-overflow-tooltip align="center"></el-table-column>
+            <el-table-column prop="color" label="毛色" show-overflow-tooltip align="center"></el-table-column>
+            <el-table-column prop="price" label="价格" show-overflow-tooltip align="center"></el-table-column>
+            <el-table-column prop="age" label="年龄" show-overflow-tooltip align="center"></el-table-column>
+            <el-table-column prop="gender" label="性别" show-overflow-tooltip align="center"></el-table-column>
+            <el-table-column prop="describe" label="描述" show-overflow-tooltip align="center"></el-table-column>
+            <el-table-column fixed="right" label="操作" show-overflow-tooltip align="center">
               <template slot-scope="scope">
                 <el-button @click="handleDeletePets(scope.row)" type="danger" size="small">移除宠物</el-button>
               </template>
@@ -272,11 +272,11 @@
             stripe
             highlight-current-row
           >
-            <el-table-column align="center" prop="date" label="入职日期"></el-table-column>
+            <el-table-column align="center" prop="date" show-overflow-tooltip label="入职日期"></el-table-column>
             <el-table-column align="center" prop="name" label="姓名"></el-table-column>
             <el-table-column align="center" prop="clerk" label="职级"></el-table-column>
-            <el-table-column align="center" prop="phone" label="联系电话"></el-table-column>
-            <el-table-column align="center" prop="site" label="地址"></el-table-column>
+            <el-table-column align="center" prop="phone" show-overflow-tooltip label="联系电话"></el-table-column>
+            <el-table-column align="center" prop="site" show-overflow-tooltip label="地址"></el-table-column>
             <el-table-column align="center" label="操作">
               <template slot-scope="scope">
                 <el-button @click="handleClickStaff(scope.row)" type="danger" size="small">移除员工</el-button>

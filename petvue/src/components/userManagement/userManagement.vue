@@ -7,10 +7,10 @@
         <div class="user">
           <el-table v-loading="loading" :data="users" style="width: 100%">
             <el-table-column type="index" align="center" label="ID"></el-table-column>
-            <el-table-column prop="username" label="登录名" align="center"></el-table-column>
+            <el-table-column prop="username" show-overflow-tooltip label="登录名" align="center"></el-table-column>
             <el-table-column prop="password" label="密码" align="center"></el-table-column>
             <el-table-column prop="phone" label="手机号" align="center"></el-table-column>
-            <el-table-column prop="email" label="邮箱" align="center"></el-table-column>
+            <el-table-column prop="email" show-overflow-tooltip label="邮箱" align="center"></el-table-column>
             <el-table-column prop="name" label="姓名" align="center"></el-table-column>
             <el-table-column prop="role" label="角色" align="center"></el-table-column>
             <el-table-column prop="state" label="状态" align="center"></el-table-column>
