@@ -1,58 +1,61 @@
 <template>
   <div>
     <!-- 搜索 -->
-    <el-select v-model="value" placeholder="请选择">
+    <el-button type="primary" @click="block" size="small">新增</el-button>
+    <el-select v-model="value" placeholder="请选择" style="width:100px;" size="small">
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
     </el-select>
     <div class="name1">
-      <el-input v-model="label" placeholder="请输入内容"></el-input>
+      <el-input v-model="label" placeholder="请输入内容" size="small"></el-input>
     </div>
-    <el-button icon="el-icon-search" @click="search"></el-button>
+    <el-button type="primary" icon="el-icon-search" @click="search" size="small">搜索</el-button>
     <el-table :data="commoditys" border style="width: 100%">
-      <el-table-column prop="name" label="商品名称" align="center"></el-table-column>
-      <el-table-column label="商品图片" align="center" width="100">
+      <el-table-column prop="name" label="商品名称" width="150" align="center"></el-table-column>
+      <el-table-column label="商品图片" align="center" width="150">
         <template slot-scope="scope">
           <el-popover placement="bottom" trigger="click">
             <img :src="scope.row.images[0]" class="head_pic">
             <img
               :src="scope.row.images[0]"
               class="head_pic"
-              width="80"
-              height="80"
+              width="50"
+              height="50"
               slot="reference"
             >
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column prop="category" label="商品类别" align="center"></el-table-column>
-      <el-table-column prop="texture" label="商品材质" align="center"></el-table-column>
-      <el-table-column prop="specification" label="适用宠物" align="center"></el-table-column>
-      <el-table-column prop="exclusive" label="专属宠物" align="center"></el-table-column>
-      <el-table-column prop="pack" label="包装规格" align="center"></el-table-column>
-      <el-table-column prop="taste" label="口味" align="center"></el-table-column>
-      <el-table-column prop="special" label="特殊功用" align="center"></el-table-column>
-      <el-table-column prop="origin" label="产地" align="center"></el-table-column>
+      <el-table-column prop="category" label="商品类别" align="center" width="150"></el-table-column>
+      <el-table-column prop="texture" label="商品材质" align="center" width="150"></el-table-column>
+      <el-table-column prop="specification" label="适用宠物" align="center" width="150"></el-table-column>
+      <el-table-column prop="exclusive" label="专属宠物" align="center" width="150"></el-table-column>
+      <el-table-column prop="pack" label="包装规格" align="center" width="150"></el-table-column>
+      <el-table-column prop="taste" label="口味" align="center" width="150"></el-table-column>
+      <el-table-column prop="special" label="特殊功用" align="center" width="150"></el-table-column>
+      <el-table-column prop="origin" label="产地" align="center" width="150"></el-table-column>
       <el-table-column prop="production" label="生产日期" width="150" align="center"></el-table-column>
-      <el-table-column prop="expiration" label="保质期" align="center"></el-table-column>
-      <el-table-column prop="supplier" label="供应商" align="center"></el-table-column>
-      <el-table-column prop="feature" label="特色说明" align="center"></el-table-column>
-      <el-table-column prop="price" label="价格" align="center"></el-table-column>
+      <el-table-column prop="expiration" label="保质期" align="center" width="150"></el-table-column>
+      <el-table-column prop="supplier" label="供应商" align="center" width="150"></el-table-column>
+      <el-table-column prop="feature" label="特色说明" align="center" width="150"></el-table-column>
+      <el-table-column prop="price" label="价格" align="center" width="150"></el-table-column>
       <el-table-column fixed="right" label="操作" width="200" align="center">
         <template slot-scope="scope">
-          <el-button type="success" plain @click="hanleClick(scope.row)" size="small">修改</el-button>
-          <el-button type="danger" plain @click="handleDelete(scope.row)" size="small">删除</el-button>
+          <el-button type="primary" @click="hanleClick(scope.row)" size="small">修改</el-button>
+          <el-button type="danger" @click="handleDelete(scope.row)" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      @size-change="setEachPage"
-      @current-change="setCurrentPage"
-      :current-page="currentPage"
-      :page-sizes="[3, 5, 7, 10]"
-      :page-size="eachPage"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="count"
-    ></el-pagination>
+    <div class="block">
+      <el-pagination
+        @size-change="setEachPage"
+        @current-change="setCurrentPage"
+        :current-page="currentPage"
+        :page-sizes="[3, 5, 7, 10]"
+        :page-size="eachPage"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="count"
+      ></el-pagination>
+    </div>
     <!-- 修改商品 -->
     <div>
       <el-dialog title="修改商品" :visible.sync="dialogVisible" width="80%">
@@ -344,6 +347,11 @@ export default {
       });
       this.dialogVisible = false;
       this.fileList = [];
+       this.$notify({
+        title: "成功",
+        message: "修改成功！",
+        type: "success"
+      });
     },
     handleRemove(file, fileList) {
       this.images = this.fileList.map(item => {
@@ -351,6 +359,7 @@ export default {
           return item;
         }
       });
+     
     },
     handleClose(done) {
       this.dialogVisible = false;
@@ -377,6 +386,11 @@ export default {
     //删除
     handleDelete(row) {
       this.removeCommodityAsync({ _id: row._id });
+         this.$notify({
+        title: "成功",
+        message: "删除成功！",
+        type: "success"
+      });
     },
     //
     search() {
@@ -389,6 +403,9 @@ export default {
           new RegExp("(^|)" + "id" + "=([^;]*)(;|$)")
         )[2]
       });
+    },
+    block() {
+      this.$router.push("/userStore/commodity");
     }
   },
   mounted() {
@@ -404,5 +421,8 @@ export default {
 .name1 {
   width: 200px;
   display: inline-block;
+}
+.block {
+  text-align: center;
 }
 </style>
