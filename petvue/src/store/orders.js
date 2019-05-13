@@ -57,6 +57,8 @@ export default {
         async getOrdersAsync(context, { type, text, userId } = {}) {
             const { currentPage, eachPage } = context.state
             const data = await OrderService.getOrdersByPage({ currentPage, eachPage })
+            console.log(data);
+            
             context.commit("getOrdersByPage", data)
 
         },

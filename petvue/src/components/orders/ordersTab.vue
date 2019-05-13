@@ -1,90 +1,83 @@
 <template>
   <div>
-    <el-select v-model="value" placeholder="请选择">
-      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-    </el-select>
-    <div class="name1">
-      <el-input v-model="label" placeholder="请输入内容"></el-input>
-    </div>
-    <el-button icon="el-icon-search" @click="search"></el-button>
-    <div>
-      <el-table :data="orders" border style="width: 100%">
-        <el-table-column prop="petMemberId.name" label="客户" align="center"></el-table-column>
-        <el-table-column prop="goodsId[0].name" label="商品名称" align="center"></el-table-column>
-        <el-table-column prop="storefrontId.name" label="萌店名称" align="center"></el-table-column>
-        <el-table-column prop="serveId[0].name" label="服务" align="center"></el-table-column>
-        <el-table-column prop="petId[0].name" label="宠物" align="center"></el-table-column>
-        <el-table-column prop="price" label="价格" align="center"></el-table-column>
-        <el-table-column fixed="right" label="操作" width="200" align="center">
-          <template slot-scope="scope">
-            <el-button type="success" plain @click="hanleClick(scope.row)" size="small">修改</el-button>
-            <el-button type="danger" plain @click="handleDelete(scope.row)" size="small">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+    <el-table :data="orders" border style="width: 100%">
+      <el-table-column prop="petMemberId.name" label="客户" align="center"></el-table-column>
+      <el-table-column prop="goodsId[0].name" label="商品名称" align="center"></el-table-column>
+      <el-table-column prop="storefrontId.name" label="萌店名称" align="center"></el-table-column>
+      <el-table-column prop="serveId[0].name" label="服务" align="center"></el-table-column>
+      <el-table-column prop="petId[0].name" label="宠物" align="center"></el-table-column>
+      <el-table-column prop="price" label="价格" align="center"></el-table-column>
+      <el-table-column fixed="right" label="操作" width="200" align="center">
+        <template slot-scope="scope">
+          <el-button type="success" @click="hanleClick(scope.row)" size="small">修改</el-button>
+          <el-button type="danger" @click="handleDelete(scope.row)" size="small">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+<div class="block">
       <el-pagination
-        @size-change="setEachPage"
-        @current-change="setCurrentPage"
-        :current-page="currentPage-0"
-        :page-sizes="[3, 5, 7, 10]"
-        :page-size="eachPage"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="count"
-      ></el-pagination>
-      <!-- 修改 -->
-      <div>
-        <el-dialog title="修改订单" :visible.sync="dialogVisible" width="80%">
-          <el-form :inline="true" :model="order" class="demo-form-inline">
-            <el-form-item label="用户:">
-              <el-autocomplete
-                v-model="petUser"
-                :fetch-suggestions="petInfoAsync"
-                placeholder="请输入内容"
-                @select="handlePetInfo"
-              ></el-autocomplete>
-            </el-form-item>
-            <el-form-item label="商品:" class="input">
-              <el-autocomplete
-                v-model="commodity"
-                :fetch-suggestions="commodityAsync"
-                placeholder="请输入内容"
-                @select="handleCom"
-              ></el-autocomplete>
-            </el-form-item>
-            <el-form-item label="门店:" class="input">
-              <el-autocomplete
-                v-model="storeFont"
-                :fetch-suggestions="storefrontInfoAsync"
-                placeholder="请输入内容"
-                @select="handleStorefrontInfo"
-              ></el-autocomplete>
-            </el-form-item>
-            <el-form-item label="服务:">
-              <el-autocomplete
-                v-model="state"
-                :fetch-suggestions="severAsync"
-                placeholder="请输入内容"
-                @select="handleSever"
-              ></el-autocomplete>
-            </el-form-item>
-            <el-form-item label="宠物:">
-              <el-autocomplete
-                v-model="pet"
-                :fetch-suggestions="petAsync"
-                placeholder="请输入内容"
-                @select="handlePet"
-              ></el-autocomplete>
-            </el-form-item>
-            <el-form-item label="价格:" class="input">
-              <el-input v-model="order.price" placeholder="价格"></el-input>
-            </el-form-item>
-          </el-form>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click=" upDataOrder">确 定</el-button>
-          </span>
-        </el-dialog>
-      </div>
+      @size-change="setEachPage"
+      @current-change="setCurrentPage"
+      :current-page="currentPage-0"
+      :page-sizes="[3, 5, 7, 10]"
+      :page-size="eachPage"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="count"
+    ></el-pagination>
+</div>
+    <!-- 修改 -->
+    <div>
+      <el-dialog title="修改订单" :visible.sync="dialogVisible" width="80%">
+        <el-form :inline="true" :model="order" class="demo-form-inline">
+          <el-form-item label="用户:">
+            <el-autocomplete
+              v-model="petUser"
+              :fetch-suggestions="petInfoAsync"
+              placeholder="请输入内容"
+              @select="handlePetInfo"
+            ></el-autocomplete>
+          </el-form-item>
+          <el-form-item label="商品:" class="input">
+            <el-autocomplete
+              v-model="commodity"
+              :fetch-suggestions="commodityAsync"
+              placeholder="请输入内容"
+              @select="handleCom"
+            ></el-autocomplete>
+          </el-form-item>
+          <el-form-item label="门店:" class="input">
+            <el-autocomplete
+              v-model="storeFont"
+              :fetch-suggestions="storefrontInfoAsync"
+              placeholder="请输入内容"
+              @select="handleStorefrontInfo"
+            ></el-autocomplete>
+          </el-form-item>
+          <el-form-item label="服务:">
+            <el-autocomplete
+              v-model="state"
+              :fetch-suggestions="severAsync"
+              placeholder="请输入内容"
+              @select="handleSever"
+            ></el-autocomplete>
+          </el-form-item>
+          <el-form-item label="宠物:">
+            <el-autocomplete
+              v-model="pet"
+              :fetch-suggestions="petAsync"
+              placeholder="请输入内容"
+              @select="handlePet"
+            ></el-autocomplete>
+          </el-form-item>
+          <el-form-item label="价格:" class="input">
+            <el-input v-model="order.price" placeholder="价格"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click=" upDataOrder">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -170,6 +163,11 @@ export default {
     //删除
     handleDelete(row) {
       this.removeOrdersAsync({ _id: row._id });
+      this.$notify({
+        title: "成功",
+        message: "删除成功！",
+        type: "success"
+      });
     },
     //修改
     hanleClick(row) {
@@ -186,6 +184,11 @@ export default {
       this.order.petId = row.petId[0]._id;
       this.order.price = row.price;
       this.order._id = row._id;
+      this.$notify({
+        title: "成功",
+        message: "修改成功！",
+        type: "success"
+      });
     },
     search() {
       //   //     console.log(this.orders)
@@ -303,4 +306,7 @@ export default {
 };
 </script>
 <style>
+.block{
+  text-align: center;
+}
 </style>

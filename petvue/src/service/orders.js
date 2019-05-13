@@ -1,4 +1,5 @@
 const addOrders = async (parm) => {
+    console.log(parm)
     return await fetch(`/orders/addOrders`,
         {
             method: 'POST',

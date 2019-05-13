@@ -1,8 +1,13 @@
 <template>
   <div>
     <div class="search">
-      <el-button @click="whole" type="primary" size="mini">全部</el-button>
-      <el-select style="width:100px;text-align: center;" v-model="value" placeholder="请选择">
+      <el-button @click="whole" type="primary" size="small">全部</el-button>
+      <el-select
+        style="width:100px;text-align: center;"
+        v-model="value"
+        placeholder="请选择"
+        size="small"
+      >
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -10,8 +15,8 @@
           :value="item.value"
         ></el-option>
       </el-select>
-      <el-input style="width:260px;" v-model="inputText" placeholder="请输入内容"></el-input>
-      <el-button type="primary" @click="searchClick" size="mini" icon="el-icon-search">搜索</el-button>
+      <el-input style="width:260px;" v-model="inputText" placeholder="请输入内容" size="small"></el-input>
+      <el-button type="primary" @click="searchClick" size="small" icon="el-icon-search">搜索</el-button>
     </div>
     <el-table :data="storefrontInfo" border style="width: 100%">
       <!-- <el-table-column header-align="center" align="center" fixed prop="_id" label="门店编号"></el-table-column> -->
@@ -23,7 +28,7 @@
             <div>
               <img style="width:500px;height:400px;" slot="reference" :src="scope.row.license" alt>
             </div>
-            <img style="width:80px;height:80px;" slot="reference" :src="scope.row.license" alt>
+            <img style="width:50px;height:50px;" slot="reference" :src="scope.row.license" alt>
           </el-popover>
         </template>
       </el-table-column>
@@ -42,29 +47,29 @@
                 alt
               >
             </div>
-            <img style="width:80px;height:80px;" slot="reference" :src="scope.row.banner[0]" alt>
+            <img style="width:50px;height:50px;" slot="reference" :src="scope.row.banner[0]" alt>
           </el-popover>
         </template>
       </el-table-column>
       <el-table-column header-align="center" align="center" prop="feature" label="特色"></el-table-column>
       <el-table-column width="120" header-align="center" align="center" label="店员">
         <template slot-scope="scope">
-          <el-button @click="clerkDetails(scope.row)" type="primary">店员详情</el-button>
+          <el-button @click="clerkDetails(scope.row)" type="primary" size="mini">店员详情</el-button>
         </template>
       </el-table-column>
       <el-table-column width="120" header-align="center" align="center" prop="goodsId" label="商品">
         <template slot-scope="scope">
-          <el-button @click="goodsDetails(scope.row)" type="primary">商品详情</el-button>
+          <el-button @click="goodsDetails(scope.row)" size="mini" type="primary">商品详情</el-button>
         </template>
       </el-table-column>
-      <el-table-column width="120" header-align="center" align="center" prop="serveId" label="服务">
+      <el-table-column width="120" header-align="center" size="mini" align="center" prop="serveId" label="服务">
         <template slot-scope="scope">
-          <el-button @click="serveDetails(scope.row)" type="primary">服务详情</el-button>
+          <el-button @click="serveDetails(scope.row)" size="mini" type="primary">服务详情</el-button>
         </template>
       </el-table-column>
       <el-table-column width="120" header-align="center" align="center" prop="petId" label="宠物">
         <template slot-scope="scope">
-          <el-button @click="petDetails(scope.row)" type="primary">宠物详情</el-button>
+          <el-button @click="petDetails(scope.row)" size="mini" type="primary">宠物详情</el-button>
         </template>
       </el-table-column>
       <el-table-column width="120" header-align="center" align="center" fixed="right" label="操作">
@@ -158,16 +163,17 @@
       </div>
     </el-dialog>
     <!-- /修改组件 -->
-    <el-pagination
-      @size-change="setEachPage"
-      @current-change="setCurrentPage"
-      :current-page="currentPage - 0"
-      :page-sizes="[ 1, 2, 3, 4, 5]"
-      :page-size="eachPage"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="count"
-    ></el-pagination>
-    <!-- 店员详情 -->
+    <div class="block">
+      <el-pagination
+        @size-change="setEachPage"
+        @current-change="setCurrentPage"
+        :current-page="currentPage - 0"
+        :page-sizes="[ 1, 2, 3, 4, 5]"
+        :page-size="eachPage"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="count"
+      ></el-pagination>
+    </div>
     <el-dialog title="店员详情" :visible.sync="clerkDialog">
       <el-table :data="clerkDate" border>
         <el-table-column align="center" property="name" label="姓名"></el-table-column>
@@ -326,6 +332,11 @@ export default {
         ...{ license: [{ url: row.license }] }
       };
       this.dialogFormVisible = true;
+      this.$notify({
+          title: '成功',
+          message: '修改成功！',
+          type: 'success'
+        });
       this.bannerDate = [...this.tableData.banner];
     },
     updateFrontById(row) {
@@ -477,6 +488,9 @@ export default {
 .search {
   display: flex;
   /* height: 28px; */
+}
+.block {
+  text-align: center;
 }
 .exothecium {
   width: 100%;

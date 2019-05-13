@@ -215,7 +215,7 @@
             <el-table-column prop="describe" label="描述" align="center"></el-table-column>
             <el-table-column fixed="right" label="操作" align="center">
               <template slot-scope="scope">
-                <el-button @click="handleDeletePet(scope.row)" type="danger" size="small">移除宠物</el-button>
+                <el-button @click="handleDeletePets(scope.row)" type="danger" size="small">移除宠物</el-button>
               </template>
             </el-table-column>
           </el-table>

@@ -8,14 +8,14 @@
       text-color="#fff"
       active-text-color="#ffd04b"
     >
-      <el-menu-item index="/userSystem/userManagement">用户管理</el-menu-item>
-      <el-menu-item index="/userSystem/petMaster">宠主管理</el-menu-item>
+  
+      <el-menu-item index="/userSystem/userManagement"> <i class="el-icon-user"></i>用户管理</el-menu-item>
+      <el-menu-item index="/userSystem/petMaster"> <i class="el-icon-male"></i>宠主管理</el-menu-item>
       <el-submenu index="2">
-        <template slot="title">门店管理</template>
+        <template slot="title"> <i class="el-icon-office-building"></i>门店管理</template>
         <el-menu-item index="/userSystem/systemFront">门店列表</el-menu-item>
         <el-menu-item index="/userSystem/applyFront">申请列表</el-menu-item>
       </el-submenu>
-      <el-menu-item index="3">评论管理</el-menu-item>
       <el-menu-item  index="/">退出系统</el-menu-item>
     </el-menu>
     <router-view></router-view>

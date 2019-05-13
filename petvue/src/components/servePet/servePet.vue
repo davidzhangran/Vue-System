@@ -1,13 +1,13 @@
 <template>
   <div>
-    <el-button type="primary" @click="dialogVisible = true">新增</el-button>
-    <el-select v-model="value" style="width:100px;" placeholder="请选择">
+    <el-button type="primary" @click="dialogVisible = true"  size="small">新增</el-button>
+    <el-select v-model="value" style="width:100px;" placeholder="请选择"  size="small">
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
     </el-select>
     <div class="name1">
-      <el-input v-model="label" style placeholder="请输入内容"></el-input>
+      <el-input v-model="label" style placeholder="请输入内容"  size="small"></el-input>
     </div>
-    <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+    <el-button type="primary" icon="el-icon-search" @click="search"  size="small">搜索</el-button>
     <el-dialog title="新增" :visible.sync="dialogVisible" width="50%">
       <el-form class="f" label-width="100px" size="mini">
         <div class="name">
@@ -123,22 +123,23 @@
       style="width: 100%"
       :default-sort="{prop:'schedule', order: 'descending'}"
     >
-      <el-table-column align="center" fixed prop="name" label="服务类型" width="150"></el-table-column>
-      <el-table-column align="center" prop="category" label="品类" width="120"></el-table-column>
-      <el-table-column align="center" prop="schedule" label="排期" width="120" sortable></el-table-column>
-      <el-table-column align="center" prop="specification" label="适用规格" width="120"></el-table-column>
-      <el-table-column align="center" prop="service" label="服务规格" width="120"></el-table-column>
-      <el-table-column align="center" prop="consuming" label="耗时" width="120"></el-table-column>
-      <el-table-column align="center" prop="grade" label="服务员等级" width="120"></el-table-column>
-      <el-table-column align="center" prop="price" label="价格" width="120"></el-table-column>
-      <el-table-column align="center" fixed="right" label="操作" width="250">
+      <el-table-column align="center" fixed prop="name" label="服务类型" ></el-table-column>
+      <el-table-column align="center" prop="category" label="品类" ></el-table-column>
+      <el-table-column align="center" prop="schedule" label="排期"  sortable></el-table-column>
+      <el-table-column align="center" prop="specification" label="适用规格" ></el-table-column>
+      <el-table-column align="center" prop="service" label="服务规格" ></el-table-column>
+      <el-table-column align="center" prop="consuming" label="耗时" ></el-table-column>
+      <el-table-column align="center" prop="grade" label="服务员等级" ></el-table-column>
+      <el-table-column align="center" prop="price" label="价格" ></el-table-column>
+      <el-table-column align="center" label="操作" >
         <template slot-scope="scope">
-          <el-button type="success" plain @click="hanleClick(scope.row)" size="small">修改</el-button>
-          <el-button type="danger" plain @click="handleDelete(scope.row)" size="small">删除</el-button>
+          <el-button type="success"  @click="hanleClick(scope.row)" size="small">修改</el-button>
+          <el-button type="danger"  @click="handleDelete(scope.row)" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
+   <div class="block">
+      <el-pagination
       @size-change="setEachPage"
       @current-change="setCurrentPage"
       :current-page="currentPage"
@@ -147,6 +148,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="serves.length"
     ></el-pagination>
+   </div>
   </div>
 </template>
 
@@ -404,9 +406,8 @@ export default {
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
+.block{
+  text-align: center;
 }
 .name {
   width: 300px;
@@ -420,8 +421,8 @@ export default {
   margin-left: 50px;
 }
 .name1 {
-  width: 120px;
-  height: 30px;
+  /* width: 120px; */
+  /* height: 30px; */
   display: inline-block;
 }
 </style>

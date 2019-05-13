@@ -160,8 +160,8 @@ export default {
         this.uploadInfo.feature = "";
         this.uploadInfo.person = "";
         this.uploadInfo.licensenumber = "";
-        this.license = []; //营业执照
-        this.banner = []; //头图
+        this.uploadInfo.banner = [];
+        this.uploadInfo.license = [];
         this.closeLoading();
         this.$notify({
           title: "发送请求成功",
