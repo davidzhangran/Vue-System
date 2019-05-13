@@ -303,9 +303,10 @@ export default {
       this.price = "";
       this.age = "";
       this.gender = "";
-      this.images = "";
+      this.images = [];
       this.describe = "";
       this.$refs.upload.clearFiles();
+      
     },
     updata() {
       this.dialogTableVisible = false; //关闭窗口
@@ -330,6 +331,15 @@ export default {
         images,
         describe
       });
+       this.name = "";
+      this.category = "";
+      this.color = "";
+      this.price = "";
+      this.age = "";
+      this.gender = "";
+      this.images = [];
+      this.describe = "";
+      this.$refs.upload.clearFiles();
     },
     search() {
       this.flag = false;
