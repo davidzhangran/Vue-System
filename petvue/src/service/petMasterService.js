@@ -15,7 +15,7 @@ const addPetMaster = async (params) => await fetch("/petMember/addPetMaster", {
 ).then(response => response.json())
 
 // 修改
-const upDataPetMasterByPage = async (params) => await fetch("/petMember/updatePetMaster", {
+const updatePetMaster = async (params) => await fetch("/petMember/updatePetMaster", {
     method: "POST",
     mode: "cors",
     headers: {
@@ -27,7 +27,7 @@ const upDataPetMasterByPage = async (params) => await fetch("/petMember/updatePe
 ).then(response => response.json())
 
 // 删除宠主
-const removePetMasterByPage = async (params) => await fetch("/petMember/removePetMaster", {
+const delePetMaster = async (params) => await fetch("/petMember/removePetMaster", {
     method: "POST",
     mode: "cors",
     headers: {
@@ -41,6 +41,6 @@ const removePetMasterByPage = async (params) => await fetch("/petMember/removePe
 export default {
     addPetMaster,
     getPetMasterByPage,
-    upDataPetMasterByPage,
-    removePetMasterByPage
+    updatePetMaster,
+    delePetMaster
 }
