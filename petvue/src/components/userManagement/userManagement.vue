@@ -125,6 +125,11 @@ export default {
     comfirm(form) {
       this.dialogFormVisible = false;
       this.upDataUserAsync(form);
+      this.$notify({
+          title: '成功',
+          message: '修改成功！',
+          type: 'success'
+        });
     },
     ...mapActions([
       "addUserAsync",

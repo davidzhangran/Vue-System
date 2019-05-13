@@ -156,6 +156,8 @@ export default {
         this.uploadInfo.feature = "";
         this.uploadInfo.person = "";
         this.uploadInfo.licensenumber = "";
+        this.uploadInfo.banner = [];
+        this.uploadInfo.license = [];
         this.closeLoading();
         this.$notify({
           title: "发送请求成功",

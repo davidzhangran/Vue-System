@@ -1,6 +1,15 @@
 <template>
   <div>
     <el-button type="primary" @click="dialogVisible=true" size="small">增加订单</el-button>
+      <el-select v-model="value" style="width:100px;" size="small" placeholder="请选择">
+      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+    </el-select>
+    <div class="name1">
+      <el-input v-model="label" placeholder="请输入内容" size="small"></el-input>
+    </div>
+    <el-button type="primary" icon="el-icon-search"  size="small">搜索</el-button>
+    <OrdersOrdersTab/>
+
     <el-dialog title="增加订单" :visible.sync="dialogVisible" width="80%">
       <el-form :inline="true" :model="orders" class="demo-form-inline">
         <el-form-item label="用户:">
@@ -52,7 +61,6 @@
         <el-button type="primary" @click=" addOrders">确 定</el-button>
       </span>
     </el-dialog>
-    <OrdersOrdersTab/>
   </div>
 </template>
 <script>
@@ -69,6 +77,7 @@ export default {
       value1:"",
       commodity: "",
       state: "",
+      label:"",
       orders: {
         userId: "",
         commodityId: "",
@@ -77,6 +86,32 @@ export default {
         petId: "",
         price: ""
       },
+        options: [
+        {
+          value: "goodsId",
+          label: "商品名称"
+        },
+        {
+          value: "petMemberId",
+          label: "客户"
+        },
+        {
+          value: "storefrontId",
+          label: "门店"
+        },
+        {
+          value: "serveId",
+          label: "服务"
+        },
+        {
+          value: "petId",
+          label: "宠物"
+        },
+        {
+          value: "price",
+          label: "价格"
+        }
+      ],
       restaurants: "",
 
     };

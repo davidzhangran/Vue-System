@@ -1,13 +1,13 @@
 <template>
   <div>
-    <el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
-    <el-select v-model="value" style="width:100px;" placeholder="请选择">
+    <el-button type="primary" @click="dialogFormVisible = true" size="small">新增</el-button>
+    <el-select v-model="value" style="width:100px;" placeholder="请选择" size="small">
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
     </el-select>
     <div class="name1">
-      <el-input v-model="label" style placeholder="请输入内容"></el-input>
+      <el-input v-model="label" style placeholder="请输入内容" size="small"></el-input>
     </div>
-    <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+    <el-button type="primary" icon="el-icon-search" @click="search" size="small">搜索</el-button>
     <el-dialog title="新增" :visible.sync="dialogFormVisible">
       <el-form class="form">
         <div class="name">
@@ -123,24 +123,25 @@
     <el-table :data="pets" border style="width: 100%">
       <el-table-column fixed prop="images" label="照片" width="150" align="center">
         <template slot-scope="scope">
-          <img :src="scope.row.images[0]" style="width:80px;height:80px">
+          <img :src="scope.row.images[0]" style="width:50px;height:50px">
         </template>
       </el-table-column>
-      <el-table-column fixed prop="name" label="名称" width="150" align="center"></el-table-column>
-      <el-table-column prop="category" label="宠物品种" width="120" align="center"></el-table-column>
-      <el-table-column prop="color" label="毛色" width="120" align="center"></el-table-column>
-      <el-table-column prop="price" label="价格" width="120" align="center"></el-table-column>
-      <el-table-column prop="age" label="年龄" width="120" align="center"></el-table-column>
-      <el-table-column prop="gender" label="性别" width="120" align="center"></el-table-column>
-      <el-table-column prop="describe" label="描述" width="120" align="center"></el-table-column>
-      <el-table-column fixed="right" label="操作" align="center">
+      <el-table-column fixed prop="name" label="名称" align="center"></el-table-column>
+      <el-table-column prop="category" label="宠物品种" align="center"></el-table-column>
+      <el-table-column prop="color" label="毛色" align="center"></el-table-column>
+      <el-table-column prop="price" label="价格" align="center"></el-table-column>
+      <el-table-column prop="age" label="年龄" align="center"></el-table-column>
+      <el-table-column prop="gender" label="性别" align="center"></el-table-column>
+      <el-table-column prop="describe" label="描述" align="center"></el-table-column>
+      <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button type="success" plain @click="hanleClick(scope.row)" size="small">修改</el-button>
-          <el-button type="danger" plain @click="handleDelete(scope.row)" size="small">删除</el-button>
+          <el-button type="success" @click="hanleClick(scope.row)" size="small">修改</el-button>
+          <el-button type="danger" @click="handleDelete(scope.row)" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
+   <div class="block">
+      <el-pagination
       @size-change="setEachPage"
       @current-change="setCurrentPage"
       :current-page="currentPage-0"
@@ -149,6 +150,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
     ></el-pagination>
+   </div>
   </div>
 </template>
 
@@ -268,6 +270,11 @@ export default {
         this.updata();
       }
       this.$refs.upload1.submit();
+      this.$notify({
+        title: "成功",
+        message: "修改宠信息成功",
+        type: "success"
+      });
     },
     //新增
     add() {
@@ -306,6 +313,11 @@ export default {
       this.images = "";
       this.describe = "";
       this.$refs.upload.clearFiles();
+      this.$notify({
+        title: "成功",
+        message: "新增成功！",
+        type: "success"
+      });
     },
     updata() {
       this.dialogTableVisible = false; //关闭窗口
@@ -407,9 +419,8 @@ export default {
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
+.block{
+  text-align: center;
 }
 .name {
   width: 200px;
