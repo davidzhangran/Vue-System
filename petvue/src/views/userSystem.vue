@@ -26,8 +26,7 @@
 
 <script>
 export default {
-  computed: {
-  },
+  computed: {},
   name: "system",
   data() {
     return {
@@ -44,8 +43,10 @@ export default {
     }
   },
   mounted() {
-   const data =  document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
-  //  console.log(data);
+    const data = document.cookie.match(
+      new RegExp("(^| )" + "id" + "=([^;]*)(;|$)")
+    )[2];
+    //  console.log(data);
   }
 };
 </script>

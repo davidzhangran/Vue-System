@@ -1,18 +1,25 @@
 
     <template>
   <div>
-    <el-table :data="storefrontInfo" stripe style="width: 100%">
-      <el-table-column prop="state" label="审核状态" ></el-table-column>
-      <el-table-column prop="name" label="名称" ></el-table-column>
-      <el-table-column prop="licensenumber" label="营业执照号码" ></el-table-column>
-      <el-table-column prop="site" label="营业地址" ></el-table-column>
-      <el-table-column prop="person" label="法人" ></el-table-column>
-      <el-table-column prop="phone" label="联系电话" ></el-table-column>
-      <el-table-column prop="feature" label="特色" ></el-table-column>
-      <el-table-column label="营业执照"  prop="license">
+    <el-table
+      :data="storefrontInfo"
+      stripe
+      style="width: 100%"
+      highlight-current-row
+      @current-change="handleCurrentChange"
+      v-loading="loading"
+    >
+      <el-table-column prop="state" label="审核状态" align="center"></el-table-column>
+      <el-table-column prop="name" label="名称" align="center"></el-table-column>
+      <el-table-column prop="licensenumber" label="营业执照号码" align="center"></el-table-column>
+      <el-table-column prop="site" label="营业地址" align="center"></el-table-column>
+      <el-table-column prop="person" label="法人" align="center"></el-table-column>
+      <el-table-column prop="phone" label="联系电话" align="center"></el-table-column>
+      <el-table-column prop="feature" label="特色" align="center"></el-table-column>
+      <el-table-column label="营业执照" prop="license" align="center">
         <template slot-scope="scope">
           <el-popover placement="bottom" trigger="click">
-            <img :src="scope.row.license[0]" class="head_pic" width="300" height="200">
+            <img :src="scope.row.license[0]" class="head_pic" width="500" height="400">
             <img
               :src="scope.row.license[0]"
               class="head_pic"
@@ -24,40 +31,28 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="门店图片" width="300" height="200" prop="banner">
+      <el-table-column label="门店图片" prop="banner" align="center">
         <template slot-scope="scope">
           <el-popover placement="bottom" trigger="click">
-            <div class="block">
-              <img
-                v-for="item in scope.row.banner"
-                :src="item"
-                class="head_pic"
-                width="80"
-                height="80"
-                :key="item"
-              >
-            </div>
-            <img
-              :src="scope.row.banner[0]"
-              class="head_pic"
-              width="50"
-              height="50"
-              slot="reference"
-            >
+            <el-carousel :interval="5000" arrow="always" style="width:500px;">
+              <el-carousel-item v-for="item in scope.row.banner" :key="item">
+                <img :src="item">
+              </el-carousel-item>
+            </el-carousel>
+
+            <img :src="scope.row.banner[0]" width="50" height="50" slot="reference">
           </el-popover>
         </template>
       </el-table-column>
-    <!-- 文字链接跳转，把状态给全局 -->
-      <el-table-column label="更多" width="100">
+      <!-- 文字链接跳转，把状态给全局 -->
+      <el-table-column label="更多" align="center">
         <template slot-scope="scope">
-          <el-button @click="moreInfo(scope.row)" type="text">
-            <el-link
-              :underline="false"
-              icon="el-icon-s-promotion"
-              @click="moreInfo(scope.row)"
-              href="/#/userStore/moreSf"
-            >更多信息</el-link>
-          </el-button>
+          <div  @click="moreInfo(scope.row)">
+          <el-link href="/#/userStore/moreSf">
+            查看
+            <i class="el-icon-more el-icon--right" ></i>
+          </el-link>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -89,8 +84,9 @@ export default {
   methods: {
     ...mapActions(["getStorefrontByPageAsync"]),
     ...mapMutations(["setEachPage", "setCurrentPage", "moreInfo"]),
-    handleClick(row) {
-      console.log(row);
+    handleCurrentChange(val) {
+      // console.log(val);
+      this.currentRow = val;
     }
   },
   data() {
@@ -121,7 +117,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(["count", "storefrontInfo", "totalPage","eachPage","currentPage"]),
+    ...mapState([
+      "count",
+      "storefrontInfo",
+      "totalPage",
+      "eachPage",
+      "currentPage",
+      "loading"
+    ])
     // eachPage: {
     //   get: mapState(["eachPage"]).eachPage, //返回eachPage
     //   set: mapMutations(["setEachPage"]).setEachPage //setEachPage方法调用
@@ -136,6 +139,17 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
+</style>
+
 
 
 
