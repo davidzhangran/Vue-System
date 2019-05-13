@@ -179,7 +179,7 @@
         <el-table-column align="center" show-overflow-tooltip property="date" label="入职日期"></el-table-column>
         <el-table-column align="center" show-overflow-tooltip property="site" label="住址"></el-table-column>
         <el-table-column align="center" show-overflow-tooltip property="phone" label="联系电话"></el-table-column>
-        <el-table-column align="center" property="value" label="职位"></el-table-column>
+        <el-table-column align="center" property="clerk" label="职位"></el-table-column>
       </el-table>
     </el-dialog>
     <!-- /店员详情 -->
