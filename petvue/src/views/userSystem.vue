@@ -16,6 +16,7 @@
         <el-menu-item index="/userSystem/applyFront">申请列表</el-menu-item>
       </el-submenu>
       <el-menu-item index="3">评论管理</el-menu-item>
+      <el-menu-item  index="/">退出系统</el-menu-item>
     </el-menu>
     <router-view></router-view>
   </div>
