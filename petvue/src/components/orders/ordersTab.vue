@@ -248,6 +248,7 @@ export default {
         //value:名称,address:_id
         return { value: item.name, address: item._id };
       });
+      console.log(commodity)
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         cb(commodity);
@@ -257,7 +258,6 @@ export default {
       this.order.storefrontId = item.address;
     },
     petInfoAsync(queryString, cb) {
-      console.log(this.petMasterUsers);
       let commodity = this.petMasterUsers.map(item => {
         //value:名称,address:_id
         return { value: item.name, address: item._id };
