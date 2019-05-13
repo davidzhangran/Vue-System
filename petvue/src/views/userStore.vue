@@ -41,9 +41,7 @@ export default {
   },
   mounted() {
    const data =  document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
-   console.log(data);
-
-  }
+  },
 };
 </script>
 
