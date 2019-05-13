@@ -293,16 +293,16 @@ export default {
       this.$refs.banner.submit();
 
       this.dialogFormVisible = false;
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)"
-      });
-      this.loading = true;
-      
+      // const loading = this.$loading({
+      //   lock: true,
+      //   text: "Loading",
+      //   spinner: "el-icon-loading",
+      //   background: "rgba(0, 0, 0, 0.7)"
+      // });
+      // this.loading = true;
+
       setTimeout(() => {
-        loading.close();
+        // loading.close();
         this.tableData.banner = this.bannerDate;
         this.bannerDate = [];
         this.updateStorefrontAsync(this.updateFrontById(this.tableData));
