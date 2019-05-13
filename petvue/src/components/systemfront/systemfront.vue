@@ -147,6 +147,7 @@
             :on-remove="handleRemove"
             :file-list="tableData.banner"
             :on-change="bannerCha"
+            :on-success="bannerSuc"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -158,7 +159,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitUpload">确 定</el-button>
+        <el-button type="primary" @click="submitUpload" >确 定</el-button>
       </div>
     </el-dialog>
     <!-- /修改组件 -->
@@ -296,8 +297,32 @@ export default {
     submitUpload() {
       this.$refs.license.submit();
       this.$refs.banner.submit();
+
       this.dialogFormVisible = false;
-      this.updateStorefrontAsync(this.updateFrontById(this.tableData));
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)"
+      });
+      this.loading = true;
+      
+      setTimeout(() => {
+        loading.close();
+        this.tableData.banner = this.bannerDate;
+        this.bannerDate = [];
+        this.updateStorefrontAsync(this.updateFrontById(this.tableData));
+        // 清空图片
+        this.$refs.banner.clearFiles();
+        this.$refs.license.clearFiles();
+        this.tableData = [];
+        this.$notify({
+          title: "发送请求成功",
+          message: "修改信息成功！",
+          type: "success"
+        });
+        this.loading = false;
+      }, 2000);
     },
     //点击修改按钮
     handleClick(row) {
@@ -312,6 +337,7 @@ export default {
           message: '修改成功！',
           type: 'success'
         });
+      this.bannerDate = [...this.tableData.banner];
     },
     updateFrontById(row) {
       return {
@@ -338,15 +364,10 @@ export default {
       return temp;
     },
     handleRemove(file, fileList) {
-      // console.log(file.url);
-      // let data = [];
-      // data = this.tableData.banner = this.tableData.banner.filter(
-      //   item => item.url != file.url
-      // );
-      // console.log(this.tableData.banner);
-      // this.tableData.banner = this.bannerDate = data;
-      // console.log(this.bannerDate);
-      // this.updateStorefrontAsync(this.updateFrontById(this.tableData));
+      //操作图片删除按钮
+      let data = [];
+      data = this.bannerDate.filter(item => item.url != file.url);
+      this.bannerDate = data;
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
@@ -380,21 +401,15 @@ export default {
     licenseSuc(response, file, fileList) {
       //营业执照上传成功的执行的函数
       this.tableData.license[0].url = response.data.url;
-      this.$refs.license.clearFiles();
-      this.$refs.banner.clearFiles();
-      this.updateStorefrontAsync(this.updateFrontById(this.tableData));
     },
-    // bannerSuc(response, file, fileList) {
-    //   //头图上传成功的执行的函数
-    //   console.log(this.tableData.banner);
-    //   this.bannerDate.push({ url: response.data.url });
-    //   this.tableData.banner = this.bannerDate;
-    //   this.updateStorefrontAsync(this.updateFrontById(this.tableData));
-    //   this.tableData = [];
-    // },
+    bannerSuc(response, file, fileList) {
+      //头图上传成功的执行的函数
+      this.bannerDate.push({ url: response.data.url });
+    },
     licenseCha(file, fileList) {},
     bannerCha(file, fileList) {
       //头图片修改
+      // console.log(this.tableData.banner);
     },
     licenseUp(file) {},
     licensePro(event, file, fileList) {},
@@ -444,6 +459,7 @@ export default {
       tableData: {
         //
       },
+      loading: false, // loading加载
       dialogFormVisible: false,
       formLabelWidth: "120px",
       clerkDate: [],
@@ -453,7 +469,7 @@ export default {
       serveDate: [],
       serveDialog: false, // 服务详情面板的状态
       petDate: [],
-      petDialog: false, // 宠物详情面板的状态
+      petDialog: false // 宠物详情面板的状态
     };
   }
 };
@@ -475,5 +491,10 @@ export default {
 }
 .block {
   text-align: center;
+}
+.exothecium {
+  width: 100%;
+  height: 100%;
+  z-index: -999;
 }
 </style>
