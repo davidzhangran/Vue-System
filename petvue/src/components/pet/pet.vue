@@ -126,13 +126,13 @@
           <img :src="scope.row.images[0]" style="width:50px;height:50px">
         </template>
       </el-table-column>
-      <el-table-column fixed prop="name" label="名称" align="center"></el-table-column>
-      <el-table-column prop="category" label="宠物品种" align="center"></el-table-column>
-      <el-table-column prop="color" label="毛色" align="center"></el-table-column>
-      <el-table-column prop="price" label="价格" align="center"></el-table-column>
-      <el-table-column prop="age" label="年龄" align="center"></el-table-column>
-      <el-table-column prop="gender" label="性别" align="center"></el-table-column>
-      <el-table-column prop="describe" label="描述" align="center"></el-table-column>
+      <el-table-column fixed prop="name" show-overflow-tooltip label="名称" align="center"></el-table-column>
+      <el-table-column prop="category" show-overflow-tooltip label="宠物品种" align="center"></el-table-column>
+      <el-table-column prop="color" show-overflow-tooltip label="毛色" align="center"></el-table-column>
+      <el-table-column prop="price" show-overflow-tooltip label="价格" align="center"></el-table-column>
+      <el-table-column prop="age" show-overflow-tooltip label="年龄" align="center"></el-table-column>
+      <el-table-column prop="gender" show-overflow-tooltip label="性别" align="center"></el-table-column>
+      <el-table-column prop="describe" show-overflow-tooltip label="描述" align="center"></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button type="success" @click="hanleClick(scope.row)" size="small">修改</el-button>

@@ -10,12 +10,12 @@
       v-loading="loading"
     >
       <el-table-column prop="state" label="审核状态" align="center"></el-table-column>
-      <el-table-column prop="name" label="名称" align="center"></el-table-column>
-      <el-table-column prop="licensenumber" label="营业执照号码" align="center"></el-table-column>
-      <el-table-column prop="site" label="营业地址" align="center"></el-table-column>
+      <el-table-column prop="name" label="名称" show-overflow-tooltip align="center"></el-table-column>
+      <el-table-column prop="licensenumber" show-overflow-tooltip label="营业执照号码" align="center"></el-table-column>
+      <el-table-column prop="site" show-overflow-tooltip label="营业地址" align="center"></el-table-column>
       <el-table-column prop="person" label="法人" align="center"></el-table-column>
-      <el-table-column prop="phone" label="联系电话" align="center"></el-table-column>
-      <el-table-column prop="feature" label="特色" align="center"></el-table-column>
+      <el-table-column prop="phone" show-overflow-tooltip label="联系电话" align="center"></el-table-column>
+      <el-table-column prop="feature"  show-overflow-tooltip label="特色" align="center"></el-table-column>
       <el-table-column label="营业执照" prop="license" align="center">
         <template slot-scope="scope">
           <el-popover placement="bottom" trigger="click">

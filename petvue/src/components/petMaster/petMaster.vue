@@ -64,12 +64,12 @@
           <img :src="scope.row.banner[0]" style="width:50px;height:50px">
         </template>
       </el-table-column>
-      <el-table-column prop="phone" label="电话号码"></el-table-column>
-      <el-table-column prop="username" label="昵称"></el-table-column>
+      <el-table-column prop="phone" show-overflow-tooltip label="电话号码"></el-table-column>
+      <el-table-column prop="username" show-overflow-tooltip label="昵称"></el-table-column>
       <el-table-column prop="name" label="真实姓名"></el-table-column>
       <el-table-column prop="city" label="城市"></el-table-column>
       <el-table-column prop="area" label="区域"></el-table-column>
-      <el-table-column prop="site" label="送货地址"></el-table-column>
+      <el-table-column prop="site" show-overflow-tooltip label="送货地址"></el-table-column>
       <el-table-column prop="integral" label="积分" width="100"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">

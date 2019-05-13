@@ -19,9 +19,8 @@
       <el-button type="primary" @click="searchClick" size="small" icon="el-icon-search">搜索</el-button>
     </div>
     <el-table :data="storefrontInfo" border style="width: 100%">
-      <!-- <el-table-column header-align="center" align="center" fixed prop="_id" label="门店编号"></el-table-column> -->
-      <el-table-column header-align="center" align="center" prop="name" label="门店名称"></el-table-column>
-      <el-table-column header-align="center" align="center" prop="licensenumber" label="营业执照号码"></el-table-column>
+      <el-table-column header-align="center" show-overflow-tooltip align="center" prop="name" label="门店名称"></el-table-column>
+      <el-table-column header-align="center" show-overflow-tooltip align="center" prop="licensenumber" label="营业执照号码"></el-table-column>
       <el-table-column header-align="center" align="center" prop="license" label="营业执照图片">
         <template slot-scope="scope">
           <el-popover placement="bottom" trigger="click">
@@ -32,9 +31,9 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column header-align="center" align="center" prop="site" label="营业地址"></el-table-column>
+      <el-table-column header-align="center" show-overflow-tooltip align="center" prop="site" label="营业地址"></el-table-column>
       <el-table-column header-align="center" align="center" prop="person" label="法人"></el-table-column>
-      <el-table-column header-align="center" align="center" prop="phone" label="联系电话"></el-table-column>
+      <el-table-column header-align="center" show-overflow-tooltip align="center" prop="phone" label="联系电话"></el-table-column>
       <el-table-column header-align="center" align="center" prop="banner" label="头图">
         <template slot-scope="scope" style="display: flex;">
           <el-popover placement="bottom" trigger="click">
@@ -51,7 +50,7 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column header-align="center" align="center" prop="feature" label="特色"></el-table-column>
+      <el-table-column header-align="center" show-overflow-tooltip align="center" prop="feature" label="特色"></el-table-column>
       <el-table-column width="120" header-align="center" align="center" label="店员">
         <template slot-scope="scope">
           <el-button @click="clerkDetails(scope.row)" type="primary" size="mini">店员详情</el-button>
@@ -177,9 +176,9 @@
     <el-dialog title="店员详情" :visible.sync="clerkDialog">
       <el-table :data="clerkDate" border>
         <el-table-column align="center" property="name" label="姓名"></el-table-column>
-        <el-table-column align="center" property="date" label="入职日期"></el-table-column>
-        <el-table-column align="center" property="site" label="住址"></el-table-column>
-        <el-table-column align="center" property="phone" label="联系电话"></el-table-column>
+        <el-table-column align="center" show-overflow-tooltip property="date" label="入职日期"></el-table-column>
+        <el-table-column align="center" show-overflow-tooltip property="site" label="住址"></el-table-column>
+        <el-table-column align="center" show-overflow-tooltip property="phone" label="联系电话"></el-table-column>
         <el-table-column align="center" property="value" label="职位"></el-table-column>
       </el-table>
     </el-dialog>
@@ -187,52 +186,52 @@
     <!-- 商品详情 -->
     <el-dialog title="商品详情" :visible.sync="goodsDialog">
       <el-table :data="goodsDate" border>
-        <el-table-column align="center" property="name" label="商品名称"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="name" label="商品名称"></el-table-column>
         <el-table-column align="center" width="100" property="images" label="商品图片">
           <template slot-scope="scope">
             <img style="width:80px;height:80px;" :src="scope.row.images" alt>
           </template>
         </el-table-column>
-        <el-table-column align="center" property="category" label="品类"></el-table-column>
-        <el-table-column align="center" property="texture" label="材质"></el-table-column>
-        <el-table-column align="center" property="specification" label="适用规格"></el-table-column>
-        <el-table-column align="center" property="taste" label="口味"></el-table-column>
-        <el-table-column align="center" property="origin" label="产地"></el-table-column>
-        <el-table-column align="center" width="160" property="production" label="出厂日期"></el-table-column>
-        <el-table-column align="center" property="expiration" label="保质期"></el-table-column>
-        <el-table-column align="center" property="supplier" label="供应商"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="category" label="品类"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="texture" label="材质"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="specification" label="适用规格"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="taste" label="口味"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="origin" label="产地"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" width="160" property="production" label="出厂日期"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="expiration" label="保质期"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="supplier" label="供应商"></el-table-column>
       </el-table>
     </el-dialog>
     <!-- /商品详情 -->
     <!-- 服务详情 -->
     <el-dialog title="服务详情" :visible.sync="serveDialog">
       <el-table :data="serveDate" border>
-        <el-table-column align="center" property="name" label="商品名称"></el-table-column>
-        <el-table-column align="center" property="category" label="品类"></el-table-column>
-        <el-table-column align="center" property="schedule" label="排期"></el-table-column>
-        <el-table-column align="center" property="specification" label="适用规格"></el-table-column>
-        <el-table-column align="center" property="service" label="服务规格"></el-table-column>
-        <el-table-column align="center" property="consuming" label="耗时"></el-table-column>
-        <el-table-column align="center" width="160" property="grade" label="服务员等级"></el-table-column>
-        <el-table-column align="center" property="price" label="价格"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="name" label="商品名称"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="category" label="品类"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="schedule" label="排期"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="specification" label="适用规格"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="service" label="服务规格"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="consuming" label="耗时"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" width="160" property="grade" label="服务员等级"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="price" label="价格"></el-table-column>
       </el-table>
     </el-dialog>
     <!-- /服务详情 -->
     <!-- 宠物详情 -->
     <el-dialog title="宠物详情" :visible.sync="petDialog">
       <el-table :data="petDate" border>
-        <el-table-column align="center" property="name" label="商品名称"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="name" label="商品名称"></el-table-column>
         <el-table-column align="center" width="100" property="images" label="图片">
           <template slot-scope="scope">
             <img style="width:80px;height:80px;" :src="scope.row.images" alt>
           </template>
         </el-table-column>
-        <el-table-column align="center" property="category" label="宠物品种"></el-table-column>
-        <el-table-column align="center" property="age" label="年龄"></el-table-column>
-        <el-table-column align="center" property="gender" label="性别"></el-table-column>
-        <el-table-column align="center" property="color" label="毛色"></el-table-column>
-        <el-table-column align="center" property="price" label="价格"></el-table-column>
-        <el-table-column align="center" property="describe" label="描述"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="category" label="宠物品种"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="age" label="年龄"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="gender" label="性别"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="color" label="毛色"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="price" label="价格"></el-table-column>
+        <el-table-column show-overflow-tooltip align="center" property="describe" label="描述"></el-table-column>
       </el-table>
     </el-dialog>
     <!-- /宠物详情 -->
@@ -486,10 +485,5 @@ export default {
 }
 .block {
   text-align: center;
-}
-.exothecium {
-  width: 100%;
-  height: 100%;
-  z-index: -999;
 }
 </style>
