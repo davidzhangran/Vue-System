@@ -3,10 +3,16 @@
     <el-tabs :tab-position="tabPosition" :stretch="stretch">
       <el-tab-pane label="商品列表">
         <el-button type="primary" @click="dialogVisibleGoods = true">添加商品</el-button>
-        <el-table :data="moreSf.goodsId" border style="width: 100%">
-          <el-table-column prop="name" label="商品名称"></el-table-column>
-          <!-- <el-table-column prop="images[0]" label="商品图片"></el-table-column> -->
-          <el-table-column label="门店图片" width="120" prop="images">
+        <el-table
+          v-loading="loading"
+          :data="moreSf.goodsId"
+          border
+          style="width: 100%"
+          stripe
+          highlight-current-row
+        >
+          <el-table-column width="150" align="center" prop="name" label="商品名称"></el-table-column>
+          <el-table-column label="商品图片" width="150" align="center" prop="images">
             <template slot-scope="scope">
               <el-popover placement="bottom" trigger="click">
                 <div class="block">
@@ -22,29 +28,29 @@
                 <img
                   :src="scope.row.images[0]"
                   class="head_pic"
-                  width="80"
-                  height="80"
+                  width="50"
+                  height="50"
                   slot="reference"
                 >
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column prop="category" label="商品类别"></el-table-column>
-          <el-table-column prop="texture" label="商品材质"></el-table-column>
-          <el-table-column prop="specification" label="适用宠物"></el-table-column>
-          <el-table-column prop="exclusive" label="专属宠物"></el-table-column>
-          <el-table-column prop="pack" label="包装规格"></el-table-column>
-          <el-table-column prop="taste" label="口味"></el-table-column>
-          <el-table-column prop="special" label="特殊功用"></el-table-column>
-          <el-table-column prop="origin" label="产地"></el-table-column>
-          <el-table-column prop="production" label="生产日期"></el-table-column>
-          <el-table-column prop="expiration" label="保质期"></el-table-column>
-          <el-table-column prop="supplier" label="供应商"></el-table-column>
-          <el-table-column prop="feature" label="特色说明"></el-table-column>
-          <el-table-column prop="price" label="价格"></el-table-column>
-          <el-table-column align="center" fixed="right" label="操作" width="250">
+          <el-table-column width="150" align="center" prop="category" label="商品类别"></el-table-column>
+          <el-table-column width="150" align="center" prop="texture" label="商品材质"></el-table-column>
+          <el-table-column width="150" align="center" prop="specification" label="适用宠物"></el-table-column>
+          <el-table-column width="150" align="center" prop="exclusive" label="专属宠物"></el-table-column>
+          <el-table-column width="150" align="center" prop="pack" label="包装规格"></el-table-column>
+          <el-table-column width="150" align="center" prop="taste" label="口味"></el-table-column>
+          <el-table-column width="150" align="center" prop="special" label="特殊功用"></el-table-column>
+          <el-table-column width="150" align="center" prop="origin" label="产地"></el-table-column>
+          <el-table-column width="150" align="center" prop="production" label="生产日期"></el-table-column>
+          <el-table-column align="center" prop="expiration" label="保质期"></el-table-column>
+          <el-table-column align="center" prop="supplier" label="供应商"></el-table-column>
+          <el-table-column align="center" prop="feature" label="特色说明"></el-table-column>
+          <el-table-column align="center" prop="price" label="价格"></el-table-column>
+          <el-table-column align="center" fixed="right" label="操作" width="150">
             <template slot-scope="scope">
-              <el-button type="danger" plain @click="handleDeleteGoods(scope.row)" size="small">删除</el-button>
+              <el-button @click="handleDeleteGoods(scope.row)" type="danger" size="small">移除商品</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -104,18 +110,25 @@
       <el-tab-pane label="服务列表">
         <el-button type="primary" @click="dialogVisibleServe = true">添加服务</el-button>
         <div>
-          <el-table :data="moreSf.serveId" border style="width: 100%">
-            <el-table-column align="center" fixed prop="name" label="服务类型" width="150"></el-table-column>
-            <el-table-column align="center" prop="category" label="品类" width="120"></el-table-column>
-            <el-table-column align="center" prop="schedule" label="排期" width="120"></el-table-column>
-            <el-table-column align="center" prop="specification" label="适用规格" width="120"></el-table-column>
-            <el-table-column align="center" prop="service" label="服务规格" width="120"></el-table-column>
-            <el-table-column align="center" prop="consuming" label="耗时" width="120"></el-table-column>
-            <el-table-column align="center" prop="grade" label="服务员等级" width="120"></el-table-column>
-            <el-table-column align="center" prop="price" label="价格" width="120"></el-table-column>
-            <el-table-column align="center" fixed="right" label="操作" width="250">
+          <el-table
+            v-loading="loading"
+            :data="moreSf.serveId"
+            border
+            style="width: 100%"
+            stripe
+            highlight-current-row
+          >
+            <el-table-column align="center" fixed prop="name" label="服务类型"></el-table-column>
+            <el-table-column align="center" prop="category" label="品类"></el-table-column>
+            <el-table-column align="center" prop="schedule" label="排期"></el-table-column>
+            <el-table-column align="center" prop="specification" label="适用规格"></el-table-column>
+            <el-table-column align="center" prop="service" label="服务规格"></el-table-column>
+            <el-table-column align="center" prop="consuming" label="耗时"></el-table-column>
+            <el-table-column align="center" prop="grade" label="服务员等级"></el-table-column>
+            <el-table-column align="center" prop="price" label="价格"></el-table-column>
+            <el-table-column align="center" label="操作">
               <template slot-scope="scope">
-                <el-button type="danger" plain @click="handleDeleteServe(scope.row)" size="small">删除</el-button>
+                <el-button @click="handleDeleteServe(scope.row)" type="danger" size="small">移除服务</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -180,22 +193,29 @@
       <el-tab-pane label="宠物列表">
         <el-button type="primary" @click="dialogVisiblePet = true">添加宠物</el-button>
         <div>
-          <el-table :data="moreSf.petId" border style="width: 100%">
-            <el-table-column fixed prop="images" label="照片" width="150" align="center">
+          <el-table
+            v-loading="loading"
+            :data="moreSf.petId"
+            border
+            style="width: 100%"
+            stripe
+            highlight-current-row
+          >
+            <el-table-column fixed prop="images" label="照片" align="center">
               <template slot-scope="scope">
                 <img :src="scope.row.images[0]" style="width:50px;height:50px">
               </template>
             </el-table-column>
-            <el-table-column fixed prop="name" label="名称" width="150" align="center"></el-table-column>
-            <el-table-column prop="category" label="宠物品种" width="120" align="center"></el-table-column>
-            <el-table-column prop="color" label="毛色" width="120" align="center"></el-table-column>
-            <el-table-column prop="price" label="价格" width="120" align="center"></el-table-column>
-            <el-table-column prop="age" label="年龄" width="120" align="center"></el-table-column>
-            <el-table-column prop="gender" label="性别" width="120" align="center"></el-table-column>
-            <el-table-column prop="describe" label="描述" width="120" align="center"></el-table-column>
+            <el-table-column fixed prop="name" label="名称" align="center"></el-table-column>
+            <el-table-column prop="category" label="宠物品种" align="center"></el-table-column>
+            <el-table-column prop="color" label="毛色" align="center"></el-table-column>
+            <el-table-column prop="price" label="价格" align="center"></el-table-column>
+            <el-table-column prop="age" label="年龄" align="center"></el-table-column>
+            <el-table-column prop="gender" label="性别" align="center"></el-table-column>
+            <el-table-column prop="describe" label="描述" align="center"></el-table-column>
             <el-table-column fixed="right" label="操作" align="center">
               <template slot-scope="scope">
-                <el-button type="danger" plain @click="handleDeletePet(scope.row)" size="small">删除</el-button>
+                <el-button @click="handleDeletePet(scope.row)" type="danger" size="small">移除宠物</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -205,7 +225,7 @@
           <div class="goods">
             <div>
               <p>宠物名称：</p>
-              <el-select v-model="value" placeholder="请选择" @change="changePet(value)">
+              <el-select v-model="pet.value" placeholder="请选择" @change="changePet(pet.value)">
                 <el-option
                   v-for="item in user.petId"
                   :key="item._id"
@@ -244,16 +264,22 @@
       <el-tab-pane label="员工列表">
         <template>
           <el-button type="primary" @click="dialogVisible = true">新增员工</el-button>
-          <el-table :data="moreSf.clerk" border style="width: 100%">
-            <el-table-column fixed prop="date" label="入职日期" width="150"></el-table-column>
-            <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-            <el-table-column prop="clerk" label="职级" width="120"></el-table-column>
-            <el-table-column prop="phone" label="联系电话" width="120"></el-table-column>
-            <el-table-column prop="site" label="地址" width="300"></el-table-column>
-            <el-table-column label="操作" width="100">
+          <el-table
+            :data="moreSf.clerk"
+            v-loading="loading"
+            border
+            style="width: 100%"
+            stripe
+            highlight-current-row
+          >
+            <el-table-column align="center" prop="date" label="入职日期"></el-table-column>
+            <el-table-column align="center" prop="name" label="姓名"></el-table-column>
+            <el-table-column align="center" prop="clerk" label="职级"></el-table-column>
+            <el-table-column align="center" prop="phone" label="联系电话"></el-table-column>
+            <el-table-column align="center" prop="site" label="地址"></el-table-column>
+            <el-table-column align="center" label="操作">
               <template slot-scope="scope">
-                <el-button type="text" size="small">编辑</el-button>
-                <el-button @click="handleClickStaff(scope.row)" type="text" size="small">移除员工</el-button>
+                <el-button @click="handleClickStaff(scope.row)" type="danger" size="small">移除员工</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -410,20 +436,36 @@ export default {
       "removeAsync",
       "removeStaffAsync"
     ]),
-    handleClick() {
-      console.log(this.moreSf);
-    },
     handleDeleteGoods(row) {
       this.removeAsync({ typeId: row._id, type: "goodsId" });
+      this.cb();
     },
     handleDeletePets(row) {
       this.removeAsync({ typeId: row._id, type: "petId" });
+      this.cb();
+
     },
     handleDeleteServe(row) {
       this.removeAsync({ typeId: row._id, type: "serveId" });
+      this.cb();
+
     },
     handleClickStaff(row) {
       this.removeStaffAsync({ phone: row.phone });
+      this.cb();
+
+    },
+    success() {
+      this.$notify({
+        title: "添加成功!",
+        type: "success"
+      });
+    },
+    cb() {
+      this.$notify({
+        title: "移除成功!",
+        type: "success"
+      });
     },
     changeGodds(value) {
       const [data] = this.user.goodsId.filter(item => item._id == value);
@@ -513,19 +555,22 @@ export default {
     addGoods() {
       this.dialogVisibleGoods = false;
       this.addGoodsAsync({ _id: this._id });
+      this.success();
     },
     addServe() {
       this.dialogVisibleServe = false;
       this.addServeAsync({ _id: this.serve._id });
+      this.success();
     },
     addPet() {
       this.dialogVisiblePet = false;
       this.addPetAsync({ _id: this.pet._id });
+      this.success();
     }
   },
   computed: {
     //拿到当前门店的信息
-    ...mapState(["moreSf", "user"])
+    ...mapState(["moreSf", "user", "loading"])
   }
 };
 </script>

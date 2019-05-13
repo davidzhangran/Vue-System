@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div style="display: flex;justify-content: flex-end;padding-bottom:20px; padding-top:20px;">
-      <el-button @click="whole" type="primary">全部</el-button>
+    <div class="search">
+      <el-button @click="whole" type="primary" size="mini">全部</el-button>
       <el-select style="width:100px;text-align: center;" v-model="value" placeholder="请选择">
         <el-option
           v-for="item in options"
@@ -11,7 +11,7 @@
         ></el-option>
       </el-select>
       <el-input style="width:260px;" v-model="inputText" placeholder="请输入内容"></el-input>
-      <el-button type="primary" @click="searchClick" icon="el-icon-search">搜索</el-button>
+      <el-button type="primary" @click="searchClick" size="mini" icon="el-icon-search">搜索</el-button>
     </div>
     <el-table :data="storefrontInfo" border style="width: 100%">
       <!-- <el-table-column header-align="center" align="center" fixed prop="_id" label="门店编号"></el-table-column> -->
@@ -136,7 +136,6 @@
             :on-remove="handleRemove"
             :file-list="tableData.banner"
             :on-change="bannerCha"
-            :on-success="bannerSuc"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
@@ -184,7 +183,7 @@ export default {
   watch: {
     dialogFormVisible() {
       if (this.dialogFormVisible) return;
-      // this.tableData = [];
+      // this.licenseDate = this.tableData;
     },
     eachPage() {
       //监听eachPage，发生变化就会触发
@@ -231,6 +230,7 @@ export default {
       this.$refs.license.submit();
       this.$refs.banner.submit();
       this.dialogFormVisible = false;
+      this.updateStorefrontAsync(this.updateFrontById(this.tableData));
     },
     //点击修改按钮
     handleClick(row) {
@@ -256,7 +256,6 @@ export default {
       for (const item of row.banner) {
         temp.push(item.url);
       }
-      console.log(temp);
       return temp;
     },
     conversion(row) {
@@ -267,15 +266,15 @@ export default {
       return temp;
     },
     handleRemove(file, fileList) {
-      console.log(file.url);
-      let data = [];
-      data = this.tableData.banner = this.tableData.banner.filter(
-        item => item.url != file.url
-      );
-      console.log(this.tableData.banner);
-      this.tableData.banner = this.bannerDate = data;
-      console.log(this.bannerDate);
-      this.updateStorefrontAsync(this.updateFrontById(this.tableData));
+      // console.log(file.url);
+      // let data = [];
+      // data = this.tableData.banner = this.tableData.banner.filter(
+      //   item => item.url != file.url
+      // );
+      // console.log(this.tableData.banner);
+      // this.tableData.banner = this.bannerDate = data;
+      // console.log(this.bannerDate);
+      // this.updateStorefrontAsync(this.updateFrontById(this.tableData));
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
@@ -309,17 +308,18 @@ export default {
     licenseSuc(response, file, fileList) {
       //营业执照上传成功的执行的函数
       this.tableData.license[0].url = response.data.url;
+      this.$refs.license.clearFiles();
+      this.$refs.banner.clearFiles();
       this.updateStorefrontAsync(this.updateFrontById(this.tableData));
-      this.tableData = [];
     },
-    bannerSuc(response, file, fileList) {
-      //头图上传成功的执行的函数
-      console.log(this.tableData.banner);
-      this.bannerDate.push({ url: response.data.url });
-      this.tableData.banner = this.bannerDate;
-      this.updateStorefrontAsync(this.updateFrontById(this.tableData));
-      this.tableData = [];
-    },
+    // bannerSuc(response, file, fileList) {
+    //   //头图上传成功的执行的函数
+    //   console.log(this.tableData.banner);
+    //   this.bannerDate.push({ url: response.data.url });
+    //   this.tableData.banner = this.bannerDate;
+    //   this.updateStorefrontAsync(this.updateFrontById(this.tableData));
+    //   this.tableData = [];
+    // },
     licenseCha(file, fileList) {},
     bannerCha(file, fileList) {
       //头图片修改
@@ -335,6 +335,7 @@ export default {
   },
   data() {
     return {
+      licenseDate: [],
       bannerDate: [],
       flag: true, //IS 搜索 状态
       state: 2, //根据该状态显示当前页面的数据
@@ -374,5 +375,9 @@ export default {
   text-align: center;
   justify-content: right;
   margin-bottom: 20px;
+}
+.search{
+  display: flex;
+  /* height: 28px; */
 }
 </style>

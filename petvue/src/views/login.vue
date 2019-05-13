@@ -42,8 +42,12 @@
             <span class="span">登陆</span>
           </div>
           <div class="textBtn">
-            <span>没有账号？</span>
-            <p @click="register">点击注册</p>
+            <div>
+              <span>没有账号？</span>
+              <p @click="register">点击注册</p>
+            </div>
+            <p @click="distinguish">人脸登陆</p>
+            <!-- <canvas ref="canvas" width="534" height="400"></canvas> -->
           </div>
         </el-form-item>
       </el-form>
@@ -57,6 +61,15 @@
         <p>The Backstage Management</p>
       </div>
     </div>
+    <!-- 人脸弹窗 -->
+    <canvas ref="canvas" width="534" height="400" class="canvas"></canvas>
+    <el-dialog title="人脸扫描" :visible.sync="dialogVisible" width="580px">
+      <video ref="video" src width="534" height="400" autoplay></video>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
     <WebWeb class="webweb"/>
   </div>
 </template>
@@ -66,6 +79,11 @@
 
 <script>
 import userService from "../service/userManagement.js";
+import recognitionSer from "../service/recognition";
+import { createNamespacedHelpers } from "vuex";
+const { mapMutations, mapState, mapActions } = createNamespacedHelpers(
+  "recognition"
+);
 export default {
   name: "login",
   data() {
@@ -104,7 +122,9 @@ export default {
       rules: {
         phone: [{ validator: phoneValidatePass, trigger: "blur" }],
         password: [{ validator: validatePass, trigger: "blur" }]
-      }
+      },
+      dialogVisible: false,
+      img: ""
     };
   },
   methods: {
@@ -114,6 +134,67 @@ export default {
     register: function(e) {
       this.$router.push("/register");
     },
+    distinguish() {
+      let mediaStreamTrack;
+      this.dialogVisible = true;
+      setTimeout(() => {
+        const video = this.$refs.video;
+        const canvas = this.$refs.canvas;
+        // 拿到画笔
+        const context = canvas.getContext("2d");
+        const getUserMedia =
+          navigator.getUserMedia ||
+          navigator.webkitGetUserMedia ||
+          navigator.mozGetUserMedia;
+        getUserMedia.call(
+          navigator,
+          {
+            video: true,
+            audio: false
+          },
+          function(localMediaStream) {
+            try {
+              //调用摄像头的媒体数据传递给video标签对象
+              video.src = window.URL.createObjectURL(localMediaStream);
+            } catch (e) {
+              
+              video.srcObject = localMediaStream;
+            }
+          },
+          function(e) {
+            console.log(e);
+          }
+        );
+        setTimeout(() => {
+          //获取图片
+          context.drawImage(video, 0, 0, 534, 400);
+          const img = canvas.toDataURL("image/png");
+          const data = recognitionSer.recognition({ img });
+          // MediaStream.getTracks()[1].stop();
+          data.then(({ result }) => {
+            // console.log(result);
+            // console.log(result.score);
+            if (!result) {
+              this.$message({
+                message: "没有识别到人脸，请从新识别。",
+                type: "warning"
+              });
+            } else if (result.score > 90) {
+          
+              this.dialogVisible = false;
+              this.ruleForm = { phone: "13566665522", password: "111111" };
+              // document.cookie = `id=5cd8ccd0c143795d14ac8085`;
+              // document.cookie = `id=5cd8ccd0c143795d14ac8085`;
+              this.$router.push("/userSystem");
+            } else {
+              this.$message({
+                message: "人脸不匹配。",
+                type: "warning"
+              });
+            }
+          });
+        }, 4000);
+      }, 100);},
     getCookie() {
       const arr = document.cookie.match(
         new RegExp("(^| )" + "id" + "=([^;]*)(;|$)")
@@ -128,7 +209,6 @@ export default {
     console.log(to);
 
     console.log(from);
-
     if (to.name == "userSystem") {
       // if (this.getCookie() == null) {
       // } else {
@@ -175,16 +255,23 @@ export default {
 </script>
 
 <style scoped>
+.canvas {
+  position: absolute;
+  z-index: -1;
+}
 .webweb {
   position: fixed;
   bottom: 140px;
   right: 240px;
 }
-/* .webweb{
+.distinguish {
   position: fixed;
-  bottom: 140px;
-  left: 150px;
-} */
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
 .text {
   color: white;
   text-align: center;
@@ -198,7 +285,7 @@ export default {
   letter-spacing: 4px;
   margin-bottom: 10px;
 }
-.textBtn > p {
+.textBtn > div > p {
   display: inline-block;
   color: #017cc3;
   font-size: 16px;

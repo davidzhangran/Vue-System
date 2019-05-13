@@ -1,18 +1,20 @@
 <template>
   <div style>
-    <el-tabs :tab-position="tabPosition">
+    <el-tabs :tab-position="tabPosition" :stretch="stretch">
+      <!-- <div class="pane"> -->
+
       <el-tab-pane label="用户列表">
         <div class="user">
           <el-table v-loading="loading" :data="users" style="width: 100%">
-            <el-table-column type="index" label="ID"></el-table-column>
-            <el-table-column prop="username" label="登录名"></el-table-column>
-            <el-table-column prop="password" label="密码"></el-table-column>
-            <el-table-column prop="phone" label="手机号"></el-table-column>
-            <el-table-column prop="email" label="邮箱"></el-table-column>
-            <el-table-column prop="name" label="姓名" w></el-table-column>
-            <el-table-column prop="role" label="角色"></el-table-column>
-            <el-table-column prop="state" label="状态"></el-table-column>
-            <el-table-column label="操作">
+            <el-table-column type="index" align="center" label="ID"></el-table-column>
+            <el-table-column prop="username" label="登录名" align="center"></el-table-column>
+            <el-table-column prop="password" label="密码" align="center"></el-table-column>
+            <el-table-column prop="phone" label="手机号" align="center"></el-table-column>
+            <el-table-column prop="email" label="邮箱" align="center"></el-table-column>
+            <el-table-column prop="name" label="姓名" align="center"></el-table-column>
+            <el-table-column prop="role" label="角色" align="center"></el-table-column>
+            <el-table-column prop="state" label="状态" align="center"></el-table-column>
+            <el-table-column label="操作" align="center">
               <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="primary" size="small">修改</el-button>
                 <el-button type="danger" @click="deleteUser(scope.row._id)" size="small">删除</el-button>
@@ -90,6 +92,7 @@
           </el-form>
         </div>
       </el-tab-pane>
+      <!-- </div> -->
     </el-tabs>
     <router-view></router-view>
   </div>
@@ -179,6 +182,7 @@ export default {
       formLabelWidth: "120px",
       dialogFormVisible: false,
       tabPosition: "top",
+      stretch:true,
       form: {
         username: "",
         password: "",
@@ -202,5 +206,8 @@ export default {
 }
 .addUser {
   width: 500px;
+}
+.pane{
+  /* display: flex; */
 }
 </style>
