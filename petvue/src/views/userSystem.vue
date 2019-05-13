@@ -14,10 +14,9 @@
       <el-submenu index="2">
         <template slot="title"> <i class="el-icon-office-building"></i>门店管理</template>
         <el-menu-item index="/userSystem/systemFront">门店列表</el-menu-item>
-        <el-menu-item index="/userSystem/applyFront">
-          <el-badge :value="value" class="item">申请列表</el-badge>
-        </el-menu-item>
+        <el-menu-item index="/userSystem/applyFront">申请列表</el-menu-item>
       </el-submenu>
+      <el-menu-item  index="/">退出系统</el-menu-item>
     </el-menu>
     <router-view></router-view>
   </div>
@@ -30,8 +29,7 @@ export default {
   name: "system",
   data() {
     return {
-      isCollapse: true,
-      value: 99 + "+"
+      isCollapse: true
     };
   },
   methods: {
@@ -43,7 +41,9 @@ export default {
     }
   },
   mounted() {
-   const data =  document.cookie.match(new RegExp("(^| )" + "id" + "=([^;]*)(;|$)"))[2]
+    const data = document.cookie.match(
+      new RegExp("(^| )" + "id" + "=([^;]*)(;|$)")
+    )[2];
   }
 };
 </script>

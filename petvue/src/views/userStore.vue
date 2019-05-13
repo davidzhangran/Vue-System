@@ -22,6 +22,7 @@
       <el-menu-item index="/userStore/pet" ><i class="el-icon-paperclip"></i>宠物管理</el-menu-item>
       <el-menu-item index="/userStore/servePet"  ><i class="el-icon-chicken"></i>服务管理</el-menu-item>
       <el-menu-item index="/userStore/orders"><i class="el-icon-shopping-cart-2"></i>订单管理</el-menu-item>
+      <el-menu-item index="/"><i class="el-icon-sort"></i>退出系统</el-menu-item>
     </el-menu>
     <router-view></router-view>
   </div>
