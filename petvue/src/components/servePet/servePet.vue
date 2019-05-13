@@ -315,6 +315,7 @@ export default {
         service,
         grade,
         price,
+        consuming
       } = row;
       this.name = name;
       this.category = category;
@@ -325,6 +326,7 @@ export default {
       this.price = price;
       this._id = row._id;
       this.schedule=schedule;
+      this.consuming=consuming;
     },
     updata() {
       this.dialogVisible1 = false; //关闭窗口
