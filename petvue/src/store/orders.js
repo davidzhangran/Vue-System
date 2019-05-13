@@ -107,15 +107,20 @@ export default {
         },
         //门店
         async getStorefrontByPageAsync(context, plo) {//获取门店
-            const { currentPage, eachPage } = context.state;
-            let data = "";
+            const { currentPage, eachPage, } = context.state;
+            let data = [];
             const userId = document.cookie.match(
-                new RegExp("(^| )" + "id" + "=([^;]*)(;|$)")
-              )[2];
+                new RegExp("(^|)" + "id" + "=([^;]*)(;|$)")
+              )[2]
+           console.log(userId)
+
             if (plo) {
-                data = await storefrontService.getStorefrontByPage({ value: plo.value, inputText: plo.inputText,userId });//拿到数据，通过mutations触发数据更新
+                 data = await storefrontService.getStorefrontByPage({ value: plo.value, inputText: plo.inputText,userId });
+                console.log(data)
+                //拿到数据，通过mutations触发数据更新
             } else {
-                data = await storefrontService.getStorefrontByPage({ currentPage, eachPage,userId });//拿到数据，通过mutations触发数据更新
+                 data = await storefrontService.getStorefrontByPage({ currentPage, eachPage,userId });
+                console.log(data)//拿到数据，通过mutations触发数据更新
             }
             context.commit("getStorefrontByPage", data);//通过commit触发getStorefrontByPage
         },
