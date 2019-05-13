@@ -1,6 +1,7 @@
 <template>
   <div>
     <div style="display: flex;justify-content: flex-end;padding-bottom:20px; padding-top:20px;">
+      <el-button @click="whole" type="primary">全部</el-button>
       <el-select style="width:100px;text-align: center;" v-model="value" placeholder="请选择">
         <el-option
           v-for="item in options"
@@ -13,8 +14,8 @@
       <el-button type="primary" @click="searchClick" icon="el-icon-search">搜索</el-button>
     </div>
     <el-table :data="storefrontInfo" border style="width: 100%">
-      <el-table-column header-align="center" align="center" fixed prop="_id" label="门店编号"></el-table-column>
-      <el-table-column header-align="center" align="center" prop="name" label="名称"></el-table-column>
+      <!-- <el-table-column header-align="center" align="center" fixed prop="_id" label="门店编号"></el-table-column> -->
+      <el-table-column header-align="center" align="center" prop="name" label="门店名称"></el-table-column>
       <el-table-column header-align="center" align="center" prop="licensenumber" label="营业执照号码"></el-table-column>
       <el-table-column header-align="center" align="center" prop="license" label="营业执照图片">
         <template slot-scope="scope">
@@ -46,25 +47,13 @@
         </template>
       </el-table-column>
       <el-table-column header-align="center" align="center" prop="feature" label="特色"></el-table-column>
-      <el-table-column width="120" header-align="center" align="center" label="店员属性">
-        <el-button type="primary">店员详情</el-button>
-      </el-table-column>
-      <el-table-column width="120" header-align="center" align="center" prop="goodsId" label="商品id">
-        <el-button type="primary">商品详情</el-button>
-      </el-table-column>
-      <el-table-column width="120" header-align="center" align="center" prop="serveId" label="服务id">
-        <el-button type="primary">服务详情</el-button>
-      </el-table-column>
-      <el-table-column width="120" header-align="center" align="center" prop="petId" label="宠物id">
-        <el-button type="primary">宠物详情</el-button>
-      </el-table-column>
       <el-table-column width="120" header-align="center" align="center" fixed="right" label="操作">
         <template slot-scope="scope">
-          <el-button type="text" @click="handleClick(scope.row)">修改</el-button>
+          <el-button type="primary" @click="handleClick(scope.row)">审核</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <!-- 修改组件 -->
+    <!-- 审核组件 -->
     <el-dialog title="审核" width="400px" :visible.sync="dialogFormVisible">
       <!-- <el-input v-model="tableData.state" style="width:300px"></el-input> -->
       <el-radio v-model="tableData.state" label="2" border>通过</el-radio>
@@ -74,7 +63,7 @@
         <el-button type="primary" @click="submitUpload">确 定</el-button>
       </div>
     </el-dialog>
-    <!-- /修改组件 -->
+    <!-- /审核组件 -->
     <el-pagination
       @size-change="setEachPage"
       @current-change="setCurrentPage"
@@ -102,11 +91,11 @@ export default {
     },
     eachPage() {
       //监听eachPage，发生变化就会触发
-      this.getStorefrontByPageAsync({ state: this.state });
+      this.ISSearch();
     },
     currentPage() {
       //监听eachPage，发生变化就会触发
-      this.getStorefrontByPageAsync({ state: this.state });
+      this.ISSearch();
     }
   },
   computed: {
@@ -126,24 +115,26 @@ export default {
     } else {
       this.setCurrentPage(1);
     }
+    this.flag = true;
   },
   methods: {
     ...mapActions(["getStorefrontByPageAsync", "updateStorefrontAsync"]),
     ...mapMutations(["setEachPage", "setCurrentPage"]),
     //点击搜索按钮触发
     searchClick() {
+      this.flag = false;
       this.getStorefrontByPageAsync({
         value: this.value,
         inputText: this.inputText,
         state: this.state
       });
     },
-    //点击确认修改按钮
+    //点击确认审核按钮
     submitUpload() {
       this.updateStorefrontAsync(this.updateFrontById(this.tableData));
       this.dialogFormVisible = false;
     },
-    //点击修改按钮
+    //点击审核按钮
     handleClick(row) {
       this.tableData = {
         ...row,
@@ -183,11 +174,34 @@ export default {
     },
     exceed() {
       this.$message.error("上传图片超出!");
+    },
+    ISSearch() {
+      // 根据是不是搜索状态，发送不同带参数的请求
+      if (this.flag) {
+        this.getStorefrontByPageAsync({ state: this.state });
+      } else {
+        this.getStorefrontByPageAsync({
+          value: this.value,
+          inputText: this.inputText,
+          state: this.state
+        });
+      }
+    },
+    whole() {
+      //全部按钮点击事件
+      this.flag = true;
+      this.inputText = "";
+      if (this.currentPage === 1) {
+        this.getStorefrontByPageAsync({ state: this.state });
+      } else {
+        this.setCurrentPage(1);
+      }
     }
   },
 
   data() {
     return {
+      flag: true, //IS 搜索 状态
       state: 1,
       options: [
         {

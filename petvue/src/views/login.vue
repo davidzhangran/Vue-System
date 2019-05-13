@@ -193,18 +193,33 @@ export default {
             }
           });
         }, 4000);
-      }, 100);
+      }, 100);},
+    getCookie() {
+      const arr = document.cookie.match(
+        new RegExp("(^| )" + "id" + "=([^;]*)(;|$)")
+      );
+      if (arr) {
+        return arr[2];
+      }
+      return null;
     }
   },
   async beforeRouteLeave(to, from, next) {
+    console.log(to);
+
     console.log(from);
     if (to.name == "userSystem") {
+      // if (this.getCookie() == null) {
+      // } else {
+      //   this.$message({ message: "调皮，不要妄想偷渡哦", type: "warning" });
+      //   next(false);
+      // }
       const { phone, password } = this.ruleForm;
       const result = await userService.loging({ phone, password });
       if (result.length > 0) {
+        document.cookie = `id=${result[0]._id}`;
         console.log(result);
         result[0].role == "1" ? next("/userStore") : next();
-        document.cookie = `id=${result[0]._id}`;
         if (result[0].role == "1" && result[0].state == "2") {
           next("/userStore");
           this.$message({
@@ -231,25 +246,7 @@ export default {
           type: "warning"
         });
       }
-    }
-    // else if (to.name == "userStore") {
-    //   next("/");
-    //   this.$message({
-    //     message: "调皮，不要妄想偷渡哦",
-    //     type: "warning"
-    //   });
-    // }
-    //  else if (to.name == "register") {
-    //   next();
-    // }
-    // else if (to.name != "userSystem" || to.name != "userStore") {
-    //   next("/");
-    //   this.$message({
-    //     message: "调皮，不要妄想偷渡哦",
-    //     type: "warning"
-    //   });
-    // }
-    else {
+    } else {
       next();
     }
   }

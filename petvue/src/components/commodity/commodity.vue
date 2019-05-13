@@ -43,16 +43,22 @@
         <el-input v-model="commodity.supplier" placeholder="供应商"></el-input>
       </el-form-item>
       <el-form-item label="出厂日期:">
-        <!-- <el-date-picker v-model="commodity.production" type="date" placeholder="选择日期"></el-date-picker> -->
-        <el-date-picker v-model="commodity.production" type="date" placeholder="选择日期" format="yyyy年MM月dd日" value-format="yyyy 年 MM 月 dd 日"></el-date-picker>
+        <el-date-picker
+          v-model="commodity.production"
+          type="date"
+          placeholder="选择日期"
+          format="yyyy年MM月dd日"
+          value-format="yyyy 年 MM 月 dd 日"
+        ></el-date-picker>
       </el-form-item>
       <div class="imageDiv">
         <h1 class="imageH1">上传图片</h1>
         <el-upload
           action="/goods/addCommodityImg"
           list-type="picture-card"
+          ref="upload"
           :on-preview="handlePictureCardPreview"
-          :limit="2"
+          :limit="10"
           :on-exceed="exceed"
           :on-success="licenseSuc"
         >
@@ -65,7 +71,7 @@
     </el-form>
     <div class="go">
       <el-button @click="cancel">取 消</el-button>
-      <el-button type="primary" @click="addCommodity ">确 定</el-button>
+      <el-button type="primary" @click="Commodity ">确 定</el-button>
     </div>
 
     <!-- <CommodityCommodityTab /> -->
@@ -122,11 +128,15 @@ export default {
       this.dialogVisibleImage = true;
     },
     exceed() {
-      this.$message.error("上传图片不能超过1张!");
+      this.$message.error("上传图片不能超过2张!");
     },
     // 上传图片
     licenseSuc(response) {
-      this.commodity.images.push(response.data.url);
+      this.commodity.images.push(response.data.url);  
+    },
+    Commodity() {
+      this.$refs.upload.submit();
+      setTimeout(()=>{this.addCommodity()},100)
     },
     cancel() {
       getValue(this);
@@ -152,7 +162,7 @@ export default {
         images //图片
       } = this.commodity;
       getValue(this);
- 
+
       this.addCommodityAsync({
         userId: document.cookie.match(
           new RegExp("(^|)" + "id" + "=([^;]*)(;|$)")
@@ -192,7 +202,8 @@ function getValue(params) {
     expiration: "", //保质期
     supplier: "", //供应商
     feature: "", //特色说明
-    price: "" //价格
+    price: "",
+    images: [""] //价格
   };
 }
 </script>
