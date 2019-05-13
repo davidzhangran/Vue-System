@@ -315,7 +315,6 @@ export default {
         // 清空图片
         this.$refs.banner.clearFiles();
         this.$refs.license.clearFiles();
-        this.tableData = [];
         this.$notify({
           title: "发送请求成功",
           message: "修改信息成功！",
