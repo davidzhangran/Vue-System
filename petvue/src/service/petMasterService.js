@@ -13,14 +13,9 @@ const addPetMaster = async (params) => await fetch("/petMember/addPetMaster", {
     body: JSON.stringify(params)
 }
 ).then(response => response.json())
-<<<<<<< HEAD
-//修改宠主
-const updatePetMaster = async (params) => await fetch("/petMember/updatePetMaster", {
-=======
 
 // 修改
 const upDataPetMasterByPage = async (params) => await fetch("/petMember/updatePetMaster", {
->>>>>>> 065fa2ceccd1ae84ecb26aa78f7c3e1626dccfb8
     method: "POST",
     mode: "cors",
     headers: {
@@ -30,14 +25,9 @@ const upDataPetMasterByPage = async (params) => await fetch("/petMember/updatePe
     body: JSON.stringify(params)
 }
 ).then(response => response.json())
-<<<<<<< HEAD
-//删除宠主
-const delePetMaster = async (params) => await fetch("/petMember/removePetMaster", {
-=======
 
 // 删除宠主
 const removePetMasterByPage = async (params) => await fetch("/petMember/removePetMaster", {
->>>>>>> 065fa2ceccd1ae84ecb26aa78f7c3e1626dccfb8
     method: "POST",
     mode: "cors",
     headers: {
@@ -47,19 +37,10 @@ const removePetMasterByPage = async (params) => await fetch("/petMember/removePe
     body: JSON.stringify(params)
 }
 ).then(response => response.json())
-<<<<<<< HEAD
-=======
-
->>>>>>> 065fa2ceccd1ae84ecb26aa78f7c3e1626dccfb8
 
 export default {
     addPetMaster,
     getPetMasterByPage,
-<<<<<<< HEAD
-    updatePetMaster,
-    delePetMaster
-=======
     upDataPetMasterByPage,
     removePetMasterByPage
->>>>>>> 065fa2ceccd1ae84ecb26aa78f7c3e1626dccfb8
 }
