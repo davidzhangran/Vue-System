@@ -7,6 +7,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 // 引入进来就可以了，自动运行
 import l from "./_gloabal";
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false
