@@ -287,7 +287,7 @@ export default {
       this.gender = "";
       this.images = "";
       this.describe = "";
-      // this.$refs.upload.clearFiles();
+      this.$refs.upload.clearFiles();
     },
     updata(){
        this.dialogTableVisible = false; //关闭窗口
