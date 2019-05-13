@@ -34,7 +34,7 @@ export default {
         },
         closeLoaing(state) {
             state.loading = false
-        }
+        },
     },
     actions: { //异步
         // 增加宠主
@@ -52,6 +52,20 @@ export default {
             const data = await petMasterService.getPetMasterByPage({ eachPage, currentPage })
             commit("getPetMasterByPage", data)
             commit("closeLoaing")
+        },
+        //修改宠主
+        async updateMasterByIdAsync({dispatch, commit},upDate) {
+            commit("openLoading")
+            const result = await petMasterService.updatePetMaster(upDate)
+            commit("closeLoaing")
+            dispatch("getPetMasterByPageAsync")
+        },
+        //删除宠主
+        async delePetMasterAsync({dispatch, commit},_id) {
+            commit("openLoading")
+            const result = await petMasterService.delePetMaster({_id})
+            commit("closeLoaing")
+            dispatch("getPetMasterByPageAsync")
         }
     }
 }
