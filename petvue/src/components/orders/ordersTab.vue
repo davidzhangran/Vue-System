@@ -14,7 +14,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
+<div class="block">
+      <el-pagination
       @size-change="setEachPage"
       @current-change="setCurrentPage"
       :current-page="currentPage-0"
@@ -23,6 +24,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="count"
     ></el-pagination>
+</div>
     <!-- 修改 -->
     <div>
       <el-dialog title="修改订单" :visible.sync="dialogVisible" width="80%">
@@ -249,6 +251,7 @@ export default {
         //value:名称,address:_id
         return { value: item.name, address: item._id };
       });
+      console.log(commodity)
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         cb(commodity);
@@ -258,7 +261,6 @@ export default {
       this.order.storefrontId = item.address;
     },
     petInfoAsync(queryString, cb) {
-      console.log(this.petMasterUsers);
       let commodity = this.petMasterUsers.map(item => {
         //value:名称,address:_id
         return { value: item.name, address: item._id };
@@ -304,4 +306,7 @@ export default {
 };
 </script>
 <style>
+.block{
+  text-align: center;
+}
 </style>
