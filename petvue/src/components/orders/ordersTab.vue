@@ -25,8 +25,8 @@
       <el-pagination
         @size-change="setEachPage"
         @current-change="setCurrentPage"
-        :current-page="currentPage"
-        :page-sizes="[1,3, 5, 7, 10]"
+        :current-page="currentPage-0"
+        :page-sizes="[3, 5, 7, 10]"
         :page-size="eachPage"
         layout="total, sizes, prev, pager, next, jumper"
         :total="count"
@@ -144,16 +144,16 @@ export default {
       label: ""
     };
   },
-  // watch: {
-  //   eachPage() {
-  //     //监听eachPage，发生变化就会触发
-  //     this.getOrdersAsync();
-  //   },
-  //   currentPage() {
-  //     //监听eachPage，发生变化就会触发
-  //     this.getOrdersAsync();
-  //   }
-  // },
+  watch: {
+    eachPage() {
+      //监听eachPage，发生变化就会触发
+      this.getOrdersAsync();
+    },
+    currentPage() {
+      //监听eachPage，发生变化就会触发
+      this.getOrdersAsync();
+    }
+  },
   methods: {
     ...mapMutations(["setCurrentPage", "setEachPage"]),
     ...mapActions([
@@ -271,8 +271,8 @@ export default {
       this.order.storefrontId = item.address;
     },
     upDataOrder() {
-      this.upDataOrdersAsync({...this.order})
-     this.dialogVisible=false
+      this.upDataOrdersAsync({ ...this.order });
+      this.dialogVisible = false;
     }
   },
   computed: {

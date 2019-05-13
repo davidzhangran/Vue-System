@@ -66,7 +66,6 @@ export default {
     return {
       dialogVisible: false,
       value: "",
-      user: "",
       value1:"",
       commodity: "",
       state: "",
@@ -100,6 +99,14 @@ export default {
         petId: this.orders.petId,
         price: this.orders.price //价格
       });
+      this.dialogVisible =false;
+      this.value= "";
+      this.value1="";
+      this.commodity= "";
+      this.state= "";
+      this.orders.price = "";
+      this.restaurants="";
+
     },
     //商品数据转换
     commodityAsync(queryString, cb) {
