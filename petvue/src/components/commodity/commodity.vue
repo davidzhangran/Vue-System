@@ -48,7 +48,7 @@
           type="date"
           placeholder="选择日期"
           format="yyyy年MM月dd日"
-          value-format="yyyy 年 MM 月 dd 日"
+          value-format="yyyy年MM月dd日"
         ></el-date-picker>
       </el-form-item>
       <div class="imageDiv">
