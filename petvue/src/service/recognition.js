@@ -7,6 +7,7 @@ const recognition = async (parm) => {
             }),
             body: JSON.stringify(parm)//参数是json格式
         }).then(response => response.json())
+    //123
 }
 export default {
     recognition

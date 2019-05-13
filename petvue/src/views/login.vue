@@ -184,6 +184,7 @@ export default {
               this.dialogVisible = false;
               this.ruleForm = { phone: "13566665522", password: "111111" };
               // document.cookie = `id=5cd8ccd0c143795d14ac8085`;
+              // document.cookie = `id=5cd8ccd0c143795d14ac8085`;
               this.$router.push("/userSystem");
             } else {
               this.$message({

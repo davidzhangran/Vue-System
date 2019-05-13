@@ -306,7 +306,6 @@ export default {
       this.images = "";
       this.describe = "";
       this.$refs.upload.clearFiles();
-      this.open2();
     },
     updata() {
       this.dialogTableVisible = false; //关闭窗口
