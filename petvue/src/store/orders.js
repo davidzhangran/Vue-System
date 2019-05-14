@@ -49,10 +49,7 @@ export default {
         },
     },
     actions: {
-        async addOrdersAsync(context, playlod) {
-            // const { currentPage, eachPage } = context.state
-            const data = await OrderService.addOrders(playlod);
-        },
+       
         // 获取订单
         async getOrdersAsync(context, { type, text, userId } = {}) {
             const { currentPage, eachPage } = context.state
@@ -61,6 +58,11 @@ export default {
             
             context.commit("getOrdersByPage", data)
 
+        },
+        async addOrdersAsync(context, playlod) {
+            // const { currentPage, eachPage } = context.state
+            const data = await OrderService.addOrders(playlod);
+            context.dispatch("getOrdersAsync");
         },
         // 
         async removeOrdersAsync(context, playlod) {

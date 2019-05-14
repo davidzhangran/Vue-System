@@ -162,6 +162,7 @@ export default {
     ]),
     //删除
     handleDelete(row) {
+         console.log(this.orders)
       this.removeOrdersAsync({ _id: row._id });
       this.$notify({
         title: "成功",
@@ -261,10 +262,12 @@ export default {
       this.order.storefrontId = item.address;
     },
     petInfoAsync(queryString, cb) {
+
       let commodity = this.petMasterUsers.map(item => {
         //value:名称,address:_id
         return { value: item.name, address: item._id };
       });
+      console.log(petMasterUsers)
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         cb(commodity);
@@ -297,11 +300,8 @@ export default {
     }
   },
   mounted() {
-    this.getOrdersAsync({
-      userId: document.cookie.match(
-        new RegExp("(^|)" + "id" + "=([^;]*)(;|$)")
-      )[2]
-    });
+    this.getOrdersAsync();
+  
   }
 };
 </script>

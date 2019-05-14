@@ -127,7 +127,7 @@ export default {
     ]),
     addOrders() {
       this.addOrdersAsync({
-        petMemberId: "5cd3c38fec6c4e3dfc08ffcd",
+        petMemberId: this.orders.petMemberId,
         goodsId: this.orders.commodityId,
         storefrontId: this.orders.storefrontId,
         serveId: this.orders.serveId,
@@ -211,7 +211,7 @@ export default {
       }, 1000 * Math.random());
     },
     handlePetInfo(item) {
-      this.orders.storefrontId = item.address;
+      this.orders.petMemberId = item.address;
     }
   },
   computed: {

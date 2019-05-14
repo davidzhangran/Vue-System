@@ -182,7 +182,7 @@ export default {
             } else if (result.score > 90) {
           
               this.dialogVisible = false;
-              this.ruleForm = { phone: "13566665522", password: "111111" };
+              this.ruleForm = { phone: "18988889990", password: "112233" };
               // document.cookie = `id=5cd8ccd0c143795d14ac8085`;
               // document.cookie = `id=5cd8ccd0c143795d14ac8085`;
               this.$router.push("/userSystem");
