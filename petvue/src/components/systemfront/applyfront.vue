@@ -19,9 +19,8 @@
       <el-button type="primary" @click="searchClick" icon="el-icon-search" size="small">搜索</el-button>
     </div>
     <el-table :data="storefrontInfo" border style="width: 100%">
-      <!-- <el-table-column header-align="center" align="center" fixed prop="_id" label="门店编号"></el-table-column> -->
-      <el-table-column header-align="center" align="center" prop="name" label="门店名称"></el-table-column>
-      <el-table-column header-align="center" align="center" prop="licensenumber" label="营业执照号码"></el-table-column>
+      <el-table-column header-align="center" show-overflow-tooltip align="center" prop="name" label="门店名称"></el-table-column>
+      <el-table-column header-align="center" show-overflow-tooltip align="center" prop="licensenumber" label="营业执照号码"></el-table-column>
       <el-table-column header-align="center" align="center" prop="license" label="营业执照图片">
         <template slot-scope="scope">
           <el-popover placement="bottom" trigger="click">
@@ -32,7 +31,7 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column header-align="center" align="center" prop="site" label="营业地址"></el-table-column>
+      <el-table-column header-align="center" show-overflow-tooltip align="center" prop="site" label="营业地址"></el-table-column>
       <el-table-column header-align="center" align="center" prop="person" label="法人"></el-table-column>
       <el-table-column header-align="center" align="center" prop="phone" label="联系电话"></el-table-column>
       <el-table-column header-align="center" align="center" prop="banner" label="头图">
@@ -51,7 +50,7 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column header-align="center" align="center" prop="feature" label="特色"></el-table-column>
+      <el-table-column header-align="center" show-overflow-tooltip align="center" prop="feature" label="特色"></el-table-column>
       <el-table-column header-align="center" align="center" fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button type="primary" @click="handleClick(scope.row)" size="mini">审核</el-button>
